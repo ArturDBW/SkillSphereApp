@@ -18,3 +18,20 @@ exports.getAllUsers = async (req, res, next) => {
     });
   }
 };
+
+exports.getUser = async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  try {
+    res.status(200).json({
+      status: "success",
+      data: {
+        user,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
