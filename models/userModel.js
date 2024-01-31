@@ -29,6 +29,7 @@ const userSchema = new mongoose.Schema({
     },
   },
 });
+
 // enkrypcja hasła (wykonywana między wysłaniem danych ale przed ich zapisaniem)
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
