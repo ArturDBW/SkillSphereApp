@@ -60,3 +60,25 @@ exports.createCourse = async (req, res, next) => {
     });
   }
 };
+
+exports.deleteCourse = async (req, res, next) => {
+  try {
+    const course = await Course.findByIdAndDelete(req.params.id);
+
+    if (!course)
+      return res.status(404).json({
+        status: "fail",
+        message: "Course with this ID not exist",
+      });
+
+    res.status(204).json({
+      status: "success",
+      data: null,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
