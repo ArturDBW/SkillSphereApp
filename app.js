@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const userRouter = require("./routes/userRouter");
 const app = express();
 const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 //// MIDDLEWARES ----------------------------------------------------->
 
@@ -10,6 +11,14 @@ const helmet = require("helmet");
 
 // PROTECT - HTTP headers
 app.use(helmet());
+
+// PROTECT - limiter request
+const limiter = rateLimit({
+  max: 100,
+  windowsMs: 60 * 60 * 100,
+  message: "To many request from this IP, please try again an hour!",
+});
+app.use("/api", limiter);
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
