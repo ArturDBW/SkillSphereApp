@@ -6,7 +6,6 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
-const xss = require("xss");
 //// MIDDLEWARES ----------------------------------------------------->
 
 //// SECURITY
@@ -23,9 +22,6 @@ app.use("/api", limiter);
 
 // PROTECT - Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
-
-// PROTECT - Data sinitization against XSS
-app.use(xss());
 
 // PROTECT - Prevent parametr pollution
 app.use(
