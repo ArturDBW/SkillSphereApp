@@ -4,11 +4,11 @@ const userRouter = require("./routes/userRouter");
 const app = express();
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
-
+const mongoSanitize = require("express-mongo-sanitize");
+const xss = require("xss");
 //// MIDDLEWARES ----------------------------------------------------->
 
-// SECURITY ----------------------------------->
-
+//// SECURITY
 // PROTECT - HTTP headers
 app.use(helmet());
 
@@ -19,6 +19,12 @@ const limiter = rateLimit({
   message: "To many request from this IP, please try again an hour!",
 });
 app.use("/api", limiter);
+
+// PROTECT - Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+
+// PROTECT - Data sinitization against XSS
+app.use(xss());
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
