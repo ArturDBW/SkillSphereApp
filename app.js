@@ -1,11 +1,36 @@
 const express = require("express");
 const morgan = require("morgan");
-
 const userRouter = require("./routes/userRouter");
-
 const app = express();
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
+const mongoSanitize = require("express-mongo-sanitize");
+const hpp = require("hpp");
+//// MIDDLEWARES ----------------------------------------------------->
 
-// MIDDLEWARES
+//// SECURITY
+// PROTECT - HTTP headers
+app.use(helmet());
+
+// PROTECT - limiter request
+const limiter = rateLimit({
+  max: 100,
+  windowsMs: 60 * 60 * 100,
+  message: "To many request from this IP, please try again an hour!",
+});
+app.use("/api", limiter);
+
+// PROTECT - Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+
+// PROTECT - Prevent parametr pollution
+app.use(
+  hpp({
+    whitelist: ["duration"], // ustawiam parametry ktore moga sie pojawic wiecej niz raz w URL
+  })
+);
+
+// Odpala środowisko developmentu
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
