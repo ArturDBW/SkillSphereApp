@@ -1,11 +1,16 @@
 const express = require("express");
 const morgan = require("morgan");
-
 const userRouter = require("./routes/userRouter");
-
 const app = express();
+const helmet = require("helmet");
 
-// MIDDLEWARES
+//// MIDDLEWARES ----------------------------------------------------->
+
+// SECURITY ----------------------------------->
+
+// PROTECT - HTTP headers
+app.use(helmet());
+
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
