@@ -5,6 +5,7 @@ const app = express();
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const mongoSanitize = require("express-mongo-sanitize");
+const hpp = require("hpp");
 const xss = require("xss");
 //// MIDDLEWARES ----------------------------------------------------->
 
@@ -26,6 +27,14 @@ app.use(mongoSanitize());
 // PROTECT - Data sinitization against XSS
 app.use(xss());
 
+// PROTECT - Prevent parametr pollution
+app.use(
+  hpp({
+    whitelist: ["duration"], // ustawiam parametry ktore moga sie pojawic wiecej niz raz w URL
+  })
+);
+
+// Odpala środowisko developmentu
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
