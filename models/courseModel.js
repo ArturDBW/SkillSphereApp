@@ -3,18 +3,19 @@ const mongoose = require("mongoose");
 const courseSchema = new mongoose.Schema({
   title: {
     type: String,
-    require: [true, "Please provide a title"],
+    required: [true, "Please provide a title"],
+    unique: true,
   },
   author: {
     type: String,
-    require: [true, "Please provie a author"],
+    required: [true, "Please provie a author"],
   },
   imageCover: {
     type: String,
   },
   price: {
     type: Number,
-    require: [true, "Please provide a price"],
+    required: [true, "Please provide a price"],
   },
   bestseller: {
     type: Boolean,

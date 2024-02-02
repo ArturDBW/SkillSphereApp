@@ -43,3 +43,20 @@ exports.getCourse = async (req, res, next) => {
     });
   }
 };
+
+exports.createCourse = async (req, res, next) => {
+  try {
+    const newCourse = await Course.create(req.body);
+    res.status(201).json({
+      status: "success",
+      data: {
+        course: newCourse,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
