@@ -1,6 +1,6 @@
-const moongose = require("moongose");
+const mongoose = require("mongoose");
 
-const courseSchema = new moongose.Schema({
+const courseSchema = new mongoose.Schema({
   title: {
     type: String,
     require: [true, "Please provide a title"],
@@ -31,5 +31,5 @@ const courseSchema = new moongose.Schema({
   },
 });
 
-const Course = moongose.model("Course", courseSchema);
+const Course = mongoose.model("Course", courseSchema);
 module.exports = Course;
