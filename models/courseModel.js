@@ -32,5 +32,12 @@ const courseSchema = new mongoose.Schema({
   },
 });
 
+// Virtual populate
+courseSchema.virtual("reviews", {
+  ref: "Review",
+  foreignField: "course",
+  localField: "_id",
+});
+
 const Course = mongoose.model("Course", courseSchema);
 module.exports = Course;
