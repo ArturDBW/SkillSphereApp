@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const userRouter = require("./routes/userRouter");
 const courseRouter = require("./routes/courseRouter");
+const reviewRouter = require("./routes/reviewRouter");
 const app = express();
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
@@ -48,5 +49,6 @@ app.use((req, res, next) => {
 
 app.use("/skillsphere/users", userRouter);
 app.use("/skillsphere/courses", courseRouter);
+app.use("/skillsphere/reviews", reviewRouter);
 
 module.exports = app;
