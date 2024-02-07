@@ -38,3 +38,14 @@ exports.createReview = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getReview = catchAsync(async (req, res, next) => {
+  const review = await Review.findById(req.params.id);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      review,
+    },
+  });
+});
