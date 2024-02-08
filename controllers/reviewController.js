@@ -21,13 +21,9 @@ exports.getAllReviews = async (req, res, next) => {
 };
 
 exports.createReview = catchAsync(async (req, res, next) => {
-  if (!req.body.tour) {
-    req.body.tour = req.params.tourId;
-  }
+  if (!req.body.course) req.body.course = req.params.courseId;
 
-  if (!req.body.user) {
-    req.body.user = req.user.id;
-  }
+  if (!req.body.user) req.body.user = req.user.id;
 
   const newReview = await Review.create(req.body);
 
