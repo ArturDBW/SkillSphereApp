@@ -1,5 +1,7 @@
 const Course = require("../models/courseModel");
 const User = require("../models/userModel");
+const AppError = require("../utils/appError");
+const catchAsync = require("../utils/catchAsync");
 
 exports.getAllTours = async (req, res, next) => {
   const courses = await Course.find();
@@ -20,30 +22,45 @@ exports.getAllTours = async (req, res, next) => {
   }
 };
 
-exports.getCourse = async (req, res, next) => {
-  try {
-    const course = await Course.findById(req.params.id);
+// exports.getCourse = async (req, res, next) => {
+//   try {
+//     const course = await Course.findById(req.params.id).populate("reviews");
 
-    if (!course) {
-      return res.status(404).json({
-        status: "fail",
-        message: "Valid course ID",
-      });
-    }
+//     if (!course) {
+//       return res.status(404).json({
+//         status: "fail",
+//         message: "Valid course ID",
+//       });
+//     }
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        course,
-      },
-    });
-  } catch (err) {
-    res.status(500).json({
-      status: "fail",
-      message: err,
-    });
+//     res.status(200).json({
+//       status: "success",
+//       data: {
+//         course,
+//       },
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       status: "fail",
+//       message: err,
+//     });
+//   }
+// };
+
+exports.getCourse = catchAsync(async (req, res, next) => {
+  const course = await Course.findById(req.params.id).populate("reviews");
+
+  if (!course) {
+    return next(AppError("No tour found with that ID", 400));
   }
-};
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      course,
+    },
+  });
+});
 
 exports.createCourse = async (req, res, next) => {
   try {
