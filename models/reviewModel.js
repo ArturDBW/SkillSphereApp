@@ -22,7 +22,7 @@ const reviewSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
-    requried: [true, "Review must belong to a user"],
+    required: [true, "Review must belong to a user"],
   },
 });
 
@@ -30,6 +30,9 @@ reviewSchema.pre(/^find/, function (next) {
   this.populate({
     path: "user",
     select: "name",
+  }).populate({
+    path: "course",
+    select: "title",
   });
 
   next();
