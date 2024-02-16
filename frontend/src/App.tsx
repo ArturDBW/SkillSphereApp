@@ -25,7 +25,7 @@ export const App = () => {
   const createCourse = async () => {
     try {
       const response = await API.post("/skillsphere/courses", {
-        title: "Testowy nowy tytuł",
+        title: "Testowy nowy tytuł 6",
         author: "Arturooo",
         price: 123,
       });
@@ -33,6 +33,15 @@ export const App = () => {
       fetchCourses();
     } catch (err) {
       console.error("Błąd podczas tworzenia nowego kursu", err);
+    }
+  };
+
+  const deleteCourse = async (id: string) => {
+    try {
+      await API.delete(`/skillsphere/courses/${id}`);
+      fetchCourses();
+    } catch (err) {
+      console.error("Błąd podczas usuwania kursu", err);
     }
   };
 
@@ -44,6 +53,13 @@ export const App = () => {
         ))}
       </ul>
       <button onClick={createCourse}>Dodaj nowy kurs!</button>
+      <button
+        onClick={() => {
+          deleteCourse("65cf92eef1d8b00e185e196e");
+        }}
+      >
+        Delete Course
+      </button>
     </div>
   );
 };
