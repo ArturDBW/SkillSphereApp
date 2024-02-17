@@ -45,6 +45,19 @@ export const App = () => {
     }
   };
 
+  const updateCourse = async (id: string) => {
+    try {
+      await API.patch(`/skillsphere/courses/${id}`, {
+        title: "Update kursu",
+        price: 1000,
+      });
+      console.log("Kurs został pomyślnie zaktualizowany");
+      fetchCourses();
+    } catch (err) {
+      console.error("Błąd podczas aktualizowania kursu", err);
+    }
+  };
+
   return (
     <div>
       <ul>
@@ -59,6 +72,13 @@ export const App = () => {
         }}
       >
         Delete Course
+      </button>
+      <button
+        onClick={() => {
+          updateCourse("65cf98f4f1d8b00e185e19a5");
+        }}
+      >
+        Update Course
       </button>
     </div>
   );
