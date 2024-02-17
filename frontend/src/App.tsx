@@ -8,6 +8,7 @@ type Course = {
 
 export const App = () => {
   const [courses, setCourses] = useState([]);
+  const [course, setCourse] = useState([]);
 
   const fetchCourses = async () => {
     try {
@@ -15,6 +16,16 @@ export const App = () => {
       setCourses(response.data.data.courses);
     } catch (err) {
       console.error("Bład podczas pobierania danych", err);
+    }
+  };
+
+  const fetchOneCourse = async (id: string) => {
+    try {
+      const response = await API.get(`/skillsphere/courses/${id}`);
+      setCourse(response.data.data.courses); // Ustawienie danych pojedynczego kursu
+      console.log(response.data.data.course); // obiekt tu jest trzba poprawic na array
+    } catch (err) {
+      console.error("Błąd podczas pobierania danych kursu", err);
     }
   };
 
@@ -79,6 +90,13 @@ export const App = () => {
         }}
       >
         Update Course
+      </button>
+      <button
+        onClick={() => {
+          fetchOneCourse("65bcf8c18d51d25f3524952d");
+        }}
+      >
+        Fetch One Course
       </button>
     </div>
   );
