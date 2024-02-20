@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { API } from "./utils/api";
 import { Login } from "./components/Login";
 import { ChangePassword } from "./components/ChangePassword";
+import { Signup } from "./components/Signup";
 
 type Course = {
   title: string;
@@ -103,6 +104,7 @@ export const App = () => {
       </button>
       <Login />
       <ChangePassword />
+      <Signup />
     </div>
   );
 };
