@@ -6,7 +6,7 @@ const reviewRouter = require("../routes/reviewRouter");
 const router = express.Router();
 
 router.get("/", courseController.getAllTours);
-router.get("/:id", courseController.getCourse);
+router.get("/:id", authController.protect, courseController.getCourse);
 router.post("/", courseController.createCourse);
 router.patch("/:id", courseController.updateCourse);
 router.delete("/:id", courseController.deleteCourse);

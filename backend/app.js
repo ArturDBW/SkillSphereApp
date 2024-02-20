@@ -5,12 +5,19 @@ const courseRouter = require("./routes/courseRouter");
 const reviewRouter = require("./routes/reviewRouter");
 const app = express();
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
 
-app.use(cors());
+// Konfiguracja CORS
+const corsOptions = {
+  origin: "http://localhost:5173", // Ustawienie dokładnego adresu aplikacji frontendowej
+  credentials: true, // Zezwól na przekazywanie plików cookie
+};
+
+app.use(cors(corsOptions));
 
 //// MIDDLEWARES ----------------------------------------------------->
 
@@ -40,6 +47,8 @@ app.use(
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+app.use(cookieParser());
 
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`)); // pozwala odczytać w wwww statyczne pliki takie jak html, img...
