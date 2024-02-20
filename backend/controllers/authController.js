@@ -53,9 +53,7 @@ exports.login = catchAsync(async (req, res, next) => {
   const token = signToken(user._id);
 
   res.cookie("jwt", token, {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
+    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     secure: true,
     httpOnly: true,
     sameSite: "None",
@@ -66,6 +64,17 @@ exports.login = catchAsync(async (req, res, next) => {
     token,
   });
 });
+//
+exports.logout = (req, res) => {
+  // Ustaw datę wygaśnięcia ciasteczka na przeszłą datę, aby usunąć je z przeglądarki
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000), // Wygasa po 10 sekundach
+    secure: true,
+    httpOnly: true,
+    sameSite: "None",
+  });
+  res.status(200).json({ status: "success" });
+};
 // -------------------------------------------------------------> Operacje na hasłach (zmiany, odzyskiwanie)
 
 exports.updatePassword = catchAsync(async (req, res, next) => {

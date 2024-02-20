@@ -5,7 +5,7 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
       const response = await API.post("/skillsphere/users/login", {
@@ -18,6 +18,16 @@ export const Login = () => {
       console.error("Błąd logowania", err);
     }
     console.log(email, password);
+  };
+
+  const logout = async () => {
+    try {
+      const response = await API.get("/skillsphere/users/logout");
+      console.log(response);
+      if (response.data.status === "success") location.reload();
+    } catch (err) {
+      console.error("Bład wylogowania", err);
+    }
   };
 
   return (
@@ -34,6 +44,7 @@ export const Login = () => {
         onChange={(e) => setPassword(e.target.value)}
       ></input>
       <button onClick={handleLogin}>Zaloguj</button>
+      <button onClick={logout}>Wyloguj</button>
     </form>
   );
 };
