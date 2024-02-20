@@ -93,6 +93,13 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   // 4) Log user in, send JWT
   const token = signToken(user._id);
+
+  res.cookie("jwt", token, {
+    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    secure: true,
+    httpOnly: true,
+    sameSite: "None",
+  });
   res.status(200).json({
     status: "success",
     token,
