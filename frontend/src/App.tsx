@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { API } from "./utils/api";
+import { Login } from "./components/Login";
+import { ChangePassword } from "./components/ChangePassword";
+import { Signup } from "./components/Signup";
 
 type Course = {
   title: string;
@@ -14,6 +17,7 @@ export const App = () => {
     try {
       const response = await API.get("/skillsphere/courses");
       setCourses(response.data.data.courses);
+      console.log(course);
     } catch (err) {
       console.error("Bład podczas pobierania danych", err);
     }
@@ -98,6 +102,9 @@ export const App = () => {
       >
         Fetch One Course
       </button>
+      <Login />
+      <ChangePassword />
+      <Signup />
     </div>
   );
 };
