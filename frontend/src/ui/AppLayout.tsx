@@ -6,7 +6,7 @@ export const AppLayout = () => {
   return (
     <>
       <Header />
-      <main>
+      <main className="mx-auto max-w-screen-2xl">
         <Outlet />
       </main>
       <Footer />
