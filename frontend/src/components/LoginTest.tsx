@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { API } from "../utils/api";
 
-export const Login = () => {
+export const LoginTest = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

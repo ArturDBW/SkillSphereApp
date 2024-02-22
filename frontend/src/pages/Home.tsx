@@ -1,10 +1,10 @@
-import { Login } from "../components/Authorization";
+import { Authorization } from "../components/Authorization";
 
 export const Home = () => {
   return (
     <div>
       Home
-      <Login />
+      <Authorization />
     </div>
   );
 };
