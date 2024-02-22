@@ -4,6 +4,7 @@ import { Signup } from "./SignUp";
 
 export const Authorization = () => {
   const [showLogin, setShowLogin] = useState(true);
+
   return (
     <div className="mx-auto flex h-[500px] max-w-4xl border">
       <div className="relative flex w-2/3 flex-col items-center justify-center overflow-hidden">
@@ -27,7 +28,7 @@ export const Authorization = () => {
         </p>
         <button
           onClick={() => setShowLogin(!showLogin)}
-          className="mt-6 w-28 rounded-full bg-white  py-3 font-bold text-black"
+          className="mt-6 w-28 rounded-full bg-white py-3 font-bold text-black duration-150 hover:text-blue-400"
         >
           {showLogin ? "Sign Up" : "Login"}
         </button>

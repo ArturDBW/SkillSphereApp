@@ -1,4 +1,4 @@
-import { Authorization } from "../components/Authorization";
+import { Authorization } from "../components/authorization/Authorization";
 
 export const Home = () => {
   return (
