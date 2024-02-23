@@ -21,7 +21,7 @@ const schema = z
 type FormValues = z.infer<typeof schema>;
 
 export const SignUp = () => {
-  const inputStyled = `mx-auto min-w-80 rounded-full  bg-sky-100 px-6 py-2 outline-none`;
+  const inputStyled = `mx-auto min-w-80 rounded-full bg-sky-100 px-6 py-2 outline-none`;
 
   const {
     register,
@@ -67,40 +67,37 @@ export const SignUp = () => {
           {...register("name")}
           className={inputStyled}
         />
-        {errors.name && (
-          <div className="w-full px-2 text-red-500">{errors.name.message}</div>
-        )}
+        <div className="h-6 w-full px-2 text-red-500">
+          {errors.name ? `${errors.name.message}` : null}
+        </div>
+
         <input
           type="text"
           placeholder="Email"
           {...register("email")}
           className={inputStyled}
         />
-        {errors.email && (
-          <div className="w-full px-2 text-red-500">{errors.email.message}</div>
-        )}
+        <div className="h-6 w-full px-2 text-red-500">
+          {errors.email ? `${errors.email.message}` : null}
+        </div>
         <input
           type="password"
           placeholder="Password"
           {...register("password")}
           className={inputStyled}
         />
-        {errors.password && (
-          <div className="w-full px-2 text-red-500">
-            {errors.password.message}
-          </div>
-        )}
+        <div className="h-6 w-full px-2 text-red-500">
+          {errors.password ? `${errors.password.message}` : null}
+        </div>
         <input
           type="password"
           placeholder="Confirm Password"
           {...register("confirmPassword")}
           className={inputStyled}
         />
-        {errors.confirmPassword && (
-          <div className="w-full px-2 text-red-500">
-            {errors.confirmPassword.message}
-          </div>
-        )}
+        <div className="h-6 w-full px-2 text-red-500">
+          {errors.confirmPassword ? `${errors.confirmPassword.message}` : null}
+        </div>
         <div className="mb-1 mt-[-12px] h-5 w-full px-1 text-red-500">
           {errors.root && <span>{errors.root.message}</span>}
         </div>
