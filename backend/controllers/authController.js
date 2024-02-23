@@ -13,6 +13,14 @@ const signToken = (id) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  const existingUser = await User.findOne({ email: req.body.email });
+  if (existingUser) {
+    return res.status(409).json({
+      status: "fail",
+      message: "Email already exists.",
+    });
+  }
+
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,

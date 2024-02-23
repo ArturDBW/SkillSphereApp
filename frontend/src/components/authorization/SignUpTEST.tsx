@@ -2,7 +2,7 @@ import { useState } from "react";
 import { API } from "../../utils/api";
 import { AxiosError } from "axios";
 
-export const Signup = () => {
+export const SignupTest = () => {
   const inputStyled = `mx-auto min-w-80 rounded-full  bg-sky-100 px-6 py-2 outline-none mb-4`;
 
   const [name, setName] = useState("");

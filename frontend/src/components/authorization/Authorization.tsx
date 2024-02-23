@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Login } from "./Login";
-import { Signup } from "./SignUp";
+import { SignUp } from "./SingUp";
 
 export const Authorization = () => {
   const [showLogin, setShowLogin] = useState(true);
@@ -16,7 +16,7 @@ export const Authorization = () => {
         <div
           className={`absolute transition-transform duration-500 ease-in-out ${showLogin ? `-translate-y-[140%]` : `translate-y-0`}`}
         >
-          <Signup />
+          <SignUp />
         </div>
       </div>
       <div className="flex w-1/3 flex-col items-center justify-center bg-blue-400 px-2 text-center text-white">
