@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { API } from "../../utils/api";
+import { AxiosError } from "axios";
 
 export const Signup = () => {
   const inputStyled = `mx-auto min-w-80 rounded-full  bg-sky-100 px-6 py-2 outline-none mb-4`;
@@ -8,6 +9,8 @@ export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
   const handleCreateAccount = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -20,8 +23,12 @@ export const Signup = () => {
       });
       console.log("Konto zostalo utworzone pomyslnie");
       console.log(response);
-    } catch (err) {
-      console.error("Błąd podczas zakladania konta", console.error());
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        setErrorMessage(err.response?.data);
+      }
+      console.error(err);
+      setIsError(true);
     }
   };
 
@@ -38,7 +45,6 @@ export const Signup = () => {
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          required
           className={inputStyled}
         />
         <input
@@ -46,7 +52,6 @@ export const Signup = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
           className={inputStyled}
         />
         <input
@@ -54,7 +59,6 @@ export const Signup = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
           className={inputStyled}
         />
         <input
@@ -62,10 +66,11 @@ export const Signup = () => {
           placeholder="Confirm Password"
           className={inputStyled}
           value={confirmPassword}
-          required
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-
+        <div className="mb-1 mt-[-12px] h-5 w-full px-1 text-red-500">
+          {isError ? errorMessage : null}
+        </div>
         <button
           type="submit"
           className="mt-8 rounded-full bg-blue-400 px-10 py-3 font-bold text-white duration-150 hover:bg-blue-500"
