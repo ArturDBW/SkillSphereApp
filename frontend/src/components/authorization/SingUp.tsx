@@ -15,13 +15,14 @@ const schema = z
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords must be the same",
-    path: ["confirmPassword"], // path of error
+    path: ["confirmPassword"],
   });
 
 type FormValues = z.infer<typeof schema>;
 
 export const SignUp = () => {
   const inputStyled = `mx-auto min-w-80 rounded-full bg-sky-100 px-6 py-2 outline-none`;
+  const errorStyled = `h-5 w-full px-2 text-sm text-red-500`;
 
   const {
     register,
@@ -67,7 +68,7 @@ export const SignUp = () => {
           {...register("name")}
           className={inputStyled}
         />
-        <div className="h-6 w-full px-2 text-red-500">
+        <div className={errorStyled}>
           {errors.name ? `${errors.name.message}` : null}
         </div>
 
@@ -77,7 +78,7 @@ export const SignUp = () => {
           {...register("email")}
           className={inputStyled}
         />
-        <div className="h-6 w-full px-2 text-red-500">
+        <div className={errorStyled}>
           {errors.email ? `${errors.email.message}` : null}
         </div>
         <input
@@ -86,7 +87,7 @@ export const SignUp = () => {
           {...register("password")}
           className={inputStyled}
         />
-        <div className="h-6 w-full px-2 text-red-500">
+        <div className={errorStyled}>
           {errors.password ? `${errors.password.message}` : null}
         </div>
         <input
@@ -95,7 +96,7 @@ export const SignUp = () => {
           {...register("confirmPassword")}
           className={inputStyled}
         />
-        <div className="h-6 w-full px-2 text-red-500">
+        <div className={errorStyled}>
           {errors.confirmPassword ? `${errors.confirmPassword.message}` : null}
         </div>
         <div className="mb-1 mt-[-12px] h-5 w-full px-1 text-red-500">

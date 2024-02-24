@@ -1,30 +1,49 @@
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { API } from "../../utils/api";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
 import { AxiosError } from "axios";
 
+const schema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Provide email" })
+    .email({ message: "Valid email" }),
+  password: z.string().min(1, { message: "Provide password" }),
+});
+
+type FormValues = z.infer<typeof schema>;
+
 export const Login = () => {
-  const inputStyled = `mx-auto min-w-80 rounded-full  bg-sky-100 px-6 py-2 outline-none mb-4`;
+  const inputStyled = `mx-auto min-w-80 rounded-full bg-sky-100 px-6 py-2 outline-none`;
+  const errorStyled = `h-5 w-full px-2 text-sm text-red-500`;
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isError, setIsError] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+  });
 
-  const handleLogin = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  const handleLogin = async (data: FormValues) => {
     try {
-      const response = await API.post("/skillsphere/users/login", {
-        email,
-        password,
-      });
-      console.log("Zalogowano pomyslnie");
-      console.log(response);
-    } catch (err: unknown) {
+      const response = await API.post("/skillsphere/users/login", data);
+      console.log("Zalogowanie pomyślne", response);
+    } catch (err) {
       if (err instanceof AxiosError) {
-        setErrorMessage(err.response?.data.message);
+        if (err.response?.status === 401) {
+          setError("password", {
+            message: "Incorrect email or password",
+          });
+        }
       }
-      setIsError(true);
     }
+  };
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    handleLogin(data);
   };
 
   return (
@@ -35,29 +54,27 @@ export const Login = () => {
       <span className="mb-10 mt-2 text-lg text-stone-400">
         Login to your account
       </span>
-      <form onSubmit={handleLogin} className="flex flex-col items-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col items-center"
+      >
         <input
-          type="email"
+          type="text"
           placeholder="Email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            setIsError(false);
-          }}
+          {...register("email")}
           className={inputStyled}
         />
+        <div className={errorStyled}>
+          {errors.email ? `${errors.email.message}` : null}
+        </div>
         <input
           type="password"
           placeholder="Password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            setIsError(false);
-          }}
+          {...register("password")}
           className={inputStyled}
         />
-        <div className="mb-1 mt-[-12px] h-5 w-full px-1 text-red-500">
-          {isError ? errorMessage : null}
+        <div className={errorStyled}>
+          {errors.password ? `${errors.password.message}` : null}
         </div>
         <div className="mt-2 flex w-full justify-between px-1">
           <span>Remember me</span>
