@@ -13,6 +13,14 @@ const signToken = (id) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  const existingUser = await User.findOne({ email: req.body.email });
+  if (existingUser) {
+    return res.status(409).json({
+      status: "fail",
+      message: "Email already exists.",
+    });
+  }
+
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
@@ -43,7 +51,11 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // 1) Check if email and password exist
   if (!email || !password) {
-    return next(new AppError("Please provide email and password!", 400));
+    // return next(new AppError("Please provide email and password!", 400));
+    return res.status(400).json({
+      status: "fail",
+      message: "Please provide email and password!",
+    });
   }
 
   // 2) Check if user exist && password is correct
@@ -52,7 +64,7 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!user || !(await user.correctPassword(password, user.password))) {
     return res.status(401).json({
       status: "fail",
-      message: "Incorrect email or password",
+      message: "Incorrect email or password!",
     });
   }
 
