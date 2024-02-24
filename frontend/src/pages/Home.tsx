@@ -1,4 +1,3 @@
-import { FormTest } from "../components/FormTest";
 import { Authorization } from "../components/authorization/Authorization";
 
 export const Home = () => {
@@ -6,7 +5,6 @@ export const Home = () => {
     <div>
       Home
       <Authorization />
-      <FormTest />
     </div>
   );
 };
