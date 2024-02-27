@@ -5,6 +5,9 @@ import { API } from "../utils/api";
 type Course = {
   title: string;
   _id: number;
+  author: string;
+  description: string;
+  price: number;
 };
 
 export const Courses = () => {
@@ -29,12 +32,11 @@ export const Courses = () => {
 
   return (
     <section>
-      <ul>
+      <div>
         {courses.map((courseData: Course) => (
-          <li key={courseData._id}>{courseData.title}</li>
+          <Course key={courseData._id} courseData={courseData} />
         ))}
-      </ul>
-      <Course />
+      </div>
     </section>
   );
 };
