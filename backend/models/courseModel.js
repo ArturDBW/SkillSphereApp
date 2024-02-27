@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 
 const courseSchema = new mongoose.Schema(
   {
@@ -26,6 +27,7 @@ const courseSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    slug: String,
     createdAt: {
       type: Date,
       default: Date.now(),
@@ -49,6 +51,12 @@ courseSchema.virtual("reviews", {
   ref: "Review",
   foreignField: "course",
   localField: "_id",
+});
+
+// Slug generation
+courseSchema.pre("save", function (next) {
+  this.slug = slugify(this.title, { lower: true });
+  next();
 });
 
 const Course = mongoose.model("Course", courseSchema);
