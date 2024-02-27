@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import test from "/ddd.avif";
 
 type CourseProps = {
@@ -24,6 +25,7 @@ export const Course = ({ courseData }: CourseProps) => {
         <div className="flex flex-col">
           <span>Reviews!</span>
           <span className="text-sm text-stone-500">{courseData.author}</span>
+          <Link to={`/courses/${courseData._id}`}>Tutaj</Link>
         </div>
       </div>
     </div>
