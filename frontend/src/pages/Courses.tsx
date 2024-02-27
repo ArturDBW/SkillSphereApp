@@ -1,0 +1,40 @@
+import { useEffect, useState } from "react";
+import { Course } from "../components/courses/Course";
+import { API } from "../utils/api";
+
+type Course = {
+  title: string;
+  _id: number;
+};
+
+export const Courses = () => {
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await API.get("/skillsphere/courses");
+        setCourses(response.data.data.courses);
+      } catch (err) {
+        console.error("Błąd podczas pobierania danych", err);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  useEffect(() => {
+    console.log(courses);
+  }, [courses]);
+
+  return (
+    <section>
+      <ul>
+        {courses.map((courseData: Course) => (
+          <li key={courseData._id}>{courseData.title}</li>
+        ))}
+      </ul>
+      <Course />
+    </section>
+  );
+};
