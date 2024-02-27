@@ -31,8 +31,9 @@ export const Courses = () => {
   }, [courses]);
 
   return (
-    <section>
-      <div>
+    <section className="flex">
+      <div className="w-1/4"></div>
+      <div className="w-3/4">
         {courses.map((courseData: Course) => (
           <Course key={courseData._id} courseData={courseData} />
         ))}

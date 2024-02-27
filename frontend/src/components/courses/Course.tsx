@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import test from "/ddd.avif";
 
 type CourseProps = {
   courseData: {
@@ -12,8 +11,12 @@ type CourseProps = {
 };
 export const Course = ({ courseData }: CourseProps) => {
   return (
-    <div className="flex max-w-screen-md gap-4 border-b py-2">
-      <img src={test} alt="test" className="aspect-[260/160] max-w-[260px]" />
+    <div className="flex gap-4 border-b py-2">
+      <img
+        src="https://www.nafrontendzie.pl/assets/featured/podstawy-react.png"
+        alt="test"
+        className="aspect-[300/160] max-w-[300px]"
+      />
       <div className="flex w-full flex-col justify-between">
         <div>
           <div className="flex justify-between font-bold">

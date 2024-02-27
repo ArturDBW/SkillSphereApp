@@ -3,8 +3,8 @@ const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
-exports.getAllTours = async (req, res, next) => {
-  const courses = await Course.find();
+exports.getAllCourse = async (req, res, next) => {
+  const courses = await Course.find().populate("reviews");
 
   try {
     res.status(200).json({
