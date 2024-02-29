@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API } from "../utils/api";
-import { Reviews } from "../components/reviews/Reviews";
+import { Review } from "../components/reviews/Review";
 
 export const CourseDetails = () => {
   const { id } = useParams(); // Pobierz identyfikator kursu z adresu URL
   const [course, setCourse] = useState(""); // Stan do przechowywania danych kursu
+  const [showAllReviews, setShowAllReviews] = useState(true);
 
   useEffect(() => {
     const fetchOneCourse = async (id) => {
@@ -56,7 +57,20 @@ export const CourseDetails = () => {
               </button>
             </div>
           </div>
-          <Reviews />
+          <div className="max-w-3xl">
+            <h2 className="mb-6 mt-10 text-4xl font-bold">Reviews</h2>
+            {/* Warunkowe renderowanie komponentu Review na podstawie stanu showOnlyOneReview */}
+            {showAllReviews ? (
+              <Review
+                reviewsData={course.reviews[0]}
+                key={course.reviews[0].id}
+              />
+            ) : (
+              course.reviews.map((reviewsData) => (
+                <Review reviewsData={reviewsData} key={reviewsData.id} />
+              ))
+            )}
+          </div>
         </div>
       ) : (
         <div>

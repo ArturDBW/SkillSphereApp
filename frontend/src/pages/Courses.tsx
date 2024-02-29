@@ -5,7 +5,7 @@ import ddd from "/ddd.avif";
 
 type Course = {
   title: string;
-  _id: number;
+  id: number;
   author: string;
   description: string;
   price: number;
@@ -51,7 +51,7 @@ export const Courses = () => {
         <div className="w-1/4"></div>
         <div className="w-3/4">
           {courses.map((courseData: Course) => (
-            <Course key={courseData._id} courseData={courseData} />
+            <Course key={courseData.id} courseData={courseData} />
           ))}
         </div>
       </div>

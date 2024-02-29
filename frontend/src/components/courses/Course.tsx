@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 type CourseProps = {
   courseData: {
     title: string;
-    _id: number;
+    id: number;
     author: string;
     description: string;
     price: number;
@@ -34,7 +34,7 @@ export const Course = ({ courseData }: CourseProps) => {
         <div className="flex items-end justify-between">
           <span>Reviews!</span>
           <Link
-            to={`/courses/${courseData._id}`}
+            to={`/courses/${courseData.id}`}
             className="rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
           >
             Details
