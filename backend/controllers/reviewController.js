@@ -1,4 +1,4 @@
-const Review = require("../models/reviewModel");
+const Review = require("./../models/reviewModel");
 const catchAsync = require("../utils/catchAsync");
 
 exports.getAllReviews = async (req, res, next) => {
@@ -49,7 +49,21 @@ exports.getReview = catchAsync(async (req, res, next) => {
 });
 
 exports.updateReview = catchAsync(async (req, res, next) => {
-  const review = await Review.findByIdAndUpdate(req.params.id, req.body);
+  if (!req.body.course) req.body.course = req.params.courseId;
+
+  const review = await Review.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!review) {
+    return res.status(404).json({
+      status: "fail",
+      message: "Review not found",
+    });
+  }
+
+  await Review.calcAverageRatings(review.course);
 
   res.status(200).json({
     status: "success",
