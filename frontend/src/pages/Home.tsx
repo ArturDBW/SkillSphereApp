@@ -2,7 +2,7 @@ import ddd from "/ddd.avif";
 
 export const Home = () => {
   return (
-    <section className="grid h-[calc(100vh-72px)] grid-cols-5 grid-rows-7 gap-4">
+    <section className="grid h-[calc(100vh-72px)] grid-cols-5 grid-rows-7 gap-5">
       <div className="x col-span-2 row-start-2 row-end-6 grid grid-cols-1">
         <div>
           <h1 className="text-6xl">
