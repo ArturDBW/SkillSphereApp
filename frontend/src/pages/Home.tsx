@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ddd from "/ddd.avif";
 
 export const Home = () => {
@@ -17,9 +18,12 @@ export const Home = () => {
             conveniently from anywhere.
           </p>
         </div>
-        <button className="self-end justify-self-start rounded-full bg-yellow-500 px-8 py-4 uppercase duration-150 hover:bg-yellow-400">
+        <Link
+          to="/courses"
+          className="self-end justify-self-start rounded-full bg-yellow-500 px-8 py-4 uppercase duration-150 hover:bg-yellow-400"
+        >
           Show Courses
-        </button>
+        </Link>
       </div>
       <div className="col-span-3 row-start-2 row-end-6 bg-blue-50">
         <img src={ddd} alt="dd" className="h-full w-full rounded-lg" />
