@@ -42,7 +42,7 @@ export const Courses = () => {
         <div className="absolute bottom-1/2 right-1/2 z-10 w-full translate-x-1/2 translate-y-1/2">
           <h2 className="text-center text-6xl text-white">Welcome, Artur!</h2>
           <h3 className="text-center text-lg text-stone-300">
-            Lets begin searching courses!
+            Let's begin looking for courses!
           </h3>
         </div>
         <div className="h-full w-full rounded-xl bg-black opacity-70"></div>
