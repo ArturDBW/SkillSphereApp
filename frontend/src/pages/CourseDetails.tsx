@@ -1,26 +1,60 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API } from "../utils/api";
 import { Review } from "../components/reviews/Review";
+import { StarRatingStatic } from "../components/reviews/StarRatingStatic";
+
+type ReviewData = {
+  id: string;
+  review: string;
+  rating: number;
+  createdAt: string;
+};
+
+type Course = {
+  title: string;
+  id: number;
+  author: string;
+  description: string;
+  price: number;
+  reviews: ReviewData[];
+};
 
 export const CourseDetails = () => {
-  const { id } = useParams(); // Pobierz identyfikator kursu z adresu URL
-  const [course, setCourse] = useState(""); // Stan do przechowywania danych kursu
+  const { id } = useParams();
+  const [course, setCourse] = useState<Course | null>(null);
   const [showAllReviews, setShowAllReviews] = useState(true);
+  const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
-    const fetchOneCourse = async (id) => {
+    const fetchOneCourse = async (id: string) => {
       try {
         const response = await API.get(`/skillsphere/courses/${id}`);
         console.log(response.data.data);
-        setCourse(response.data.data.course); // Ustaw dane kursu w stanie
+        setCourse(response.data.data.course);
       } catch (err) {
         console.error("Błąd podczas pobierania danych kursu", err);
       }
     };
 
-    fetchOneCourse(id);
-  }, [id]); // Dodaj `id` do zależności, aby wywołać efekt przy zmianie `id`
+    fetchOneCourse(id!);
+  }, [id]);
+
+  const calculateAverageRating = useCallback(() => {
+    if (!course || !course.reviews || course.reviews.length === 0) return 0;
+
+    const ratings = course.reviews.map((review) => review.rating);
+    const totalRating = ratings.reduce((acc, rating) => acc + rating, 0);
+    const averageRating = totalRating / ratings.length;
+    return Math.floor(averageRating + 0.5);
+  }, [course]);
+
+  useEffect(() => {
+    if (course) {
+      const average = calculateAverageRating();
+      setAverageRating(average);
+    }
+  }, [course, calculateAverageRating]);
 
   return (
     <section className="mt-4">
@@ -31,14 +65,15 @@ export const CourseDetails = () => {
               <h2 className="text-5xl font-bold">
                 React - The Complete Guide 2024 (incl. React Router & Redux)
               </h2>
-              <p className="my-6 text-xl">
+              <p className="mb-2 mt-6 text-xl">
                 Dive in and learn React.js from scratch! Learn React, Hooks,
                 Redux, React Router, Next.js, Best Practices and way more!
               </p>
-              <div>
-                <span className="block">Reviews! (25)</span>
-                <span>Bestseller!</span>
+              <div className="flex">
+                <StarRatingStatic stars={averageRating} size={28} />
+                <span className="text-sm text-stone-500">(25)</span>
               </div>
+              <span className="text-xl">Bestseller!</span>
               <span className="block">
                 Created by: <span>{course.author}</span>
               </span>
@@ -59,8 +94,7 @@ export const CourseDetails = () => {
           </div>
           <div className="flex max-w-3xl flex-col">
             <h2 className="mb-6 mt-10 text-4xl font-bold">Reviews</h2>
-            {/* Warunkowe renderowanie komponentu Review na podstawie stanu showOnlyOneReview */}
-            {showAllReviews ? (
+            {showAllReviews && course.reviews.length > 0 ? (
               <Review
                 reviewsData={course.reviews[0]}
                 key={course.reviews[0].id}
