@@ -3,36 +3,42 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 const crypto = require("crypto");
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    require: [true, "Please tell us your name"],
-  },
-  email: {
-    type: String,
-    require: [true, "Please provide your email"],
-    unique: true,
-    lowercase: true,
-    validate: [validator.isEmail, "Please provide a correct email"],
-  },
-  password: {
-    type: String,
-    require: [true, "Please provide a password"],
-  },
-  passwordConfirm: {
-    type: String,
-    require: [true, "Please confirm your password"],
-    validate: {
-      validator: function (el) {
-        return el === this.password;
-      },
-      message: "Password are not the same",
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      require: [true, "Please tell us your name"],
     },
+    email: {
+      type: String,
+      require: [true, "Please provide your email"],
+      unique: true,
+      lowercase: true,
+      validate: [validator.isEmail, "Please provide a correct email"],
+    },
+    password: {
+      type: String,
+      require: [true, "Please provide a password"],
+    },
+    passwordConfirm: {
+      type: String,
+      require: [true, "Please confirm your password"],
+      validate: {
+        validator: function (el) {
+          return el === this.password;
+        },
+        message: "Password are not the same",
+      },
+    },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
   },
-  passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
-});
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
 
 // enkrypcja hasła (wykonywana między wysłaniem danych ale przed ich zapisaniem)
 userSchema.pre("save", async function (next) {
