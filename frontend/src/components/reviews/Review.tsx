@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export const Review = ({ reviewsData }) => {
   return (
     <div className="flex gap-x-5 border-b py-6">
@@ -17,7 +15,7 @@ export const Review = ({ reviewsData }) => {
           <span>Stars!</span>
           <span>24.10.2012</span>
         </div>
-        <span className="text-lg font-bold">Margaret</span>
+        <span className="text-lg font-bold">{reviewsData.rating}</span>
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi sunt
           illo sed delectus accusamus, eaque deserunt sit minima error

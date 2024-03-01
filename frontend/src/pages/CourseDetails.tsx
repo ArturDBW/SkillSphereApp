@@ -57,7 +57,7 @@ export const CourseDetails = () => {
               </button>
             </div>
           </div>
-          <div className="max-w-3xl">
+          <div className="flex max-w-3xl flex-col">
             <h2 className="mb-6 mt-10 text-4xl font-bold">Reviews</h2>
             {/* Warunkowe renderowanie komponentu Review na podstawie stanu showOnlyOneReview */}
             {showAllReviews ? (
@@ -69,6 +69,18 @@ export const CourseDetails = () => {
               course.reviews.map((reviewsData) => (
                 <Review reviewsData={reviewsData} key={reviewsData.id} />
               ))
+            )}
+            {course.reviews.length > 1 && (
+              <button
+                onClick={() => {
+                  setShowAllReviews(!showAllReviews);
+                }}
+                className="self-center px-6 py-3 text-center text-stone-500 underline duration-150 hover:text-black"
+              >
+                {showAllReviews
+                  ? `Show more reviews (${course.reviews.length - 1})`
+                  : "Show less reviews"}
+              </button>
             )}
           </div>
         </div>
