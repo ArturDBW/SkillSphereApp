@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import ddd from "/ddd.avif";
+import { StarRating } from "../components/reviews/StarRating";
 
 export const Home = () => {
   return (
     <section className="grid h-[calc(100vh-72px)] grid-cols-5 grid-rows-7 gap-5">
+      <StarRating />
       <div className="x col-span-2 row-start-2 row-end-6 grid grid-cols-1">
         <div>
           <h1 className="text-6xl">

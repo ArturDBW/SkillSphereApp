@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API } from "../utils/api";
 import { Review } from "../components/reviews/Review";
+import { StarRatingStatic } from "../components/reviews/StarRatingStatic";
 
 export const CourseDetails = () => {
   const { id } = useParams(); // Pobierz identyfikator kursu z adresu URL
   const [course, setCourse] = useState(null); // Stan do przechowywania danych kursu
   const [showAllReviews, setShowAllReviews] = useState(true);
   const [averageRating, setAverageRating] = useState(0);
+  console.log(averageRating);
 
   useEffect(() => {
     const fetchOneCourse = async (id) => {
@@ -47,14 +49,15 @@ export const CourseDetails = () => {
               <h2 className="text-5xl font-bold">
                 React - The Complete Guide 2024 (incl. React Router & Redux)
               </h2>
-              <p className="my-6 text-xl">
+              <p className="mb-2 mt-6 text-xl">
                 Dive in and learn React.js from scratch! Learn React, Hooks,
                 Redux, React Router, Next.js, Best Practices and way more!
               </p>
-              <div>
-                <span className="block">Reviews! ({averageRating})</span>
-                <span>Bestseller!</span>
+              <div className="flex">
+                <StarRatingStatic stars={averageRating} size={28} />
+                <span className="text-sm text-stone-500">(25)</span>
               </div>
+              <span className="text-xl">Bestseller!</span>
               <span className="block">
                 Created by: <span>{course.author}</span>
               </span>
@@ -76,7 +79,7 @@ export const CourseDetails = () => {
           <div className="flex max-w-3xl flex-col">
             <h2 className="mb-6 mt-10 text-4xl font-bold">Reviews</h2>
             {/* Warunkowe renderowanie komponentu Review na podstawie stanu showOnlyOneReview */}
-            {showAllReviews && course.reviews > 0 ? (
+            {showAllReviews && course.reviews.length > 0 ? (
               <Review
                 reviewsData={course.reviews[0]}
                 key={course.reviews[0].id}
