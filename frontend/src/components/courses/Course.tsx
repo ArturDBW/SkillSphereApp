@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { StarRatingStatic } from "../reviews/StarRatingStatic";
 
 type CourseProps = {
   courseData: {
@@ -32,7 +33,10 @@ export const Course = ({ courseData }: CourseProps) => {
           <span className="text-sm text-stone-500">{courseData.author}</span>
         </div>
         <div className="flex items-end justify-between">
-          <span>Reviews!</span>
+          <div className="flex space-x-2">
+            <StarRatingStatic stars={2} size={18} />
+            <span className="text-sm text-stone-500">(25)</span>
+          </div>
           <Link
             to={`/courses/${courseData.id}`}
             className="rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"

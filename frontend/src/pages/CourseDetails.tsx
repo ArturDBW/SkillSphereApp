@@ -30,7 +30,9 @@ export const CourseDetails = () => {
 
     const ratings = course.reviews.map((review) => review.rating);
     const totalRating = ratings.reduce((acc, rating) => acc + rating, 0);
-    return totalRating / ratings.length;
+    const averageRating = totalRating / ratings.length;
+    console.log(averageRating);
+    return Math.floor(averageRating + 0.5);
   };
 
   useEffect(() => {
