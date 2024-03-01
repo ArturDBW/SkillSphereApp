@@ -5,8 +5,9 @@ import { Review } from "../components/reviews/Review";
 
 export const CourseDetails = () => {
   const { id } = useParams(); // Pobierz identyfikator kursu z adresu URL
-  const [course, setCourse] = useState(""); // Stan do przechowywania danych kursu
+  const [course, setCourse] = useState(null); // Stan do przechowywania danych kursu
   const [showAllReviews, setShowAllReviews] = useState(true);
+  const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
     const fetchOneCourse = async (id) => {
@@ -22,6 +23,21 @@ export const CourseDetails = () => {
     fetchOneCourse(id);
   }, [id]); // Dodaj `id` do zależności, aby wywołać efekt przy zmianie `id`
 
+  const calculateAverageRating = () => {
+    if (!course.reviews || course.reviews.length === 0) return 0;
+
+    const ratings = course.reviews.map((review) => review.rating);
+    const totalRating = ratings.reduce((acc, rating) => acc + rating, 0);
+    return totalRating / ratings.length;
+  };
+
+  useEffect(() => {
+    if (course) {
+      const average = calculateAverageRating();
+      setAverageRating(average);
+    }
+  }, [course]);
+
   return (
     <section className="mt-4">
       {course ? (
@@ -36,7 +52,7 @@ export const CourseDetails = () => {
                 Redux, React Router, Next.js, Best Practices and way more!
               </p>
               <div>
-                <span className="block">Reviews! (25)</span>
+                <span className="block">Reviews! ({averageRating})</span>
                 <span>Bestseller!</span>
               </div>
               <span className="block">
@@ -60,7 +76,7 @@ export const CourseDetails = () => {
           <div className="flex max-w-3xl flex-col">
             <h2 className="mb-6 mt-10 text-4xl font-bold">Reviews</h2>
             {/* Warunkowe renderowanie komponentu Review na podstawie stanu showOnlyOneReview */}
-            {showAllReviews ? (
+            {showAllReviews && course.reviews > 0 ? (
               <Review
                 reviewsData={course.reviews[0]}
                 key={course.reviews[0].id}
