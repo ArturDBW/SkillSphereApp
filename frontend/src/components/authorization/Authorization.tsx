@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Login } from "./Login";
 import { SignUp } from "./SingUp";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -14,9 +14,43 @@ export const Authorization = ({
 }: AuthorizationPros) => {
   const [showLogin, setShowLogin] = useState(true);
 
+  const stopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+  };
+
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setShowAuthorization(false);
+      }
+    },
+    [setShowAuthorization],
+  );
+
+  useEffect(() => {
+    if (showAuthorization) {
+      document.addEventListener("keydown", handleKeyPress);
+    } else {
+      document.removeEventListener("keydown", handleKeyPress);
+    }
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [showAuthorization, handleKeyPress]);
+
   return (
-    <div className="absolute left-0 top-0 h-screen w-screen bg-black bg-opacity-50">
-      <div className="absolute bottom-1/2 right-1/2 mx-auto flex h-[500px] w-full max-w-4xl translate-x-1/2 translate-y-1/2 border bg-white">
+    <div
+      onClick={() => {
+        setShowAuthorization(false);
+      }}
+      className="absolute left-0 top-0 h-screen w-screen bg-black bg-opacity-50"
+    >
+      <div
+        onClick={(e) => {
+          stopPropagation(e);
+        }}
+        className="absolute bottom-1/2 right-1/2 mx-auto flex h-[500px] w-full max-w-4xl translate-x-1/2 translate-y-1/2 border bg-white"
+      >
         <div className="relative flex w-2/3 flex-col items-center justify-center overflow-hidden">
           <div
             className={`absolute transition-transform duration-500 ease-in-out ${showLogin ? `translate-y-0` : `translate-y-[140%]`}`}
