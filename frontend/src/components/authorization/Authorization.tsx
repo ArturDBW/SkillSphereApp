@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+import hero from "/hero.avif";
 import { Login } from "./Login";
 import { SignUp } from "./SingUp";
-import { IoIosCloseCircleOutline } from "react-icons/io";
 
 type AuthorizationPros = {
   showAuthorization: boolean;
@@ -63,26 +64,36 @@ export const Authorization = ({
             <SignUp />
           </div>
         </div>
-        <div className="relative flex w-1/3 flex-col items-center justify-center bg-blue-400 px-2 text-center text-white">
-          <IoIosCloseCircleOutline
-            onClick={() => {
-              setShowAuthorization(!showAuthorization);
-            }}
-            size={36}
-            className="absolute right-1 top-1 cursor-pointer"
-          />
-          <h3 className="text-3xl font-bold">
-            {showLogin ? "New Here?" : "You have account?"}
-          </h3>
-          <p className="text-lg">
-            Start looking for the best courses for your self-development!"
-          </p>
-          <button
-            onClick={() => setShowLogin(!showLogin)}
-            className="mt-6 w-28 rounded-full bg-white py-3 font-bold text-black duration-150 hover:text-blue-400"
+        <div
+          className="relative w-1/3 bg-cover bg-center bg-no-repeat text-center text-white"
+          style={{
+            backgroundImage: `url(${hero})`,
+          }}
+        >
+          <div
+            className="flex h-full w-full flex-col items-center justify-center bg-yellow-600 px-2"
+            style={{ backgroundColor: "rgba(102, 78, 36, 0.5)" }}
           >
-            {showLogin ? "Sign Up" : "Login"}
-          </button>
+            <IoIosCloseCircleOutline
+              onClick={() => {
+                setShowAuthorization(!showAuthorization);
+              }}
+              size={36}
+              className="absolute right-1 top-1 cursor-pointer"
+            />
+            <h3 className="text-3xl font-bold">
+              {showLogin ? "New Here?" : "You have account?"}
+            </h3>
+            <p className="text-lg">
+              Start looking for the best courses for your self-development!"
+            </p>
+            <button
+              onClick={() => setShowLogin(!showLogin)}
+              className="mt-6 w-28 rounded-full bg-white py-3 font-bold text-black duration-150 hover:text-yellow-500"
+            >
+              {showLogin ? "Sign Up" : "Login"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
