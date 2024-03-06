@@ -12,6 +12,32 @@ const signToken = (id) => {
   });
 };
 
+const createSendToken = (user, statusCode, res) => {
+  const token = signToken(user._id);
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+    sameSite: "None",
+    secure: true, // bez tego cookies sie nie zapisuje :?
+  };
+  // if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
+
+  res.cookie("jwt", token, cookieOptions);
+
+  // Remove password from output
+  user.password = undefined;
+
+  res.status(statusCode).json({
+    status: "success",
+    token,
+    data: {
+      user,
+    },
+  });
+};
+
 exports.signup = catchAsync(async (req, res, next) => {
   const existingUser = await User.findOne({ email: req.body.email });
   if (existingUser) {
@@ -28,22 +54,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
   });
 
-  const token = signToken(newUser._id);
-
-  res.cookie("jwt", token, {
-    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-    secure: true,
-    httpOnly: true,
-    sameSite: "None",
-  });
-
-  res.status(201).json({
-    status: "success",
-    token,
-    data: {
-      user: newUser,
-    },
-  });
+  createSendToken(newUser, 201, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -68,20 +79,7 @@ exports.login = catchAsync(async (req, res, next) => {
     });
   }
 
-  // 3) If everything ok, send token to client
-  const token = signToken(user._id);
-
-  res.cookie("jwt", token, {
-    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-    secure: true,
-    httpOnly: true,
-    sameSite: "None",
-  });
-
-  res.status(200).json({
-    status: "success",
-    token,
-  });
+  createSendToken(user, 200, res);
 });
 //
 exports.logout = (req, res) => {
@@ -113,16 +111,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // 4) Log user in, send JWT
   const token = signToken(user._id);
 
-  res.cookie("jwt", token, {
-    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-    secure: true,
-    httpOnly: true,
-    sameSite: "None",
-  });
-  res.status(200).json({
-    status: "success",
-    token,
-  });
+  createSendToken(user, 200, res);
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
@@ -147,12 +136,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   user.passwordResetExpires = undefined;
   await user.save();
 
-  const token = signToken(user._id);
-
-  res.status(200).json({
-    status: "success",
-    token,
-  });
+  createSendToken(user, 200, res);
 });
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
@@ -254,8 +238,55 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // 5) Access
   req.user = currentUser;
+  res.locals.user = currentUser;
   next();
 });
+
+// Only for rednered pages, no errors
+// exports.isLoggedIn = async (req, res, next) => {
+//   try {
+//     const test = req.cookies.jwt;
+//     res.status(200).json({
+//       message: "Gicior",
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+//   next();
+// };
+
+exports.isLoggedIn = async (req, res, next) => {
+  try {
+    if (req.cookies.jwt) {
+      // 1) verify token
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
+
+      // 2) Check if user still exists
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) {
+        return next();
+      }
+
+      // 3) Check if user changed password after the token was issued
+      if (currentUser.changedPasswordAfter(decoded.iat)) {
+        return next();
+      }
+
+      // THERE IS A LOGGED IN USER
+      res.locals.user = currentUser;
+
+      res.status(200).json({
+        message: "Autorization is correct",
+        currentUser,
+      });
+    }
+  } catch (err) {
+    if (!req.cookies.jwt) console.log(err);
+  }
+};
 
 // const createSendToken = (user, statusCode, res) => {
 //   const token = signToken(user._id);
@@ -280,3 +311,20 @@ exports.protect = catchAsync(async (req, res, next) => {
 //     },
 //   });
 // };
+
+///////////////////// zamiast funkcji mozna tez tak
+
+// 3) If everything ok, send token to client
+// const token = signToken(user._id);
+
+// res.cookie("jwt", token, {
+//   expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+//   secure: true,
+//   httpOnly: true,
+//   sameSite: "None",
+// });
+
+// res.status(200).json({
+//   status: "success",
+//   token,
+// });

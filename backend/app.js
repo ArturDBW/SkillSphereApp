@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const viewRouter = require("./routes/viewRouter");
 const userRouter = require("./routes/userRouter");
 const courseRouter = require("./routes/courseRouter");
 const reviewRouter = require("./routes/reviewRouter");
@@ -48,6 +49,8 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(cookieParser());
 
 app.use(express.json());
@@ -59,7 +62,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-
+app.use("/", viewRouter);
 app.use("/skillsphere/users", userRouter);
 app.use("/skillsphere/courses", courseRouter);
 app.use("/skillsphere/reviews", reviewRouter);

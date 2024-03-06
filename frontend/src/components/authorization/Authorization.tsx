@@ -44,13 +44,13 @@ export const Authorization = ({
       onClick={() => {
         setShowAuthorization(false);
       }}
-      className="absolute left-0 top-0 h-screen w-screen bg-black bg-opacity-50"
+      className="absolute left-0 top-0 z-50 h-screen w-screen bg-black bg-opacity-50"
     >
       <div
         onClick={(e) => {
           stopPropagation(e);
         }}
-        className="absolute bottom-1/2 right-1/2 mx-auto flex h-[500px] w-full max-w-4xl translate-x-1/2 translate-y-1/2 border bg-white"
+        className="absolute bottom-1/2 right-1/2 mx-auto flex h-[500px] w-full max-w-4xl translate-x-1/2 translate-y-1/2  bg-white"
       >
         <div className="relative flex w-2/3 flex-col items-center justify-center overflow-hidden">
           <div
@@ -65,13 +65,13 @@ export const Authorization = ({
           </div>
         </div>
         <div
-          className="relative w-1/3 bg-cover bg-center bg-no-repeat text-center text-white"
+          className="relative w-1/3 border-y bg-cover bg-center bg-no-repeat text-center text-white"
           style={{
             backgroundImage: `url(${hero})`,
           }}
         >
           <div
-            className="flex h-full w-full flex-col items-center justify-center bg-yellow-600 px-2"
+            className="flex h-full w-full flex-col items-center justify-center px-2"
             style={{ backgroundColor: "rgba(102, 78, 36, 0.5)" }}
           >
             <IoIosCloseCircleOutline
@@ -89,7 +89,7 @@ export const Authorization = ({
             </p>
             <button
               onClick={() => setShowLogin(!showLogin)}
-              className="mt-6 w-28 rounded-full bg-white py-3 font-bold text-black duration-150 hover:text-yellow-500"
+              className="mt-6 w-28 rounded-full border-2 py-3 font-bold duration-150 hover:border-yellow-500 hover:bg-yellow-500 hover:text-white"
             >
               {showLogin ? "Sign Up" : "Login"}
             </button>
