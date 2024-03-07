@@ -4,7 +4,7 @@ import { BsBasket3 } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { Authorization } from "./authorization/Authorization";
 
-export const Header = () => {
+export const Header = ({ user }) => {
   const [showAuthorization, setShowAuthorization] = useState(false);
 
   useEffect(() => {
@@ -57,12 +57,25 @@ export const Header = () => {
             size={18}
             className="cursor-pointer duration-150 hover:text-yellow-500"
           />
-          <button
-            onClick={() => setShowAuthorization(!showAuthorization)}
-            className="rounded-full border-2 border-[#eab308] px-5 py-2 font-bold duration-150 hover:bg-yellow-500 hover:text-white"
-          >
-            Sing Up
-          </button>
+          {user ? (
+            <div className="flex items-center space-x-2">
+              <div
+                className="h-10 w-10 rounded-full bg-cover bg-center"
+                style={{
+                  backgroundImage:
+                    "url('https://i.pinimg.com/564x/1f/50/b9/1f50b9d69876f889319c1bbae9a03f4f.jpg')",
+                }}
+              />
+              <span className="text-stone-500">Margaret</span>
+            </div>
+          ) : (
+            <button
+              onClick={() => setShowAuthorization(!showAuthorization)}
+              className="rounded-full border-2 border-[#eab308] px-5 py-2 font-bold duration-150 hover:bg-yellow-500 hover:text-white"
+            >
+              Sing Up
+            </button>
+          )}
         </div>
       </header>
       {showAuthorization && (
