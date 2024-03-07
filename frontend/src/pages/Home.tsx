@@ -1,23 +1,7 @@
 import { Link } from "react-router-dom";
 import hero from "/hero.avif";
-import { API } from "../utils/api";
-import { useEffect } from "react";
 
 export const Home = () => {
-  useEffect(() => {
-    const checkLoggedIn = async () => {
-      try {
-        const response = await API.get("/checkLogin", {
-          withCredentials: true,
-        });
-        console.log("Autoryzacja okej", response);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    checkLoggedIn();
-  }, []);
-
   return (
     <section className="grid h-[calc(100vh-72px)] grid-cols-5 grid-rows-7 gap-5">
       <div className="x col-span-2 row-start-2 row-end-6 grid grid-cols-1">
