@@ -99,7 +99,7 @@ export const SignUp = () => {
         <div className={errorStyled}>
           {errors.confirmPassword ? `${errors.confirmPassword.message}` : null}
         </div>
-        <div className="mb-1 mt-[-12px] h-5 w-full px-1 text-red-500">
+        <div className={errorStyled}>
           {errors.root && <span>{errors.root.message}</span>}
         </div>
         <button

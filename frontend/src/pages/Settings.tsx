@@ -2,8 +2,13 @@ import { BsPerson } from "react-icons/bs";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { IoLockOpenOutline, IoSettingsOutline } from "react-icons/io5";
 import { UpdatePersonalDataForm } from "../components/user/UpdatePersonalDataForm";
+import { ChangePasswordForm } from "../components/user/ChangePasswordForm";
+import { useState } from "react";
 
 export const Settings = () => {
+  const [settingsComponent, setSettingComponent] = useState("PersonalData");
+  const liStyled = `m-2 flex cursor-pointer items-center space-x-2 rounded-xl px-4 py-6 duration-150 hover:bg-yellow-500 hover:text-white`;
+
   return (
     <section className="flex h-[calc(100vh-72px)] gap-x-4">
       <div className="w-1/3 border text-2xl text-black">
@@ -12,12 +17,22 @@ export const Settings = () => {
           <span>Settings</span>
         </div>
         <ul>
-          <li className="m-2 flex cursor-pointer items-center space-x-2 rounded-xl px-4 py-6 duration-150 hover:bg-yellow-500 hover:text-white">
+          <li
+            onClick={() => {
+              setSettingComponent("PersonalData");
+            }}
+            className={`${liStyled} ${settingsComponent === "PersonalData" ? "bg-yellow-500 text-white" : "bg-white text-black"}`}
+          >
             <BsPerson />
             <span>Account</span>
             <MdKeyboardArrowRight className="self-end" />
           </li>
-          <li className="x-5 m-2 flex cursor-pointer items-center space-x-2 rounded-xl px-4 py-6 duration-150 hover:bg-yellow-500 hover:text-white">
+          <li
+            onClick={() => {
+              setSettingComponent("ChangePassword");
+            }}
+            className={`${liStyled} ${settingsComponent === "ChangePassword" ? "bg-yellow-500 text-white" : "bg-white text-black"}`}
+          >
             <IoLockOpenOutline />
             <span>Security</span>
             <MdKeyboardArrowRight className="self-end" />
@@ -34,12 +49,13 @@ export const Settings = () => {
             }}
           />
           <div className="flex flex-col justify-center">
-            <span className="text-lg font-bold">Marcelina</span>
+            <span className="text-lg font-bold">Margaret</span>
             <span className="text-stone-500">admin@o2.pl</span>
             <span className="text-sm text-stone-500">User</span>
           </div>
         </div>
-        <UpdatePersonalDataForm />
+        {settingsComponent === "PersonalData" && <UpdatePersonalDataForm />}
+        {settingsComponent === "ChangePassword" && <ChangePasswordForm />}
       </div>
     </section>
   );

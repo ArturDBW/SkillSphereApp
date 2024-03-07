@@ -29,6 +29,7 @@ export const UpdatePersonalDataForm = () => {
     try {
       const response = await API.patch("/skillsphere/users/updateMe", data);
       console.log("Zaaktualizowano dane uzytkownika", response);
+      window.location.reload();
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
         if (err.response?.status === 409) {
@@ -70,7 +71,7 @@ export const UpdatePersonalDataForm = () => {
       </div>
       <button
         type="submit"
-        className="mt-8 w-40 rounded-xl bg-yellow-500 px-6 py-3"
+        className="mt-8 w-40 rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
       >
         Submit
       </button>
