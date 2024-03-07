@@ -34,7 +34,7 @@ export const Login = () => {
 
       window.setTimeout(() => {
         location.assign("/");
-      }, 1500);
+      }, 1000);
     } catch (err) {
       if (err instanceof AxiosError) {
         if (err.response?.status === 401) {
