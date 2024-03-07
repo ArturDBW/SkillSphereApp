@@ -32,9 +32,9 @@ export const Login = () => {
       const response = await API.post("/skillsphere/users/login", data);
       console.log("Zalogowanie pomyślne", response);
 
-      // window.setTimeout(() => {
-      //   location.assign("/");
-      // }, 1500);
+      window.setTimeout(() => {
+        location.assign("/");
+      }, 1500);
     } catch (err) {
       if (err instanceof AxiosError) {
         if (err.response?.status === 401) {

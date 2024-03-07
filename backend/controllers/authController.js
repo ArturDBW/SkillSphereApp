@@ -242,19 +242,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-// Only for rednered pages, no errors
-// exports.isLoggedIn = async (req, res, next) => {
-//   try {
-//     const test = req.cookies.jwt;
-//     res.status(200).json({
-//       message: "Gicior",
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-//   next();
-// };
-
 exports.isLoggedIn = async (req, res, next) => {
   try {
     if (req.cookies.jwt) {
