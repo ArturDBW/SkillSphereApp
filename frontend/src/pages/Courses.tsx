@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Course } from "../components/courses/Course";
 import { API } from "../utils/api";
-import ddd from "/ddd.avif";
+import hero from "/hero.avif";
 
 type Course = {
   title: string;
@@ -27,16 +27,12 @@ export const Courses = () => {
     fetchCourses();
   }, []);
 
-  useEffect(() => {
-    console.log(courses);
-  }, [courses]);
-
   return (
     <div>
       <div
         className="relative my-10 h-[200px] rounded-xl bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url(${ddd})`,
+          backgroundImage: `url(${hero})`,
         }}
       >
         <div className="absolute bottom-1/2 right-1/2 z-10 w-full translate-x-1/2 translate-y-1/2">

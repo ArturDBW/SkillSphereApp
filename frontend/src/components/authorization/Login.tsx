@@ -15,7 +15,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export const Login = () => {
-  const inputStyled = `mx-auto min-w-80 rounded-full bg-sky-100 px-6 py-2 outline-none`;
+  const inputStyled = `mx-auto min-w-80 rounded-full px-6 py-2 outline-none border-2 focus:border-yellow-500 duration-150`;
   const errorStyled = `h-5 w-full px-2 text-sm text-red-500`;
 
   const {
@@ -31,6 +31,10 @@ export const Login = () => {
     try {
       const response = await API.post("/skillsphere/users/login", data);
       console.log("Zalogowanie pomyślne", response);
+
+      // window.setTimeout(() => {
+      //   location.assign("/");
+      // }, 1500);
     } catch (err) {
       if (err instanceof AxiosError) {
         if (err.response?.status === 401) {
@@ -82,7 +86,7 @@ export const Login = () => {
         </div>
         <button
           type="submit"
-          className="mt-8 rounded-full bg-blue-400 px-10 py-3 font-bold text-white duration-150 hover:bg-blue-500"
+          className="mt-8 rounded-full bg-yellow-500 px-10 py-3 font-bold text-white outline-none duration-150 hover:bg-yellow-400"
         >
           Log in
         </button>
