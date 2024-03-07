@@ -64,6 +64,14 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
   }
 
+  const existingUser = await User.findOne({ email: req.body.email });
+  if (existingUser) {
+    return res.status(409).json({
+      status: "fail",
+      message: "Email already exists.",
+    });
+  }
+
   const filteredBody = filterObj(req.body, "name", "email");
 
   const updateUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {

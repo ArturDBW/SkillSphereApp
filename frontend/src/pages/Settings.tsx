@@ -6,7 +6,7 @@ import { UpdatePersonalDataForm } from "../components/user/UpdatePersonalDataFor
 export const Settings = () => {
   return (
     <section className="flex h-[calc(100vh-72px)] gap-x-4">
-      <div className="w-1/3 border text-3xl text-black">
+      <div className="w-1/3 border text-2xl text-black">
         <div className="m-2 flex items-center space-x-2 border-b px-4 py-6">
           <IoSettingsOutline />
           <span>Settings</span>
