@@ -53,7 +53,7 @@ export const Header = ({ user }) => {
             </NavLink>
           </ul>
         </nav>
-        <div className="flex items-center space-x-4">
+        <div className="relative flex items-center space-x-4">
           <BsBasket3
             size={18}
             className="cursor-pointer duration-150 hover:text-yellow-500"

@@ -94,13 +94,3 @@ export const Login = () => {
     </div>
   );
 };
-
-// const logout = async () => {
-//   try {
-//     const response = await API.get("/skillsphere/users/logout");
-//     console.log(response);
-//     if (response.data.status === "success") location.reload();
-//   } catch (err) {
-//     console.error("Bład wylogowania", err);
-//   }
-// };
