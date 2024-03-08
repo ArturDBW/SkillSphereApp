@@ -2,7 +2,7 @@ import { BsPerson } from "react-icons/bs";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { IoLockOpenOutline, IoSettingsOutline } from "react-icons/io5";
 import { UpdatePersonalDataForm } from "../components/user/UpdatePersonalDataForm";
-import { ChangePasswordForm } from "../components/user/ChangePasswordForm";
+import { UpdatePasswordForm } from "../components/user/UpdatePasswordForm";
 import { useState } from "react";
 
 export const Settings = () => {
@@ -29,9 +29,9 @@ export const Settings = () => {
           </li>
           <li
             onClick={() => {
-              setSettingComponent("ChangePassword");
+              setSettingComponent("Security");
             }}
-            className={`${liStyled} ${settingsComponent === "ChangePassword" ? "bg-yellow-500 text-white" : "bg-white text-black"}`}
+            className={`${liStyled} ${settingsComponent === "Security" ? "bg-yellow-500 text-white" : "bg-white text-black"}`}
           >
             <IoLockOpenOutline />
             <span>Security</span>
@@ -55,7 +55,7 @@ export const Settings = () => {
           </div>
         </div>
         {settingsComponent === "PersonalData" && <UpdatePersonalDataForm />}
-        {settingsComponent === "ChangePassword" && <ChangePasswordForm />}
+        {settingsComponent === "Security" && <UpdatePasswordForm />}
       </div>
     </section>
   );
