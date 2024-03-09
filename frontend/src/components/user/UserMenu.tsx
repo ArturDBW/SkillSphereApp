@@ -57,16 +57,18 @@ export const UserMenu = () => {
             }}
             className="font-bold"
           >
-            <Link to={"/settings"}>
+            <Link to="/settings">
               <li className={`${liStyled} border-b`}>
                 <IoSettingsOutline size={22} />
                 <span>Settings</span>
               </li>
             </Link>
-            <li className={`${liStyled} border-b`}>
-              <IoCreateOutline size={22} />
-              <span>My courses</span>
-            </li>
+            <Link to="/myCourses">
+              <li className={`${liStyled} border-b`}>
+                <IoCreateOutline size={22} />
+                <span>My courses</span>
+              </li>
+            </Link>
             <li onClick={logout} className={liStyled}>
               <CiLogout size={22} />
               <span>Log out</span>

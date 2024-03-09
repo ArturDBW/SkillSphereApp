@@ -4,7 +4,8 @@ import { Home } from "./pages/Home";
 import { Courses } from "./pages/Courses";
 import { CourseDetails } from "./pages/CourseDetails";
 import { AboutUs } from "./pages/AboutUs";
-import { Settings } from "./pages/Settings";
+import { Settings } from "./components/user/Settings";
+import { MyCourses } from "./components/courses/MyCourses";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/settings",
         element: <Settings />,
+      },
+      {
+        path: "/myCourses",
+        element: <MyCourses />,
       },
     ],
   },

@@ -5,7 +5,14 @@ import { useEffect, useState } from "react";
 import { Authorization } from "./authorization/Authorization";
 import { UserMenu } from "./user/UserMenu";
 
-export const Header = ({ user }) => {
+type UserProps = {
+  user: {
+    email: string;
+    name: string;
+  };
+};
+
+export const Header = ({ user }: UserProps) => {
   const [showAuthorization, setShowAuthorization] = useState(false);
 
   useEffect(() => {

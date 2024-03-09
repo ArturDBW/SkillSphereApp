@@ -36,6 +36,7 @@ export const UpdatePasswordForm = () => {
         "skillsphere/users/updateMyPassword",
         data,
       );
+      window.location.reload();
       console.log(response, "Hasło zaaktualizowane!");
     } catch (err: unknown) {
       if (err instanceof AxiosError) {

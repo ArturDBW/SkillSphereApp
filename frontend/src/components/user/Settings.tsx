@@ -1,8 +1,8 @@
 import { BsPerson } from "react-icons/bs";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { IoLockOpenOutline, IoSettingsOutline } from "react-icons/io5";
-import { UpdatePersonalDataForm } from "../components/user/UpdatePersonalDataForm";
-import { UpdatePasswordForm } from "../components/user/UpdatePasswordForm";
+import { UpdatePersonalDataForm } from "./UpdatePersonalDataForm";
+import { UpdatePasswordForm } from "./UpdatePasswordForm";
 import { useState } from "react";
 
 export const Settings = () => {
