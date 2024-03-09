@@ -3,6 +3,7 @@ import { IoCreateOutline } from "react-icons/io5";
 import { BsBook } from "react-icons/bs";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { GrNewWindow } from "react-icons/gr";
+import { AddNewCourse } from "./AddNewCourse";
 
 export const MyCourses = () => {
   const [settingsComponent, setSettingComponent] = useState("PersonalData");
@@ -38,7 +39,9 @@ export const MyCourses = () => {
           </li>
         </ul>
       </div>
-      <div className="w-2/3 border"></div>
+      <div className="w-2/3 border">
+        <AddNewCourse />
+      </div>
     </section>
   );
 };
