@@ -2,6 +2,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { API } from "../../utils/api";
+import { useContext } from "react";
+import { UserContext } from "../../ui/AppLayout";
+
+type UserProps = {
+  email: string;
+  name: string;
+};
 
 const schema = z
   .object({
@@ -26,6 +33,8 @@ type FormValues = z.infer<typeof schema>;
 export const AddNewCourse = () => {
   const inputStyled = `max-w-96 rounded-xl px-2 py-2 outline-none border-2 focus:border-yellow-500 duration-150`;
   const errorStyled = `h-5 w-full px-2 text-sm text-red-500`;
+
+  const user: UserProps | null = useContext(UserContext);
 
   const {
     register,
@@ -56,7 +65,13 @@ export const AddNewCourse = () => {
         {errors.title ? `${errors.title.message}` : null}
       </div>
       <label>Author</label>
-      <input {...register("author")} type="text" className={inputStyled} />
+      <input
+        {...register("author")}
+        type="text"
+        readOnly
+        value={user?.name ?? ""}
+        className={`${inputStyled} text-stone-500`}
+      />
       <div className={errorStyled}>
         {errors.author ? `${errors.author.message}` : null}
       </div>

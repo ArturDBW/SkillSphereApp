@@ -1,19 +1,19 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "/logo.png";
 import { BsBasket3 } from "react-icons/bs";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Authorization } from "./authorization/Authorization";
 import { UserMenu } from "./user/UserMenu";
+import { UserContext } from "../ui/AppLayout";
 
 type UserProps = {
-  user: {
-    email: string;
-    name: string;
-  };
+  email: string;
+  name: string;
 };
 
-export const Header = ({ user }: UserProps) => {
+export const Header = () => {
   const [showAuthorization, setShowAuthorization] = useState(false);
+  const user: UserProps | null = useContext(UserContext);
 
   useEffect(() => {
     if (showAuthorization) {

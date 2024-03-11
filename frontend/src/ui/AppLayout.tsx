@@ -1,8 +1,15 @@
 import { Outlet } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { API } from "../utils/api";
+
+type UserProps = {
+  email: string;
+  name: string;
+};
+
+export const UserContext = createContext<UserProps | null>(null);
 
 export const AppLayout = () => {
   const [user, setUser] = useState(null);
@@ -26,12 +33,12 @@ export const AppLayout = () => {
   }, []);
 
   return (
-    <>
-      <Header user={user} />
+    <UserContext.Provider value={user}>
+      <Header />
       <main className="mx-auto max-w-screen-xl">
         <Outlet />
       </main>
       <Footer />
-    </>
+    </UserContext.Provider>
   );
 };
