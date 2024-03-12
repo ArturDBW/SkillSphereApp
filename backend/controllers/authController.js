@@ -109,7 +109,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // 4) Log user in, send JWT
-  const token = signToken(user._id);
+  // const token = signToken(user._id);
 
   createSendToken(user, 200, res);
 });

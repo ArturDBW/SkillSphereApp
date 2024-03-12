@@ -6,7 +6,9 @@ const courseSchema = new mongoose.Schema(
     title: {
       type: String,
       required: [true, "Please provide a title"],
-      unique: true,
+      minlength: [5, "Title must be at least 5 characters long"],
+      maxlength: [50, "Title cannot exceed 50 characters"],
+      // unique: true,
     },
     author: {
       type: String,
@@ -26,6 +28,7 @@ const courseSchema = new mongoose.Schema(
     description: {
       type: String,
       trim: true,
+      minlength: [5, "Title must be at least 50 characters long"],
     },
     slug: String,
     ratingsAverage: {
