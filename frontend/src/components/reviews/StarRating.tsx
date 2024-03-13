@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { FaStar } from "react-icons/fa6";
 
-export const StarRating = () => {
+export const StarRating = ({ size }: { size: number }) => {
   const [rating, setRating] = useState(0);
-  const [hover, setHover] = useState(null);
-  console.log(rating);
+  const [hover, setHover] = useState<number | null>(null);
 
   return (
     <div className="flex">
@@ -22,7 +21,7 @@ export const StarRating = () => {
               }}
             />
             <FaStar
-              size={100}
+              size={size}
               color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
               className="cursor-pointer"
               onMouseEnter={() => setHover(ratingValue)}

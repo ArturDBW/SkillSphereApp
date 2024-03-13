@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema(
 userSchema.pre(/^find/, function (next) {
   this.populate({
     path: "boughtCourses",
-    select: "title author description",
+    select: "title author imageCover",
   });
 
   next();

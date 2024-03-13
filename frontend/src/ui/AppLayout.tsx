@@ -20,7 +20,7 @@ export const AppLayout = () => {
         const loginResponse = await API.get("/checkLogin", {
           withCredentials: true,
         });
-        console.log("Autoryzacja okej", user);
+        console.log("Autoryzacja okej");
         const userId = loginResponse.data.currentUser.id;
 
         const userResponse = await API.get(`/skillsphere/users/${userId}`);

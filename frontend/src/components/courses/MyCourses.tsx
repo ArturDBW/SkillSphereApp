@@ -4,9 +4,10 @@ import { BsBook } from "react-icons/bs";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { GrNewWindow } from "react-icons/gr";
 import { AddNewCourse } from "./AddNewCourse";
+import { BoughtCourses } from "./BoughtCourses";
 
 export const MyCourses = () => {
-  const [settingsComponent, setSettingComponent] = useState("PersonalData");
+  const [settingsComponent, setSettingComponent] = useState("boughtCourses");
   const liStyled = `m-2 flex cursor-pointer items-center space-x-2 rounded-xl px-4 py-6 duration-150 hover:bg-yellow-500 hover:text-white`;
 
   return (
@@ -19,9 +20,9 @@ export const MyCourses = () => {
         <ul>
           <li
             onClick={() => {
-              setSettingComponent("PersonalData");
+              setSettingComponent("boughtCourses");
             }}
-            className={`${liStyled} ${settingsComponent === "PersonalData" ? "bg-yellow-500 text-white" : "bg-white text-black"}`}
+            className={`${liStyled} ${settingsComponent === "boughtCourses" ? "bg-yellow-500 text-white" : "bg-white text-black"}`}
           >
             <BsBook />
             <span>Courses</span>
@@ -29,9 +30,9 @@ export const MyCourses = () => {
           </li>
           <li
             onClick={() => {
-              setSettingComponent("Security");
+              setSettingComponent("newCourse");
             }}
-            className={`${liStyled} ${settingsComponent === "Security" ? "bg-yellow-500 text-white" : "bg-white text-black"}`}
+            className={`${liStyled} ${settingsComponent === "newCourse" ? "bg-yellow-500 text-white" : "bg-white text-black"}`}
           >
             <GrNewWindow />
             <span>Add new course</span>
@@ -40,7 +41,8 @@ export const MyCourses = () => {
         </ul>
       </div>
       <div className="w-2/3 border">
-        <AddNewCourse />
+        {settingsComponent === "newCourse" && <AddNewCourse />}
+        {settingsComponent === "boughtCourses" && <BoughtCourses />}
       </div>
     </section>
   );
