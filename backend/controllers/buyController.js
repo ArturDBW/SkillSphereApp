@@ -5,7 +5,8 @@ const catchAsync = require("../utils/catchAsync");
 exports.buyCourse = catchAsync(async (req, res, next) => {
   try {
     // Pobierz identyfikatory kursu i użytkownika z ciała żądania
-    const { courseId, userId } = req.body;
+    // const { courseId, userId } = req.body;
+    const { courseId, userId } = req.params;
 
     // Upewnij się, że oba identyfikatory zostały przekazane
     if (!courseId || !userId) {
