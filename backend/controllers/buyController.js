@@ -32,12 +32,18 @@ exports.buyCourse = catchAsync(async (req, res, next) => {
         message: "User not found",
       });
     }
-
-    // Zaktualizuj listę kupionych kursów użytkownika
-    if (!user.boughtCourses.includes(courseId)) {
-      user.boughtCourses.push(courseId);
-      await user.save();
+    // Sprawdź czy użytkownik posiada już kurs
+    if (
+      user.boughtCourses.find((course) => course._id.toString() === courseId)
+    ) {
+      return res.status(400).json({
+        status: "fail",
+        message: "User already bought this course",
+      });
     }
+    // Dodaj kurs do listy kupionych kursów użytkownika
+    user.boughtCourses.push(courseId);
+    await user.save();
 
     res.status(200).json({
       status: "success",

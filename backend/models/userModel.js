@@ -50,17 +50,11 @@ const userSchema = new mongoose.Schema(
 userSchema.pre(/^find/, function (next) {
   this.populate({
     path: "boughtCourses",
-    select: "title",
+    select: "title author description",
   });
 
   next();
 });
-
-// userSchema.virtual("boughtCourses", {
-//   ref: "Course",
-//   foreignField: "_id",
-//   localField: "boughtCourses",
-// });
 
 // enkrypcja hasła (wykonywana między wysłaniem danych ale przed ich zapisaniem)
 userSchema.pre("save", async function (next) {
