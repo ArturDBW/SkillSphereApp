@@ -4,6 +4,7 @@ const viewRouter = require("./routes/viewRouter");
 const userRouter = require("./routes/userRouter");
 const courseRouter = require("./routes/courseRouter");
 const reviewRouter = require("./routes/reviewRouter");
+const buyRouter = require("./routes/buyRouter");
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -66,5 +67,6 @@ app.use("/", viewRouter);
 app.use("/skillsphere/users", userRouter);
 app.use("/skillsphere/courses", courseRouter);
 app.use("/skillsphere/reviews", reviewRouter);
+app.use("/skillsphere/buy", buyRouter);
 
 module.exports = app;
