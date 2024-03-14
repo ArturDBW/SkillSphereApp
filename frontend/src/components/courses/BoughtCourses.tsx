@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../ui/AppLayout";
 import { StarRatingStatic } from "../reviews/StarRatingStatic";
 import { AddNewReview } from "../reviews/AddNewReview";
@@ -6,6 +6,7 @@ import { AddNewReview } from "../reviews/AddNewReview";
 type UserProps = {
   email: string;
   name: string;
+  id: string;
   boughtCourses?: BoughtCourse[];
 };
 
@@ -18,7 +19,29 @@ type BoughtCourse = {
 
 export const BoughtCourses = () => {
   const user: UserProps | null = useContext(UserContext);
-  console.log(user);
+  const [openReviews, setOpenReviews] = useState<{ [key: string]: boolean }>(
+    {},
+  );
+
+  useEffect(() => {
+    const body = document.querySelector("body");
+    if (body) {
+      if (openReviews && Object.values(openReviews).some((isOpen) => isOpen)) {
+        body.style.overflow = "hidden";
+      } else {
+        body.style.overflow = "unset";
+      }
+    }
+  }, [openReviews]);
+
+  const handleOpenReview = (courseId: string) => {
+    setOpenReviews((prevState) => {
+      return {
+        ...prevState,
+        [courseId]: true,
+      };
+    });
+  };
 
   return (
     <section className="grid grid-cols-3 gap-4 p-4 ">
@@ -36,8 +59,24 @@ export const BoughtCourses = () => {
           </div>
           <div className="flex flex-col items-end">
             <StarRatingStatic size={18} stars={0} />
-            <button className="hover:underline">Review course</button>
-            <AddNewReview />
+            <button
+              onClick={() => handleOpenReview(course.id)}
+              className="hover:underline"
+            >
+              Review course
+            </button>
+            {openReviews[course.id] && (
+              <AddNewReview
+                courseId={course.id}
+                openReview={openReviews[course.id]}
+                setOpenReview={(isOpen: boolean) =>
+                  setOpenReviews((prevState) => ({
+                    ...prevState,
+                    [course.id]: isOpen,
+                  }))
+                }
+              />
+            )}
           </div>
         </div>
       ))}

@@ -24,7 +24,6 @@ exports.getAllReviews = async (req, res, next) => {
 
 exports.createReview = catchAsync(async (req, res, next) => {
   if (!req.body.course) req.body.course = req.params.courseId;
-
   if (!req.body.user) req.body.user = req.user.id;
 
   const newReview = await Review.create(req.body);

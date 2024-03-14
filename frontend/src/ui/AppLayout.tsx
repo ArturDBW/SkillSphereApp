@@ -7,6 +7,7 @@ import { API } from "../utils/api";
 type UserProps = {
   email: string;
   name: string;
+  id: string;
 };
 
 export const UserContext = createContext<UserProps | null>(null);
