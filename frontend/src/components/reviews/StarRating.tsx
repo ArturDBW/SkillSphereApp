@@ -15,8 +15,6 @@ export const StarRating = ({ size, onRatingChange }: StarRatingProps) => {
     onRatingChange(ratingValue); // przekazanie oceny do funkcji zwrotnej
   };
 
-  console.log(rating);
-
   return (
     <div className="flex">
       {[...Array(5)].map((_, i) => {

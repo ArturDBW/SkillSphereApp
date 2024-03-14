@@ -22,6 +22,9 @@ export const AddNewReview = ({
 }: AddNewReviewProps) => {
   const user: UserProps | null = useContext(UserContext);
   const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
+  const [ratingError, setRatingError] = useState(false);
+  const [reviewError, setReviewError] = useState(false);
 
   const handleRatingChange = (newRating: number) => {
     setRating(newRating);
@@ -50,13 +53,20 @@ export const AddNewReview = ({
         user: user?.id,
         course: courseId,
         rating,
-        review: "Ciekawe czy to zadziala xD",
+        review,
       });
       console.log(response, "Dodano komentarz");
     } catch (err) {
+      if (rating <= 0) setRatingError(true);
+      if (review === "") setReviewError(true);
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    if (rating > 0) setRatingError(false);
+    if (review) setReviewError(false);
+  }, [rating, review]);
 
   return (
     <div
@@ -73,11 +83,21 @@ export const AddNewReview = ({
       >
         <h2 className="mb-5 text-4xl font-bold">What is your review? </h2>
         <StarRating size={56} onRatingChange={handleRatingChange} />
+        {ratingError && (
+          <span className="mt-2 px-4 text-red-500">Choose the rating!</span>
+        )}
         <form onSubmit={createReview} className="flex flex-col items-center">
           <textarea
+            onChange={(e) => setReview(e.target.value)}
+            value={review}
             placeholder="Tell us about your impressions of the course."
             className="mt-5 h-36 min-w-[600px] border border-black p-2"
           ></textarea>
+          {reviewError && (
+            <span className="mt-2 px-4 text-red-500">
+              Review can not be empty!
+            </span>
+          )}
           <button
             type="submit"
             className="mt-8 w-40 self-end rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
