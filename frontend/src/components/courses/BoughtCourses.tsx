@@ -19,13 +19,12 @@ type BoughtCourse = {
 };
 
 export const BoughtCourses = () => {
+  const [isHover, setIsHover] = useState(false);
   const user: UserProps | null = useContext(UserContext);
   const [openReviews, setOpenReviews] = useState<{ [key: string]: boolean }>(
     {},
   );
-  const [userReviews, setUserReviews] = useState<{ [key: string]: number }>(
-    {}, // Przechowuje liczbę recenzji użytkownika dla każdego kursu
-  );
+  const [userReviews, setUserReviews] = useState<{ [key: string]: number }>({});
 
   useEffect(() => {
     const body = document.querySelector("body");
@@ -53,11 +52,6 @@ export const BoughtCourses = () => {
     try {
       const response = await API.get(
         `/skillsphere/courses/${courseId}/reviews`,
-      );
-      console.log(
-        response.data.data.reviews[0]?.rating,
-        "Sprawdzono reviews",
-        courseId,
       );
       const rating = response.data.data.reviews[0]?.rating || 0;
       setUserReviews((prevState) => ({
@@ -89,14 +83,24 @@ export const BoughtCourses = () => {
             <h3 className="text-lg font-bold">{course.title}</h3>
             <span className="text-sm text-stone-500">{course.author}</span>
           </div>
-          <div className="flex flex-col items-end">
+          <div className="flex flex-col items-end text-sm">
             <StarRatingStatic size={18} stars={userReviews[course.id] || 0} />
-            <button
-              onClick={() => handleOpenReview(course.id)}
-              className="hover:underline"
-            >
-              Review course
-            </button>
+            {userReviews[course.id] === 0 ? (
+              <button
+                onClick={() => handleOpenReview(course.id)}
+                className="hover:underline"
+              >
+                Review course
+              </button>
+            ) : (
+              <button
+                onMouseEnter={() => setIsHover(true)}
+                onMouseLeave={() => setIsHover(false)}
+                className="hover:underline"
+              >
+                {isHover ? "Edit review" : "Your review"}
+              </button>
+            )}
             {openReviews[course.id] && (
               <AddNewReview
                 courseId={course.id}
