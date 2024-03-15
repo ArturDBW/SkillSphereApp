@@ -45,46 +45,8 @@ reviewSchema.pre(/^find/, function (next) {
   next();
 });
 
-// Rating, calc Average
+// Unikalny index w celu ograniczenia wystawiania recenzji max dla uzytkownika 1 raz na kurs (ta operacja wykonana tez w mongodb compass)
+reviewSchema.index({ course: 1, user: 1 }, { unique: true });
 
-// reviewSchema.statics.calcAverageRatings = async function (courseId) {
-//   const stats = await this.aggregate([
-//     {
-//       $match: { course: courseId },
-//     },
-//     {
-//       $group: {
-//         _id: "$course",
-//         nRating: { $sum: 1 },
-//         avgRating: { $avg: "$rating" },
-//       },
-//     },
-//   ]);
-
-//   if (stats.length > 0) {
-//     await Course.findByIdAndUpdate(courseId, {
-//       ratingsQuantity: stats[0].nRating,
-//       ratingsAverage: stats[0].avgRating,
-//     });
-//   } else {
-//     await Course.findByIdAndUpdate(courseId, {
-//       ratingsQuantity: 0,
-//       ratingsAverage: 4.5,
-//     });
-//   }
-// };
-
-// reviewSchema.post("save", function () {
-//   this.constructor.calcAverageRatings(this.course);
-// });
-
-// reviewSchema.pre(/^findOneAnd/, async function (next) {
-//   this.r = await this.findOne();
-//   next();
-// });
-
-// reviewSchema.post(/^findOneAnd/, async function () {
-//   await this.r.constructor.calcAverageRatings(course);
-// });
 const Review = mongoose.model("Review", reviewSchema);
 module.exports = Review;

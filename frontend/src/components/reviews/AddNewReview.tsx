@@ -55,6 +55,7 @@ export const AddNewReview = ({
         rating,
         review,
       });
+      setOpenReview(false);
       console.log(response, "Dodano komentarz");
     } catch (err) {
       if (rating <= 0) setRatingError(true);
