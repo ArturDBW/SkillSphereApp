@@ -8,6 +8,7 @@ type AddNewReviewProps = {
   courseId: string;
   openReview: boolean;
   setOpenReview: (isOpen: boolean) => void;
+  updateRatingUI: () => void;
 };
 
 type UserProps = {
@@ -19,6 +20,7 @@ type UserProps = {
 export const AddNewReview = ({
   courseId,
   setOpenReview,
+  updateRatingUI,
 }: AddNewReviewProps) => {
   const user: UserProps | null = useContext(UserContext);
   const [rating, setRating] = useState(0);
@@ -56,6 +58,7 @@ export const AddNewReview = ({
         review,
       });
       setOpenReview(false);
+      updateRatingUI();
       console.log(response, "Dodano komentarz");
     } catch (err) {
       if (rating <= 0) setRatingError(true);

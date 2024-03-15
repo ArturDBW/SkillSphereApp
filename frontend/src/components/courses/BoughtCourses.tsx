@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../ui/AppLayout";
 import { StarRatingStatic } from "../reviews/StarRatingStatic";
 import { AddNewReview } from "../reviews/AddNewReview";
+import { API } from "../../utils/api";
 
 type UserProps = {
   email: string;
@@ -21,6 +22,9 @@ export const BoughtCourses = () => {
   const user: UserProps | null = useContext(UserContext);
   const [openReviews, setOpenReviews] = useState<{ [key: string]: boolean }>(
     {},
+  );
+  const [userReviews, setUserReviews] = useState<{ [key: string]: number }>(
+    {}, // Przechowuje liczbę recenzji użytkownika dla każdego kursu
   );
 
   useEffect(() => {
@@ -43,6 +47,34 @@ export const BoughtCourses = () => {
     });
   };
 
+  // ---------------------------------------------------------------->
+
+  const checkUserReviews = async (courseId: string) => {
+    try {
+      const response = await API.get(
+        `/skillsphere/courses/${courseId}/reviews`,
+      );
+      console.log(
+        response.data.data.reviews[0]?.rating,
+        "Sprawdzono reviews",
+        courseId,
+      );
+      const rating = response.data.data.reviews[0]?.rating || 0;
+      setUserReviews((prevState) => ({
+        ...prevState,
+        [courseId]: rating, // Zaktualizuj stan, przechowujący liczbę recenzji użytkownika dla danego kursu
+      }));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    user?.boughtCourses?.forEach((course) => {
+      checkUserReviews(course.id);
+    });
+  }, [user?.boughtCourses]);
+
   return (
     <section className="grid grid-cols-3 gap-4 p-4 ">
       {user?.boughtCourses?.map((course: BoughtCourse) => (
@@ -58,7 +90,7 @@ export const BoughtCourses = () => {
             <span className="text-sm text-stone-500">{course.author}</span>
           </div>
           <div className="flex flex-col items-end">
-            <StarRatingStatic size={18} stars={0} />
+            <StarRatingStatic size={18} stars={userReviews[course.id] || 0} />
             <button
               onClick={() => handleOpenReview(course.id)}
               className="hover:underline"
@@ -75,6 +107,7 @@ export const BoughtCourses = () => {
                     [course.id]: isOpen,
                   }))
                 }
+                updateRatingUI={() => checkUserReviews(course.id)}
               />
             )}
           </div>
