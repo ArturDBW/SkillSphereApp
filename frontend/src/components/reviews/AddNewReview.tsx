@@ -7,7 +7,7 @@ import { UserContext } from "../../ui/AppLayout";
 type AddNewReviewProps = {
   courseId: string;
   openReview: boolean;
-  setOpenReview: (isOpen: boolean) => void;
+  setOpenAddReview: (isOpen: boolean) => void;
   updateRatingUI: () => void;
 };
 
@@ -19,7 +19,7 @@ type UserProps = {
 
 export const AddNewReview = ({
   courseId,
-  setOpenReview,
+  setOpenAddReview,
   updateRatingUI,
 }: AddNewReviewProps) => {
   const user: UserProps | null = useContext(UserContext);
@@ -39,14 +39,14 @@ export const AddNewReview = ({
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setOpenReview(false);
+        setOpenAddReview(false);
       }
     };
     document.addEventListener("keydown", handleEscape);
     return () => {
       document.removeEventListener("keydown", handleEscape);
     };
-  }, [setOpenReview]);
+  }, [setOpenAddReview]);
 
   const createReview = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,7 +57,7 @@ export const AddNewReview = ({
         rating,
         review,
       });
-      setOpenReview(false);
+      setOpenAddReview(false);
       updateRatingUI();
       console.log(response, "Dodano komentarz");
     } catch (err) {
@@ -75,7 +75,7 @@ export const AddNewReview = ({
   return (
     <div
       onClick={() => {
-        setOpenReview(false);
+        setOpenAddReview(false);
       }}
       className="absolute left-0 top-0 h-screen w-screen bg-black bg-opacity-40"
     >
@@ -111,7 +111,7 @@ export const AddNewReview = ({
         </form>
         <IoClose
           onClick={() => {
-            setOpenReview(false);
+            setOpenAddReview(false);
           }}
           size={28}
           className="absolute right-1 top-1 cursor-pointer text-stone-400 duration-150 hover:text-black"

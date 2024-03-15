@@ -3,6 +3,7 @@ import { UserContext } from "../../ui/AppLayout";
 import { StarRatingStatic } from "../reviews/StarRatingStatic";
 import { AddNewReview } from "../reviews/AddNewReview";
 import { API } from "../../utils/api";
+import { UpdateReview } from "../reviews/UpdateReview";
 
 type UserProps = {
   email: string;
@@ -18,27 +19,49 @@ type BoughtCourse = {
   imageCover: string;
 };
 
+type UserData = {
+  rating: number;
+  review: string;
+  id: string;
+};
+
 export const BoughtCourses = () => {
   const [isHover, setIsHover] = useState(false);
   const user: UserProps | null = useContext(UserContext);
-  const [openReviews, setOpenReviews] = useState<{ [key: string]: boolean }>(
-    {},
-  );
+  const [openAddReviews, setOpenAddReviews] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const [openUpdateReviews, setOpenUpdateReviews] = useState<{
+    [key: string]: boolean;
+  }>({});
   const [userReviews, setUserReviews] = useState<{ [key: string]: number }>({});
+  const [userData, setUserData] = useState<{ [key: string]: UserData }>({});
 
   useEffect(() => {
     const body = document.querySelector("body");
     if (body) {
-      if (openReviews && Object.values(openReviews).some((isOpen) => isOpen)) {
+      if (
+        openAddReviews &&
+        Object.values(openAddReviews).some((isOpen) => isOpen)
+      ) {
         body.style.overflow = "hidden";
       } else {
         body.style.overflow = "unset";
       }
     }
-  }, [openReviews]);
+  }, [openAddReviews]);
 
   const handleOpenReview = (courseId: string) => {
-    setOpenReviews((prevState) => {
+    setOpenAddReviews((prevState) => {
+      return {
+        ...prevState,
+        [courseId]: true,
+      };
+    });
+  };
+
+  const handleOpenUpdateReview = (courseId: string) => {
+    setOpenUpdateReviews((prevState) => {
       return {
         ...prevState,
         [courseId]: true,
@@ -54,9 +77,15 @@ export const BoughtCourses = () => {
         `/skillsphere/courses/${courseId}/reviews`,
       );
       const rating = response.data.data.reviews[0]?.rating || 0;
+      const user = response.data.data.reviews[0];
       setUserReviews((prevState) => ({
         ...prevState,
         [courseId]: rating, // Zaktualizuj stan, przechowujący liczbę recenzji użytkownika dla danego kursu
+      }));
+
+      setUserData((prevState) => ({
+        ...prevState,
+        [courseId]: user, // Zaktualizuj stan, przechowujący liczbę recenzji użytkownika dla danego kursu
       }));
     } catch (err) {
       console.error(err);
@@ -94,6 +123,7 @@ export const BoughtCourses = () => {
               </button>
             ) : (
               <button
+                onClick={() => handleOpenUpdateReview(course.id)}
                 onMouseEnter={() => setIsHover(true)}
                 onMouseLeave={() => setIsHover(false)}
                 className="hover:underline"
@@ -101,12 +131,24 @@ export const BoughtCourses = () => {
                 {isHover ? "Edit review" : "Your review"}
               </button>
             )}
-            {openReviews[course.id] && (
+            {openAddReviews[course.id] && (
               <AddNewReview
                 courseId={course.id}
-                openReview={openReviews[course.id]}
-                setOpenReview={(isOpen: boolean) =>
-                  setOpenReviews((prevState) => ({
+                openReview={openAddReviews[course.id]}
+                setOpenAddReview={(isOpen: boolean) =>
+                  setOpenAddReviews((prevState) => ({
+                    ...prevState,
+                    [course.id]: isOpen,
+                  }))
+                }
+                updateRatingUI={() => checkUserReviews(course.id)}
+              />
+            )}
+            {openUpdateReviews[course.id] && (
+              <UpdateReview
+                userData={userData[course.id]}
+                setOpenUpdateReview={(isOpen: boolean) =>
+                  setOpenUpdateReviews((prevState) => ({
                     ...prevState,
                     [course.id]: isOpen,
                   }))
