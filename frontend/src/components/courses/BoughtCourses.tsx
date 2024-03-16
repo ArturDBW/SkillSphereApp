@@ -3,7 +3,7 @@ import { UserContext } from "../../ui/AppLayout";
 import { StarRatingStatic } from "../reviews/StarRatingStatic";
 import { AddNewReview } from "../reviews/AddNewReview";
 import { API } from "../../utils/api";
-import { UpdateReview } from "../reviews/UpdateReview";
+import { HandleReview } from "../reviews/HandleReview";
 
 type UserProps = {
   email: string;
@@ -145,7 +145,7 @@ export const BoughtCourses = () => {
               />
             )}
             {openUpdateReviews[course.id] && (
-              <UpdateReview
+              <HandleReview
                 userData={userData[course.id]}
                 setOpenUpdateReview={(isOpen: boolean) =>
                   setOpenUpdateReviews((prevState) => ({
