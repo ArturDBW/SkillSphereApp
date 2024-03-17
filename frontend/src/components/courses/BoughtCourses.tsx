@@ -41,15 +41,16 @@ export const BoughtCourses = () => {
     const body = document.querySelector("body");
     if (body) {
       if (
-        openAddReviews &&
-        Object.values(openAddReviews).some((isOpen) => isOpen)
+        openAddReviews ||
+        (openUpdateReviews &&
+          Object.values(openAddReviews).some((isOpen) => isOpen))
       ) {
         body.style.overflow = "hidden";
       } else {
         body.style.overflow = "unset";
       }
     }
-  }, [openAddReviews]);
+  }, [openAddReviews, openUpdateReviews]);
 
   const handleOpenReview = (courseId: string) => {
     setOpenAddReviews((prevState) => {

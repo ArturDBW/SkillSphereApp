@@ -1,7 +1,7 @@
 import { IoClose } from "react-icons/io5";
 import { StarRatingStatic } from "./StarRatingStatic";
 import { API } from "../../utils/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StarRating } from "./StarRating";
 
 type HandleReviewProps = {
@@ -19,9 +19,11 @@ export const HandleReview = ({
   userData,
   updateRatingUI,
 }: HandleReviewProps) => {
-  const [showUpdateReview, setShowUpdateReview] = useState(true);
-
-  console.log(userData);
+  const [showUpdateReview, setShowUpdateReview] = useState(false);
+  const [rating, setRating] = useState(userData.rating);
+  const [review, setReview] = useState(userData.review);
+  const [ratingError, setRatingError] = useState(false);
+  const [reviewError, setReviewError] = useState(false);
 
   const deleteReview = async (reviewId: string) => {
     try {
@@ -38,19 +40,60 @@ export const HandleReview = ({
     e.stopPropagation();
   };
 
-  // ------------------------------------------------------------------------>
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setShowUpdateReview(false);
+      }
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [setShowUpdateReview]);
 
-  const updateReview = async (reviewId: string) => {
+  //  update ------------------------------------------------------------------------>
+
+  const updateReview = async (
+    reviewId: string,
+    e: React.FormEvent<HTMLFormElement>,
+  ) => {
+    e.preventDefault();
     try {
       const response = await API.patch(`/skillsphere/reviews/${reviewId}`, {
-        rating: 3,
-        review: "Updateeeee!",
+        rating,
+        review,
       });
+      updateRatingUI();
+      setOpenUpdateReview(false);
       console.log(response, "Update komentarzu!");
     } catch (err) {
+      if (rating <= 0) setRatingError(true);
+      if (review === "") setReviewError(true);
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    if (rating > 0) setRatingError(false);
+    if (review) setReviewError(false);
+  }, [rating, review]);
+
+  const handleRatingChange = (newRating: number) => {
+    setRating(newRating);
+  };
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpenUpdateReview(false);
+      }
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [setOpenUpdateReview]);
 
   return (
     <div
@@ -63,41 +106,65 @@ export const HandleReview = ({
         }}
         className="absolute bottom-1/2 right-1/2 flex w-[600px] translate-x-1/2 translate-y-1/2 flex-col rounded-xl bg-white p-5"
       >
-        <h2 className="mb-3 text-xl font-bold">
-          {showUpdateReview ? "Edit review" : "Your review"}
-        </h2>
         {showUpdateReview ? (
-          <StarRating size={20} stars={3} />
+          <>
+            <h2 className="mb-3 text-xl font-bold">Edit review</h2>
+            <StarRating
+              size={20}
+              onRatingChange={handleRatingChange}
+              initialRating={userData.rating}
+            />
+            {ratingError && (
+              <span className="mt-2 text-red-500">Choose the rating!</span>
+            )}
+            <form onSubmit={(e) => updateReview(userData.id, e)}>
+              <textarea
+                onChange={(e) => setReview(e.target.value)}
+                value={review}
+                className="mt-3 w-full border border-black  p-2"
+              />
+              {reviewError && (
+                <div className="mt-2 text-red-500">
+                  Review can not be empty!
+                </div>
+              )}
+              <div className="mt-6 flex justify-end space-x-2">
+                <button
+                  onClick={() => setShowUpdateReview(false)}
+                  className="rounded-xl px-6 py-3 duration-150 hover:text-yellow-500"
+                >
+                  Back
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </>
         ) : (
-          <StarRatingStatic size={20} stars={userData.rating} />
-        )}
-        {showUpdateReview ? (
-          <textarea className="mt-3 border-2 border-black" />
-        ) : (
-          <p className="mt-3">{userData?.review}</p>
-        )}
-        <div className="mt-6 flex justify-end space-x-2">
-          {showUpdateReview ? (
-            <button
-              onClick={() => updateReview(userData.id)}
-              className="rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
-            >
-              Save
-            </button>
-          ) : (
-            <>
+          <>
+            <h2 className="mb-3 text-xl font-bold">Your review</h2>
+            <StarRatingStatic size={20} stars={userData.rating} />
+            <p className="mt-3">{userData?.review}</p>
+            <div className="mt-6 flex justify-end space-x-2">
               <button
                 onClick={() => deleteReview(userData.id)}
                 className="rounded-xl px-6 py-3 duration-150 hover:text-yellow-500"
               >
                 Delete
               </button>
-              <button className="rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400">
+              <button
+                onClick={() => setShowUpdateReview(true)}
+                className="rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
+              >
                 Edit review
               </button>
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        )}
 
         <IoClose
           onClick={() => setOpenUpdateReview(false)}

@@ -4,10 +4,15 @@ import { FaStar } from "react-icons/fa6";
 type StarRatingProps = {
   size: number;
   onRatingChange: (newRating: number) => void;
+  initialRating?: number;
 };
 
-export const StarRating = ({ size, onRatingChange }: StarRatingProps) => {
-  const [rating, setRating] = useState(0);
+export const StarRating = ({
+  size,
+  onRatingChange,
+  initialRating = 0,
+}: StarRatingProps) => {
+  const [rating, setRating] = useState(initialRating);
   const [hover, setHover] = useState<number | null>(null);
 
   const handleClick = (ratingValue: number) => {
