@@ -26,7 +26,7 @@ type UserData = {
 };
 
 export const BoughtCourses = () => {
-  const [isHover, setIsHover] = useState(false);
+  const [hoverState, setHoverState] = useState<{ [key: string]: boolean }>({});
   const user: UserProps | null = useContext(UserContext);
   const [openAddReviews, setOpenAddReviews] = useState<{
     [key: string]: boolean;
@@ -69,6 +69,10 @@ export const BoughtCourses = () => {
         [courseId]: true,
       };
     });
+    setHoverState((prevState) => ({
+      ...prevState,
+      [courseId]: false, // ustawienie początkowe stanu isHover na false
+    }));
   };
 
   // ---------------------------------------------------------------->
@@ -126,11 +130,21 @@ export const BoughtCourses = () => {
             ) : (
               <button
                 onClick={() => handleOpenUpdateReview(course.id)}
-                onMouseEnter={() => setIsHover(true)}
-                onMouseLeave={() => setIsHover(false)}
+                onMouseEnter={() =>
+                  setHoverState((prevState) => ({
+                    ...prevState,
+                    [course.id]: true,
+                  }))
+                }
+                onMouseLeave={() =>
+                  setHoverState((prevState) => ({
+                    ...prevState,
+                    [course.id]: false,
+                  }))
+                }
                 className="hover:underline"
               >
-                {isHover ? "Edit review" : "Your review"}
+                {hoverState[course.id] ? "Edit review" : "Your review"}
               </button>
             )}
             {openAddReviews[course.id] && (
