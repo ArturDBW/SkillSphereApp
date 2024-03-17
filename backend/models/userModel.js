@@ -30,6 +30,11 @@ const userSchema = new mongoose.Schema(
         message: "Password are not the same",
       },
     },
+    boughtCourses: {
+      type: [mongoose.Schema.ObjectId],
+      ref: "Course",
+      default: [],
+    },
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -39,6 +44,17 @@ const userSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+// Bought Courses
+
+userSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "boughtCourses",
+    select: "title author imageCover",
+  });
+
+  next();
+});
 
 // enkrypcja hasła (wykonywana między wysłaniem danych ale przed ich zapisaniem)
 userSchema.pre("save", async function (next) {

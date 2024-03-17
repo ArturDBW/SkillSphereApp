@@ -9,6 +9,7 @@ import { UserContext } from "../ui/AppLayout";
 type UserProps = {
   email: string;
   name: string;
+  id: string;
 };
 
 export const Header = () => {

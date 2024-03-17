@@ -1,5 +1,6 @@
 const Review = require("./../models/reviewModel");
 const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 
 exports.getAllReviews = async (req, res, next) => {
   let filter = {};
@@ -24,17 +25,28 @@ exports.getAllReviews = async (req, res, next) => {
 
 exports.createReview = catchAsync(async (req, res, next) => {
   if (!req.body.course) req.body.course = req.params.courseId;
-
   if (!req.body.user) req.body.user = req.user.id;
 
-  const newReview = await Review.create(req.body);
+  try {
+    const newReview = await Review.create(req.body);
 
-  res.status(200).json({
-    status: "success",
-    data: {
-      review: newReview,
-    },
-  });
+    res.status(200).json({
+      status: "success",
+      data: {
+        review: newReview,
+      },
+    });
+  } catch (err) {
+    if (
+      err.code === 11000 &&
+      err.keyPattern &&
+      err.keyPattern.course &&
+      err.keyPattern.user
+    ) {
+      return next(new AppError("You have already reviewed this course", 400));
+    }
+    return next(err);
+  }
 });
 
 exports.getReview = catchAsync(async (req, res, next) => {
@@ -63,7 +75,7 @@ exports.updateReview = catchAsync(async (req, res, next) => {
     });
   }
 
-  await Review.calcAverageRatings(review.course);
+  // await Review.calcAverageRatings(review.course);
 
   res.status(200).json({
     status: "success",

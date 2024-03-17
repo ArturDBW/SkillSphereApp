@@ -1,10 +1,24 @@
 import { useState } from "react";
 import { FaStar } from "react-icons/fa6";
 
-export const StarRating = () => {
-  const [rating, setRating] = useState(0);
-  const [hover, setHover] = useState(null);
-  console.log(rating);
+type StarRatingProps = {
+  size: number;
+  onRatingChange: (newRating: number) => void;
+  initialRating?: number;
+};
+
+export const StarRating = ({
+  size,
+  onRatingChange,
+  initialRating = 0,
+}: StarRatingProps) => {
+  const [rating, setRating] = useState(initialRating);
+  const [hover, setHover] = useState<number | null>(null);
+
+  const handleClick = (ratingValue: number) => {
+    setRating(ratingValue);
+    onRatingChange(ratingValue); // przekazanie oceny do funkcji zwrotnej
+  };
 
   return (
     <div className="flex">
@@ -18,11 +32,11 @@ export const StarRating = () => {
               name="rating"
               value={ratingValue}
               onClick={() => {
-                setRating(ratingValue);
+                handleClick(ratingValue);
               }}
             />
             <FaStar
-              size={100}
+              size={size}
               color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
               className="cursor-pointer"
               onMouseEnter={() => setHover(ratingValue)}
