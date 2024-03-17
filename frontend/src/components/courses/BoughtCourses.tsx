@@ -41,9 +41,10 @@ export const BoughtCourses = () => {
     const body = document.querySelector("body");
     if (body) {
       if (
-        openAddReviews ||
+        (openAddReviews &&
+          Object.values(openAddReviews).some((isOpen) => isOpen)) ||
         (openUpdateReviews &&
-          Object.values(openAddReviews).some((isOpen) => isOpen))
+          Object.values(openUpdateReviews).some((isOpen) => isOpen))
       ) {
         body.style.overflow = "hidden";
       } else {
