@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.testClass {
-  background-color: rgba(0, 0, 0, 0.5);
+.custom-select__control {
+  border: 1px solid #da1818; /* zmień styl obramowania */
+  border-radius: 4px; /* zaokrąglenie krawędzi */
 }

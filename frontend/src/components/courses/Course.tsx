@@ -21,9 +21,7 @@ export const Course = ({ courseData }: CourseProps) => {
       <div className="flex w-full flex-col justify-between">
         <div>
           <div className="flex justify-between font-bold">
-            <h3 className="text-lg">
-              React - The Complete Guide 2024 (incl. React Router & Redux)
-            </h3>
+            <h3 className="text-lg">{courseData.title}</h3>
             <span>{courseData.price}$</span>
           </div>
           <p className="w-11/12">
