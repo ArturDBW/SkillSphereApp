@@ -57,7 +57,7 @@ export const CourseDetails = () => {
   }, [course, calculateAverageRating]);
 
   return (
-    <section className="mt-4">
+    <section className="mt-4 min-h-[calc(100vh-72px)]">
       {course ? (
         <div>
           <div className="flex border-b py-10">
