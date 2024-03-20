@@ -12,6 +12,7 @@ type CourseProps = {
     title: string;
     id: number;
     author: string;
+    imageCover: string;
     description: string;
     price: number;
     reviews: Review[];
@@ -30,7 +31,7 @@ export const Course = ({ courseData }: CourseProps) => {
   return (
     <div className="flex gap-4 border-b py-2">
       <img
-        src="https://www.nafrontendzie.pl/assets/featured/podstawy-react.png"
+        src={courseData.imageCover}
         alt="Course Image"
         className="aspect-[300/160] max-w-[300px]"
       />

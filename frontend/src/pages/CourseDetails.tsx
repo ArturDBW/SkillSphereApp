@@ -20,7 +20,9 @@ type Course = {
   title: string;
   id: number;
   author: string;
+  imageCover: string;
   description: string;
+  createdAt: string;
   price: number;
   reviews: ReviewData[];
 };
@@ -65,27 +67,27 @@ export const CourseDetails = () => {
       {course ? (
         <div>
           <div className="flex border-b py-10">
-            <div className="w-2/3">
-              <h2 className="text-5xl font-bold">{course.title}</h2>
-              <p className="mb-2 mt-6 text-xl">{course.description}</p>
-              <div className="flex">
-                <StarRatingStatic stars={averageRating} size={28} />
-                <span className="text-sm text-stone-500">
-                  ({course.reviews.length})
-                </span>
+            <div className="flex w-2/3 flex-col justify-between">
+              <div>
+                <h2 className="text-5xl font-bold">{course.title}</h2>
+                <p className="mb-2 mt-6 text-xl">{course.description}</p>
+                <div className="flex">
+                  <StarRatingStatic stars={averageRating} size={28} />
+                  <span className="text-sm text-stone-500">
+                    ({course.reviews.length})
+                  </span>
+                </div>
               </div>
-              <span className="text-xl">Bestseller!</span>
-              <span className="block">
-                Created by: <span>{course.author}</span>
-              </span>
-              <span>Created at: 16.02.2024</span>
+
+              <div>
+                <span className="block">
+                  Created by: <span>{course.author}</span>
+                </span>
+                <span>Created at: {course.createdAt}</span>
+              </div>
             </div>
             <div className="flex w-1/3 flex-col justify-between">
-              <img
-                src="https://www.nafrontendzie.pl/assets/featured/podstawy-react.png"
-                alt="image"
-                className="rounded-xl"
-              />
+              <img src={course.imageCover} alt="image" className="rounded-xl" />
               <div className="text-xl font-bold">{course.price}$ </div>
 
               <button className="rounded-xl bg-yellow-500 py-3">
