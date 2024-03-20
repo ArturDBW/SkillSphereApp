@@ -7,9 +7,9 @@ const router = express.Router();
 
 router.get("/", courseController.getAllCourse);
 router.get("/:id", courseController.getCourse);
-router.post("/", courseController.createCourse);
-router.patch("/:id", courseController.updateCourse);
-router.delete("/:id", courseController.deleteCourse);
+router.post("/", authController.protect, courseController.createCourse);
+router.patch("/:id", authController.protect, courseController.updateCourse);
+router.delete("/:id", authController.protect, courseController.deleteCourse);
 
 // router
 //   .route("/:courseId/reviews")
