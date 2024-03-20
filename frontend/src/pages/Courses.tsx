@@ -79,7 +79,7 @@ export const Courses = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-72px)]">
+    <div className="min-h-[calc(100vh-72px)]">
       <div
         className="relative mb-5 mt-10 h-[200px] rounded-xl bg-cover bg-center bg-no-repeat"
         style={{
@@ -144,8 +144,7 @@ export const Courses = () => {
                 pageCount={pageCount}
                 previousLabel="<"
                 renderOnZeroPageCount={null}
-                className="mt-6 flex items-center justify-center space-x-4 text-lg"
-                containerClassName="bg-red-500"
+                className="my-6 flex items-center justify-center space-x-4 text-lg"
                 pageLinkClassName="hover:text-yellow-400 duration-150"
                 activeLinkClassName="text-yellow-500 underline duration-150"
                 nextClassName="py-2 px-4 hover:text-yellow-400 active:text-yellow-500 duration-150"

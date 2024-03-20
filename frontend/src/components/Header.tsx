@@ -30,7 +30,7 @@ export const Header = () => {
         <Link to="/">
           <div className="flex items-center space-x-3">
             <img src={logo} alt="logo" className="h-10" />
-            <span>SkillSphere</span>
+            <span className="text-xl font-bold">SkillSphere</span>
           </div>
         </Link>
         <nav>
