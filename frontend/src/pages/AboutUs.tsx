@@ -43,8 +43,8 @@ export const AboutUs = () => {
   return (
     <section className="mt-10 min-h-[calc(100vh-72px)]">
       <div className="flex gap-x-7">
-        <div className="flex w-2/5 flex-col">
-          <h2 className="mb-7 text-6xl">
+        <div className="jus flex w-2/5 flex-col justify-between">
+          <h2 className="text-6xl">
             Our dream is global
             <span className="text-yellow-500"> learning</span> transformation.
           </h2>
@@ -56,7 +56,9 @@ export const AboutUs = () => {
             instructors is committed to delivering engaging and interactive
             content tailored to meet the diverse needs of our learners. Join us
             on a journey of knowledge and skill development, and unlock your
-            full potential with SkillSphere.
+            full potential with SkillSphere. Whether you're looking to enhance
+            your career prospects, explore new interests, or simply expand your
+            horizons.
           </p>
         </div>
         <div className="w-3/5">

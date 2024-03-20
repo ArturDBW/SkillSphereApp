@@ -33,7 +33,7 @@ export const Login = () => {
       console.log("Zalogowanie pomyślne", response);
 
       window.setTimeout(() => {
-        location.assign("/");
+        location.assign("/courses");
       }, 1000);
     } catch (err) {
       if (err instanceof AxiosError) {

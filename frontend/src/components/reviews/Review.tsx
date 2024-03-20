@@ -3,10 +3,16 @@ import { StarRatingStatic } from "./StarRatingStatic";
 type reviewsDataProps = {
   reviewsData: {
     rating: number;
+    review: string;
+    user: {
+      name: string;
+    };
   };
 };
 
 export const Review = ({ reviewsData }: reviewsDataProps) => {
+  console.log(reviewsData);
+
   return (
     <div className="flex gap-x-5 border-b py-6">
       <div>
@@ -23,13 +29,8 @@ export const Review = ({ reviewsData }: reviewsDataProps) => {
           <StarRatingStatic stars={reviewsData.rating} size={16} />
           <span>24.10.2012</span>
         </div>
-        <span className="text-lg font-bold">Margaret</span>
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi sunt
-          illo sed delectus accusamus, eaque deserunt sit minima error
-          consectetur sapiente asperiores et non eos placeat odio ipsum! Lorem
-          ipsum dolor sit amet consectetur adipisicing elit.
-        </div>
+        <span className="text-lg font-bold">{reviewsData.user.name}</span>
+        <div>{reviewsData.review}</div>
       </div>
     </div>
   );

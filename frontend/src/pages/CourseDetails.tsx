@@ -1,14 +1,19 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API } from "../utils/api";
 import { Review } from "../components/reviews/Review";
 import { StarRatingStatic } from "../components/reviews/StarRatingStatic";
+import { calculateAverageRating } from "../utils/averageRating";
+import { useNavigate } from "react-router-dom";
+import { IoArrowBackSharp } from "react-icons/io5";
 
 type ReviewData = {
   id: string;
-  review: string;
   rating: number;
-  createdAt: string;
+  review: string;
+  user: {
+    name: string;
+  };
 };
 
 type Course = {
@@ -25,6 +30,7 @@ export const CourseDetails = () => {
   const [course, setCourse] = useState<Course | null>(null);
   const [showAllReviews, setShowAllReviews] = useState(true);
   const [averageRating, setAverageRating] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOneCourse = async (id: string) => {
@@ -40,24 +46,22 @@ export const CourseDetails = () => {
     fetchOneCourse(id!);
   }, [id]);
 
-  const calculateAverageRating = useCallback(() => {
-    if (!course || !course.reviews || course.reviews.length === 0) return 0;
-
-    const ratings = course.reviews.map((review) => review.rating);
-    const totalRating = ratings.reduce((acc, rating) => acc + rating, 0);
-    const averageRating = totalRating / ratings.length;
-    return Math.floor(averageRating + 0.5);
-  }, [course]);
-
   useEffect(() => {
     if (course) {
-      const average = calculateAverageRating();
+      const average = calculateAverageRating(course);
       setAverageRating(average);
     }
-  }, [course, calculateAverageRating]);
+  }, [course]);
 
   return (
     <section className="mt-4 min-h-[calc(100vh-72px)]">
+      <button
+        onClick={() => navigate(-1)}
+        className="flex items-center duration-150 hover:text-yellow-500"
+      >
+        <IoArrowBackSharp className="mr-3" />
+        Back
+      </button>
       {course ? (
         <div>
           <div className="flex border-b py-10">

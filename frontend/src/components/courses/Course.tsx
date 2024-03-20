@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { StarRatingStatic } from "../reviews/StarRatingStatic";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useState } from "react";
+import { calculateAverageRating } from "../../utils/averageRating";
 
 type Review = {
   rating: number;
@@ -17,28 +18,14 @@ type CourseProps = {
   };
 };
 export const Course = ({ courseData }: CourseProps) => {
-  console.log(courseData);
-
-  //
   const [averageRating, setAverageRating] = useState(0);
-
-  const calculateAverageRating = useCallback(() => {
-    if (!courseData || !courseData.reviews || courseData.reviews.length === 0)
-      return 0;
-
-    const ratings = courseData.reviews.map((review) => review.rating);
-    const totalRating = ratings.reduce((acc, rating) => acc + rating, 0);
-    const averageRating = totalRating / ratings.length;
-    return Math.floor(averageRating + 0.5);
-  }, [courseData]);
 
   useEffect(() => {
     if (courseData) {
-      const average = calculateAverageRating();
+      const average = calculateAverageRating(courseData);
       setAverageRating(average);
     }
-  }, [courseData, calculateAverageRating]);
-  //
+  }, [courseData]);
 
   return (
     <div className="flex gap-4 border-b py-2">
