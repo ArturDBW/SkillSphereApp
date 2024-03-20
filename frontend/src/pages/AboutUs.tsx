@@ -69,19 +69,19 @@ export const AboutUs = () => {
       <div className="flex justify-around">
         <div className="flex w-full flex-col items-center">
           <animated.span className="text-7xl text-yellow-500">
-            {coursesSpring.number.interpolate((value) => Math.floor(value))}
+            {coursesSpring.number.to((value) => Math.floor(value))}
           </animated.span>
           <span className="mt-4 text-sm text-stone-500">Courses</span>
         </div>
         <div className="flex w-full flex-col items-center border-x">
           <animated.span className="text-7xl text-yellow-500">
-            {usersSpring.number.interpolate((value) => Math.floor(value))}
+            {usersSpring.number.to((value) => Math.floor(value))}
           </animated.span>
           <span className="mt-4 text-sm text-stone-500">Users</span>
         </div>
         <div className="flex w-full flex-col items-center">
           <animated.span className="text-7xl text-yellow-500">
-            {reviewsSpring.number.interpolate((value) => Math.floor(value))}
+            {reviewsSpring.number.to((value) => Math.floor(value))}
           </animated.span>
           <span className="mt-4 text-sm text-stone-500">Reviews</span>
         </div>
