@@ -130,9 +130,11 @@ export const Courses = () => {
                 }
               </span>
             </div>
-            {currentItems.map((courseData: Course) => (
-              <Course key={courseData.id} courseData={courseData} />
-            ))}
+            <div className="mt-2">
+              {currentItems.map((courseData: Course) => (
+                <Course key={courseData.id} courseData={courseData} />
+              ))}
+            </div>
             <div>
               <ReactPaginate
                 breakLabel="..."
