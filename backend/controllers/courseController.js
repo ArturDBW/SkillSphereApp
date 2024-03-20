@@ -24,9 +24,6 @@ exports.getAllCourse = async (req, res, next) => {
       const sortBy = req.query.sort.split(",").join(" ");
       query = query.sort(sortBy);
     }
-    //  else {
-    //   query = query.sort("-createdAt");
-    // }
 
     // field limiting - średnio użyteczne
 
@@ -37,12 +34,12 @@ exports.getAllCourse = async (req, res, next) => {
       query = query.select("-__v");
     }
 
-    // pagination
+    // pagination - nieużywane, zaimplementowano na froncie
 
-    const page = req.query.page * 1 || 1;
-    const limit = req.query.limit * 1 || 100;
-    const skip = (page - 1) * limit;
-    query = query.skip(skip).limit(limit);
+    // const page = req.query.page * 1 || 1;
+    // const limit = req.query.limit * 1 || 100;
+    // const skip = (page - 1) * limit;
+    // query = query.skip(skip).limit(limit);
 
     if (req.query.page) {
       const numCourse = await Course.countDocuments();

@@ -5,6 +5,7 @@ import hero from "/hero.avif";
 import Select from "react-select";
 import { sortingStyles } from "../utils/sortingStyles";
 import ReactPaginate from "react-paginate";
+import { GoSearch } from "react-icons/go";
 
 type Course = {
   title: string;
@@ -28,7 +29,6 @@ export const Courses = () => {
     const fetchCourses = async () => {
       try {
         const response = await API.get(
-          // `/skillsphere/courses?sort=${sortOption.value}&page=1&limit=6`,
           `/skillsphere/courses?sort=${sortOption.value}`,
         );
         setCourses(response.data.data.courses);
@@ -63,7 +63,7 @@ export const Courses = () => {
   return (
     <div>
       <div
-        className="relative my-10 h-[200px] rounded-xl bg-cover bg-center bg-no-repeat"
+        className="relative mb-5 mt-10 h-[200px] rounded-xl bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url(${hero})`,
         }}
@@ -78,7 +78,7 @@ export const Courses = () => {
       </div>
       <div>
         <div className="flex gap-x-4">
-          <div className="w-1/4 py-2">
+          <div className="w-1/4">
             <Select
               defaultValue={sortOption}
               onChange={(selectedOption) =>
@@ -89,6 +89,20 @@ export const Courses = () => {
             />
           </div>
           <div className="w-3/4">
+            <div className="relative flex justify-between">
+              <input
+                type="text"
+                placeholder="Search courses..."
+                className="h-[38px] w-full rounded-md border border-[#ccc] px-10 outline-none hover:border-yellow-500 focus:border-2 focus:border-yellow-500"
+              />
+              <GoSearch
+                size={22}
+                className="absolute left-2 top-2 text-[#ccc]"
+              />
+              <span className="flex w-32 items-end justify-end text-lg font-bold">
+                Results: {courses.length}
+              </span>
+            </div>
             {currentItems.map((courseData: Course) => (
               <Course key={courseData.id} courseData={courseData} />
             ))}

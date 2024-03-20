@@ -12,7 +12,7 @@ type CourseProps = {
 };
 export const Course = ({ courseData }: CourseProps) => {
   return (
-    <div className="flex gap-4 border-b py-2">
+    <div className="mt-2 flex gap-4 border-b py-2">
       <img
         src="https://www.nafrontendzie.pl/assets/featured/podstawy-react.png"
         alt="test"
