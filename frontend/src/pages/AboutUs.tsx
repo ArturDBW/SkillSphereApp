@@ -41,7 +41,7 @@ export const AboutUs = () => {
   }, []);
 
   return (
-    <section className="mt-10">
+    <section className="mt-10 min-h-[calc(100vh-72px)]">
       <div className="flex gap-x-7">
         <div className="flex w-2/5 flex-col">
           <h2 className="mb-7 text-6xl">
