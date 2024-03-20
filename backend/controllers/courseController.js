@@ -16,7 +16,7 @@ exports.getAllCourse = async (req, res, next) => {
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
-    let query = Course.find(JSON.parse(queryStr));
+    let query = Course.find(JSON.parse(queryStr)).populate("reviews");
 
     // sorting
 
