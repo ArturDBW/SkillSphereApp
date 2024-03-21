@@ -36,7 +36,7 @@ export const AppLayout = () => {
   return (
     <UserContext.Provider value={user}>
       <Header />
-      <main className="mx-auto max-w-screen-xl">
+      <main className="">
         <Outlet />
       </main>
       <Footer />
