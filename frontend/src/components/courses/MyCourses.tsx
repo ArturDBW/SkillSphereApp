@@ -8,41 +8,43 @@ import { BoughtCourses } from "./BoughtCourses";
 
 export const MyCourses = () => {
   const [settingsComponent, setSettingComponent] = useState("boughtCourses");
-  const liStyled = `m-2 flex cursor-pointer items-center space-x-2 rounded-xl px-4 py-6 duration-150 hover:bg-yellow-500 hover:text-white`;
+  const liStyled = `m-2 flex cursor-pointer items-center space-x-2 rounded-xl px-4 py-6 duration-150 hover:bg-yellow-500 hover:text-white max-sm:w-full max-sm:justify-center`;
 
   return (
-    <section className="flex h-[calc(100vh-72px)] gap-x-4">
-      <div className="w-1/3 border text-2xl text-black">
-        <div className="m-2 flex items-center space-x-2 border-b px-4 py-6">
-          <IoCreateOutline />
-          <span>MyCourses</span>
+    <section className="h-[calc(100vh-72px)] ">
+      <div className="mx-auto flex max-w-screen-xl gap-x-4 px-2 ">
+        <div className="w-1/3 border text-2xl text-black ">
+          <div className="m-2 flex items-center space-x-2 border-b px-4 py-6 max-sm:flex-col">
+            <IoCreateOutline />
+            <span className="max-sm:hidden">MyCourses</span>
+          </div>
+          <ul className="max-sm:flex max-sm:flex-col max-sm:items-center">
+            <li
+              onClick={() => {
+                setSettingComponent("boughtCourses");
+              }}
+              className={`${liStyled} ${settingsComponent === "boughtCourses" ? "bg-yellow-500 text-white" : "bg-white text-black"}`}
+            >
+              <BsBook />
+              <span className="max-sm:hidden">Courses</span>
+              <MdKeyboardArrowRight className="self-end max-sm:hidden" />
+            </li>
+            <li
+              onClick={() => {
+                setSettingComponent("newCourse");
+              }}
+              className={`${liStyled} ${settingsComponent === "newCourse" ? "bg-yellow-500 text-white" : "bg-white text-black"}`}
+            >
+              <GrNewWindow />
+              <span className="max-sm:hidden">Add new course</span>
+              <MdKeyboardArrowRight className="self-end max-sm:hidden" />
+            </li>
+          </ul>
         </div>
-        <ul>
-          <li
-            onClick={() => {
-              setSettingComponent("boughtCourses");
-            }}
-            className={`${liStyled} ${settingsComponent === "boughtCourses" ? "bg-yellow-500 text-white" : "bg-white text-black"}`}
-          >
-            <BsBook />
-            <span>Courses</span>
-            <MdKeyboardArrowRight className="self-end" />
-          </li>
-          <li
-            onClick={() => {
-              setSettingComponent("newCourse");
-            }}
-            className={`${liStyled} ${settingsComponent === "newCourse" ? "bg-yellow-500 text-white" : "bg-white text-black"}`}
-          >
-            <GrNewWindow />
-            <span>Add new course</span>
-            <MdKeyboardArrowRight className="self-end" />
-          </li>
-        </ul>
-      </div>
-      <div className="w-2/3 border">
-        {settingsComponent === "newCourse" && <AddNewCourse />}
-        {settingsComponent === "boughtCourses" && <BoughtCourses />}
+        <div className="w-2/3 border">
+          {settingsComponent === "newCourse" && <AddNewCourse />}
+          {settingsComponent === "boughtCourses" && <BoughtCourses />}
+        </div>
       </div>
     </section>
   );
