@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { API } from "../utils/api";
 import { Review } from "../components/reviews/Review";
@@ -6,6 +6,13 @@ import { StarRatingStatic } from "../components/reviews/StarRatingStatic";
 import { calculateAverageRating } from "../utils/averageRating";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBackSharp } from "react-icons/io5";
+import { UserContext } from "../ui/AppLayout";
+
+type UserProps = {
+  email: string;
+  name: string;
+  id: string;
+};
 
 type ReviewData = {
   id: string;
@@ -28,6 +35,7 @@ type Course = {
 };
 
 export const CourseDetails = () => {
+  const user: UserProps | null = useContext(UserContext);
   const { id } = useParams();
   const [course, setCourse] = useState<Course | null>(null);
   const [showAllReviews, setShowAllReviews] = useState(true);
@@ -54,6 +62,21 @@ export const CourseDetails = () => {
       setAverageRating(average);
     }
   }, [course]);
+
+  // ----------------------------------------------------------->
+
+  const buyCourse = async (courseId: number) => {
+    try {
+      const response = await API.post(
+        `/skillsphere/buy/course/${courseId}/user/${user?.id}`,
+      );
+      console.log(response, "Kupiono kurs!");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // ------------------------------------------------------------>
 
   return (
     <section className="mt-4 min-h-[calc(100vh-72px)]">
@@ -90,7 +113,10 @@ export const CourseDetails = () => {
               <img src={course.imageCover} alt="image" className="rounded-xl" />
               <div className="text-xl font-bold">{course.price}$ </div>
 
-              <button className="rounded-xl bg-yellow-500 py-3">
+              <button
+                onClick={() => buyCourse(course.id)}
+                className="rounded-xl bg-yellow-500 py-3"
+              >
                 Add to Cart
               </button>
             </div>

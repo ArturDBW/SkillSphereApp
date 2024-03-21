@@ -110,8 +110,8 @@ export const BoughtCourses = () => {
         <div key={course.id} className="flex min-h-64 flex-col justify-between">
           <div>
             <img
-              src="https://www.nafrontendzie.pl/assets/featured/podstawy-react.png"
-              alt="test"
+              src={course.imageCover}
+              alt="Course image"
               className="aspect-[300/160]"
             />
 
