@@ -29,11 +29,11 @@ export const Course = ({ courseData }: CourseProps) => {
   }, [courseData]);
 
   return (
-    <div className="flex gap-4 border-b py-2">
+    <div className="flex gap-4 border-b py-2 max-sm:flex-col">
       <img
         src={courseData.imageCover}
         alt="Course Image"
-        className="aspect-[300/160] max-w-[300px]"
+        className="aspect-[300/160] max-w-[300px] max-sm:max-w-full"
       />
       <div className="flex w-full flex-col justify-between">
         <div>
