@@ -1,10 +1,11 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "/logo.png";
 import { BsBasket3 } from "react-icons/bs";
 import { useContext, useEffect, useState } from "react";
 import { Authorization } from "./authorization/Authorization";
 import { UserMenu } from "./user/UserMenu";
 import { UserContext } from "../ui/AppLayout";
+import { Navigation } from "./Navigation";
 
 type UserProps = {
   email: string;
@@ -33,34 +34,7 @@ export const Header = () => {
             <span className="text-xl font-bold">SkillSphere</span>
           </div>
         </Link>
-        <nav>
-          <ul className="flex space-x-10 font-bold">
-            <NavLink
-              to="/"
-              style={({ isActive }) => ({
-                color: isActive ? "#eab308" : "black",
-              })}
-            >
-              <li>Home</li>
-            </NavLink>
-            <NavLink
-              to="/courses"
-              style={({ isActive }) => ({
-                color: isActive ? "#eab308" : "black",
-              })}
-            >
-              <li>Courses</li>
-            </NavLink>
-            <NavLink
-              to="/aboutus"
-              style={({ isActive }) => ({
-                color: isActive ? "#eab308" : "black",
-              })}
-            >
-              <li>About Us</li>
-            </NavLink>
-          </ul>
-        </nav>
+        <Navigation textColor={"black"} />
         <div className="relative flex items-center space-x-4">
           <BsBasket3
             size={18}

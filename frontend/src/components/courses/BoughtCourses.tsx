@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { UserContext } from "../../ui/AppLayout";
 import { StarRatingStatic } from "../reviews/StarRatingStatic";
 import { AddNewReview } from "../reviews/AddNewReview";
@@ -77,32 +77,35 @@ export const BoughtCourses = () => {
 
   // ---------------------------------------------------------------->
 
-  const checkUserReviews = async (courseId: string) => {
-    try {
-      const response = await API.get(
-        `/skillsphere/courses/${courseId}/reviews`,
-      );
-      const rating = response.data.data.reviews[0]?.rating || 0;
-      const user = response.data.data.reviews[0];
-      setUserReviews((prevState) => ({
-        ...prevState,
-        [courseId]: rating, // Zaktualizuj stan, przechowujący liczbę recenzji użytkownika dla danego kursu
-      }));
+  const checkUserReviews = useCallback(
+    async (courseId: string) => {
+      try {
+        const response = await API.get(
+          `/skillsphere/courses/${courseId}/reviews/user/${user?.id}`,
+        );
+        const rating = response.data.data.reviews[0]?.rating || 0;
+        const userData = response.data.data.reviews[0];
+        setUserReviews((prevState) => ({
+          ...prevState,
+          [courseId]: rating, // Zaktualizuj stan, przechowujący liczbę recenzji użytkownika dla danego kursu
+        }));
 
-      setUserData((prevState) => ({
-        ...prevState,
-        [courseId]: user, // Zaktualizuj stan, przechowujący liczbę recenzji użytkownika dla danego kursu
-      }));
-    } catch (err) {
-      console.error(err);
-    }
-  };
+        setUserData((prevState) => ({
+          ...prevState,
+          [courseId]: userData, // Zaktualizuj stan, przechowujący liczbę recenzji użytkownika dla danego kursu
+        }));
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    [user?.id],
+  );
 
   useEffect(() => {
     user?.boughtCourses?.forEach((course) => {
       checkUserReviews(course.id);
     });
-  }, [user?.boughtCourses]);
+  }, [user?.boughtCourses, checkUserReviews]);
 
   return (
     <section className="grid grid-cols-3 gap-4 p-4 ">
@@ -110,8 +113,8 @@ export const BoughtCourses = () => {
         <div key={course.id} className="flex min-h-64 flex-col justify-between">
           <div>
             <img
-              src="https://www.nafrontendzie.pl/assets/featured/podstawy-react.png"
-              alt="test"
+              src={course.imageCover}
+              alt="Course image"
               className="aspect-[300/160]"
             />
 

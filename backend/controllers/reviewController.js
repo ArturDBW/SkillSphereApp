@@ -5,6 +5,7 @@ const AppError = require("../utils/appError");
 exports.getAllReviews = async (req, res, next) => {
   let filter = {};
   if (req.params.courseId) filter = { course: req.params.courseId };
+  if (req.params.userId) filter = { ...filter, user: req.params.userId };
   try {
     const reviews = await Review.find(filter);
 

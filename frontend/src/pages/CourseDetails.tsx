@@ -1,30 +1,47 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { API } from "../utils/api";
 import { Review } from "../components/reviews/Review";
 import { StarRatingStatic } from "../components/reviews/StarRatingStatic";
+import { calculateAverageRating } from "../utils/averageRating";
+import { useNavigate } from "react-router-dom";
+import { IoArrowBackSharp } from "react-icons/io5";
+import { UserContext } from "../ui/AppLayout";
+
+type UserProps = {
+  email: string;
+  name: string;
+  id: string;
+};
 
 type ReviewData = {
   id: string;
-  review: string;
   rating: number;
-  createdAt: string;
+  review: string;
+  user: {
+    name: string;
+    imageCover: string;
+  };
 };
 
 type Course = {
   title: string;
   id: number;
   author: string;
+  imageCover: string;
   description: string;
+  createdAt: string;
   price: number;
   reviews: ReviewData[];
 };
 
 export const CourseDetails = () => {
+  const user: UserProps | null = useContext(UserContext);
   const { id } = useParams();
   const [course, setCourse] = useState<Course | null>(null);
   const [showAllReviews, setShowAllReviews] = useState(true);
   const [averageRating, setAverageRating] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOneCourse = async (id: string) => {
@@ -40,60 +57,79 @@ export const CourseDetails = () => {
     fetchOneCourse(id!);
   }, [id]);
 
-  const calculateAverageRating = useCallback(() => {
-    if (!course || !course.reviews || course.reviews.length === 0) return 0;
-
-    const ratings = course.reviews.map((review) => review.rating);
-    const totalRating = ratings.reduce((acc, rating) => acc + rating, 0);
-    const averageRating = totalRating / ratings.length;
-    return Math.floor(averageRating + 0.5);
-  }, [course]);
-
   useEffect(() => {
     if (course) {
-      const average = calculateAverageRating();
+      const average = calculateAverageRating(course);
       setAverageRating(average);
     }
-  }, [course, calculateAverageRating]);
+  }, [course]);
+
+  // ----------------------------------------------------------->
+
+  const buyCourse = async (courseId: number) => {
+    try {
+      const response = await API.post(
+        `/skillsphere/buy/course/${courseId}/user/${user?.id}`,
+      );
+      console.log(response, "Kupiono kurs!");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // ------------------------------------------------------------>
 
   return (
-    <section className="mt-4">
+    <section className="mt-4 min-h-[calc(100vh-72px)]">
+      <button
+        onClick={() => navigate(-1)}
+        className="flex items-center duration-150 hover:text-yellow-500"
+      >
+        <IoArrowBackSharp className="mr-3" />
+        Back
+      </button>
       {course ? (
         <div>
           <div className="flex border-b py-10">
-            <div className="w-2/3">
-              <h2 className="text-5xl font-bold">
-                React - The Complete Guide 2024 (incl. React Router & Redux)
-              </h2>
-              <p className="mb-2 mt-6 text-xl">
-                Dive in and learn React.js from scratch! Learn React, Hooks,
-                Redux, React Router, Next.js, Best Practices and way more!
-              </p>
-              <div className="flex">
-                <StarRatingStatic stars={averageRating} size={28} />
-                <span className="text-sm text-stone-500">(25)</span>
+            <div className="flex w-2/3 flex-col justify-between">
+              <div>
+                <h2 className="text-5xl font-bold">{course.title}</h2>
+                <p className="mb-2 mt-6 text-xl">{course.description}</p>
+                <div className="flex">
+                  <StarRatingStatic stars={averageRating} size={28} />
+                  <span className="text-sm text-stone-500">
+                    ({course.reviews.length})
+                  </span>
+                </div>
               </div>
-              <span className="text-xl">Bestseller!</span>
-              <span className="block">
-                Created by: <span>{course.author}</span>
-              </span>
-              <span>Stworzony został 16.02.2024</span>
+
+              <div>
+                <span className="block">
+                  Created by: <span>{course.author}</span>
+                </span>
+                <span>Created at: {course.createdAt}</span>
+              </div>
             </div>
             <div className="flex w-1/3 flex-col justify-between">
-              <img
-                src="https://www.nafrontendzie.pl/assets/featured/podstawy-react.png"
-                alt="image"
-                className="rounded-xl"
-              />
-              <div className="text-xl font-bold">$499</div>
+              <img src={course.imageCover} alt="image" className="rounded-xl" />
+              <div className="text-xl font-bold">{course.price}$ </div>
 
-              <button className="rounded-xl bg-yellow-500 py-3">
+              <button
+                onClick={() => buyCourse(course.id)}
+                className="rounded-xl bg-yellow-500 py-3"
+              >
                 Add to Cart
               </button>
             </div>
           </div>
           <div className="flex max-w-3xl flex-col">
-            <h2 className="mb-6 mt-10 text-4xl font-bold">Reviews</h2>
+            {course.reviews.length > 0 ? (
+              <h2 className="mb-6 mt-10 text-4xl font-bold">Reviews</h2>
+            ) : (
+              <span className="mt-10 text-2xl">
+                There are no reviews for this course yet.
+              </span>
+            )}
             {showAllReviews && course.reviews.length > 0 ? (
               <Review
                 reviewsData={course.reviews[0]}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Course } from "../components/courses/Course";
 import { API } from "../utils/api";
 import hero from "/hero.avif";
@@ -6,6 +6,13 @@ import Select from "react-select";
 import { sortingStyles } from "../utils/sortingStyles";
 import ReactPaginate from "react-paginate";
 import { GoSearch } from "react-icons/go";
+import { UserContext } from "../ui/AppLayout";
+
+type UserProps = {
+  email: string;
+  name: string;
+  id: string;
+};
 
 type Course = {
   title: string;
@@ -13,6 +20,7 @@ type Course = {
   author: string;
   description: string;
   price: number;
+  reviews: [];
 };
 
 const options = [
@@ -22,6 +30,7 @@ const options = [
 ];
 
 export const Courses = () => {
+  const user: UserProps | null = useContext(UserContext);
   const [courses, setCourses] = useState<Course[]>([]);
   // Sorting state
   const [sortOption, setSortOption] = useState(options[0]);
@@ -87,7 +96,9 @@ export const Courses = () => {
         }}
       >
         <div className="absolute bottom-1/2 right-1/2 z-10 w-full translate-x-1/2 translate-y-1/2">
-          <h2 className="text-center text-6xl text-white">Welcome, Artur!</h2>
+          <h2 className="text-center text-6xl text-white">
+            {user ? `Welcome, ${user?.name}!` : "Welcome!"}
+          </h2>
           <h3 className="text-center text-lg text-stone-300">
             Let's begin looking for courses!
           </h3>

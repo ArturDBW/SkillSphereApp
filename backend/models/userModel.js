@@ -30,6 +30,9 @@ const userSchema = new mongoose.Schema(
         message: "Password are not the same",
       },
     },
+    imageCover: {
+      type: String,
+    },
     boughtCourses: {
       type: [mongoose.Schema.ObjectId],
       ref: "Course",
