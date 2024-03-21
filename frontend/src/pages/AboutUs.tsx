@@ -69,7 +69,7 @@ export const AboutUs = () => {
         <h2 className="my-10 flex justify-center text-3xl font-bold max-sm:my-5 max-sm:text-xl">
           About us in numbers!
         </h2>
-        <div className="flex justify-around max-sm:mb-5">
+        <div className="flex justify-around max-md:mb-5">
           <div className="flex w-full flex-col items-center">
             <animated.span className="text-7xl text-yellow-500 max-sm:text-5xl">
               {coursesSpring.number.to((value) => Math.floor(value))}

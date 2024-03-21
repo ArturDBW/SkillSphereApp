@@ -38,11 +38,13 @@ export const Course = ({ courseData }: CourseProps) => {
       <div className="flex w-full flex-col justify-between">
         <div>
           <div className="flex justify-between font-bold">
-            <h3 className="text-lg">{courseData.title}</h3>
+            <h3 className="text-lg max-md:text-base">{courseData.title}</h3>
             <span>{courseData.price}$</span>
           </div>
-          <p className="w-11/12">{courseData.description}</p>
-          <span className="text-sm text-stone-500">{courseData.author}</span>
+          <p className="w-11/12 max-md:text-xs">{courseData.description}</p>
+          <span className="text-sm text-stone-500 max-md:text-xs">
+            {courseData.author}
+          </span>
         </div>
         <div className="flex items-end justify-between">
           <div className="flex space-x-2">
