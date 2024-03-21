@@ -6,21 +6,19 @@ type reviewsDataProps = {
     review: string;
     user: {
       name: string;
+      imageCover: string;
     };
   };
 };
 
 export const Review = ({ reviewsData }: reviewsDataProps) => {
-  console.log(reviewsData);
-
   return (
     <div className="flex gap-x-5 border-b py-6">
       <div>
         <div
           className="h-24 w-24 rounded-xl bg-cover bg-center"
           style={{
-            backgroundImage:
-              "url('https://i.pinimg.com/564x/1f/50/b9/1f50b9d69876f889319c1bbae9a03f4f.jpg')",
+            backgroundImage: `url('${reviewsData.user.imageCover}')`,
           }}
         />
       </div>

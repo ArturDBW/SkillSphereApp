@@ -80,10 +80,10 @@ export const BoughtCourses = () => {
   const checkUserReviews = async (courseId: string) => {
     try {
       const response = await API.get(
-        `/skillsphere/courses/${courseId}/reviews`,
+        `/skillsphere/courses/${courseId}/reviews/user/${user?.id}`,
       );
       const rating = response.data.data.reviews[0]?.rating || 0;
-      const user = response.data.data.reviews[0];
+      const userData = response.data.data.reviews[0];
       setUserReviews((prevState) => ({
         ...prevState,
         [courseId]: rating, // Zaktualizuj stan, przechowujący liczbę recenzji użytkownika dla danego kursu
@@ -91,7 +91,7 @@ export const BoughtCourses = () => {
 
       setUserData((prevState) => ({
         ...prevState,
-        [courseId]: user, // Zaktualizuj stan, przechowujący liczbę recenzji użytkownika dla danego kursu
+        [courseId]: userData, // Zaktualizuj stan, przechowujący liczbę recenzji użytkownika dla danego kursu
       }));
     } catch (err) {
       console.error(err);

@@ -20,6 +20,7 @@ type ReviewData = {
   review: string;
   user: {
     name: string;
+    imageCover: string;
   };
 };
 

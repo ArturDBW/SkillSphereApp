@@ -16,6 +16,6 @@ router.delete("/:id", authController.protect, courseController.deleteCourse);
 //   .post(authController.protect, reviewController.createReview);
 // zamiast tego linijka niżej + mergeParams:true na reviewRouter
 
-router.use("/:courseId/reviews", reviewRouter);
+router.use("/:courseId/reviews/user/:userId", reviewRouter);
 
 module.exports = router;
