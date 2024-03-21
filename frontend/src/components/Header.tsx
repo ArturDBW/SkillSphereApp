@@ -27,7 +27,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="relative mx-auto flex max-w-screen-xl items-center justify-between py-4">
+      <header className="relative mx-auto flex max-w-screen-xl items-center justify-between px-2 py-4">
         <Link to="/">
           <div className="flex items-center space-x-3">
             <img src={logo} alt="logo" className="h-10" />

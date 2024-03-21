@@ -2,7 +2,7 @@ import { Navigation } from "./Navigation";
 
 export const Footer = () => {
   return (
-    <footer className="bg-neutral-900 py-10 text-white">
+    <footer className="bg-neutral-900 px-2 py-10 text-white">
       <div className="mx-auto max-w-screen-xl">
         <div className="flex justify-between">
           <span className="text-2xl font-bold">SkillSphere</span>
