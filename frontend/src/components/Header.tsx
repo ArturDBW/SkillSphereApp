@@ -6,6 +6,7 @@ import { Authorization } from "./authorization/Authorization";
 import { UserMenu } from "./user/UserMenu";
 import { UserContext } from "../ui/AppLayout";
 import { Navigation } from "./Navigation";
+import { BurgerMenu } from "./BurgerMenu";
 
 type UserProps = {
   email: string;
@@ -16,6 +17,7 @@ type UserProps = {
 export const Header = () => {
   const [showAuthorization, setShowAuthorization] = useState(false);
   const user: UserProps | null = useContext(UserContext);
+  const [showBurgerMenu, setShowBurgerMenu] = useState(false);
 
   useEffect(() => {
     if (showAuthorization) {
@@ -28,13 +30,17 @@ export const Header = () => {
   return (
     <>
       <header className="relative mx-auto flex max-w-screen-xl items-center justify-between px-2 py-4">
-        <Link to="/">
-          <div className="flex items-center space-x-3">
+        <Link to="/" className="max-md:hidden">
+          <div className="flex items-center space-x-3 ">
             <img src={logo} alt="logo" className="h-10" />
             <span className="text-xl font-bold">SkillSphere</span>
           </div>
         </Link>
-        <Navigation textColor={"black"} />
+        <Navigation textColor={"black"} extraNavStyles={"max-md:hidden"} />
+        <BurgerMenu
+          showBurgerMenu={showBurgerMenu}
+          setShowBurgerMenu={setShowBurgerMenu}
+        />
         <div className="relative flex items-center space-x-4">
           <BsBasket3
             size={18}
