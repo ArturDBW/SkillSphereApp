@@ -16,7 +16,7 @@ type FormValues = z.infer<typeof schema>;
 
 export const UpdatePersonalDataForm = () => {
   const inputStyled = `max-w-96 rounded-xl px-2 py-2 outline-none border-2 focus:border-yellow-500 duration-150`;
-  const errorStyled = `h-5 w-full px-2 text-sm text-red-500`;
+  const errorStyled = `h-5 w-full px-2 text-sm text-red-500 max-[480px]:h-10`;
 
   const {
     register,

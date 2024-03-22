@@ -29,20 +29,22 @@ export const Course = ({ courseData }: CourseProps) => {
   }, [courseData]);
 
   return (
-    <div className="flex gap-4 border-b py-2">
+    <div className="flex gap-4 border-b py-2 max-sm:flex-col">
       <img
         src={courseData.imageCover}
         alt="Course Image"
-        className="aspect-[300/160] max-w-[300px]"
+        className="aspect-[300/160] max-w-[300px] max-sm:max-w-full"
       />
       <div className="flex w-full flex-col justify-between">
         <div>
           <div className="flex justify-between font-bold">
-            <h3 className="text-lg">{courseData.title}</h3>
+            <h3 className="text-lg max-md:text-base">{courseData.title}</h3>
             <span>{courseData.price}$</span>
           </div>
-          <p className="w-11/12">{courseData.description}</p>
-          <span className="text-sm text-stone-500">{courseData.author}</span>
+          <p className="w-11/12 max-md:text-xs">{courseData.description}</p>
+          <span className="text-sm text-stone-500 max-md:text-xs">
+            {courseData.author}
+          </span>
         </div>
         <div className="flex items-end justify-between">
           <div className="flex space-x-2">

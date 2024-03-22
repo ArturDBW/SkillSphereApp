@@ -108,7 +108,7 @@ export const BoughtCourses = () => {
   }, [user?.boughtCourses, checkUserReviews]);
 
   return (
-    <section className="grid grid-cols-3 gap-4 p-4 ">
+    <section className="grid grid-cols-3 gap-4 p-4 max-lg:grid-cols-2 max-md:grid-cols-1">
       {user?.boughtCourses?.map((course: BoughtCourse) => (
         <div key={course.id} className="flex min-h-64 flex-col justify-between">
           <div>

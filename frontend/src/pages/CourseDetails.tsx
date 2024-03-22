@@ -81,84 +81,98 @@ export const CourseDetails = () => {
 
   return (
     <section className="mt-4 min-h-[calc(100vh-72px)]">
-      <button
-        onClick={() => navigate(-1)}
-        className="flex items-center duration-150 hover:text-yellow-500"
-      >
-        <IoArrowBackSharp className="mr-3" />
-        Back
-      </button>
-      {course ? (
-        <div>
-          <div className="flex border-b py-10">
-            <div className="flex w-2/3 flex-col justify-between">
-              <div>
-                <h2 className="text-5xl font-bold">{course.title}</h2>
-                <p className="mb-2 mt-6 text-xl">{course.description}</p>
-                <div className="flex">
-                  <StarRatingStatic stars={averageRating} size={28} />
-                  <span className="text-sm text-stone-500">
-                    ({course.reviews.length})
+      <div className="mx-auto max-w-screen-xl px-2">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center duration-150 hover:text-yellow-500"
+        >
+          <IoArrowBackSharp className="mr-3" />
+          Back
+        </button>
+        {course ? (
+          <div>
+            <div className="flex gap-x-2 border-b py-10 max-lg:py-4 max-sm:flex-col">
+              <div className="flex w-2/3 flex-col justify-between max-lg:w-1/2 max-sm:w-full">
+                <div>
+                  <img
+                    src={course.imageCover}
+                    alt="image"
+                    className="hidden rounded-xl max-sm:block"
+                  />
+                  <h2 className="text-5xl font-bold max-lg:text-4xl max-md:text-xl">
+                    {course.title}
+                  </h2>
+                  <p className="mb-2 mt-6 text-xl max-xl:mt-2 max-lg:text-lg max-md:text-sm">
+                    {course.description}
+                  </p>
+                  <div className="flex">
+                    <StarRatingStatic stars={averageRating} size={28} />
+                    <span className="text-sm text-stone-500">
+                      ({course.reviews.length})
+                    </span>
+                  </div>
+                </div>
+
+                <div className="max-lg:text-sm max-sm:mt-2">
+                  <span className="block">
+                    Created by: <span>{course.author}</span>
                   </span>
+                  <span>Created at: {course.createdAt}</span>
                 </div>
               </div>
-
-              <div>
-                <span className="block">
-                  Created by: <span>{course.author}</span>
-                </span>
-                <span>Created at: {course.createdAt}</span>
+              <div className="flex w-1/3 flex-col justify-between max-lg:w-1/2 max-sm:mt-4 max-sm:w-full">
+                <img
+                  src={course.imageCover}
+                  alt="image"
+                  className="rounded-xl  max-sm:hidden "
+                />
+                <div className="text-xl font-bold">{course.price}$ </div>
+                <button
+                  onClick={() => buyCourse(course.id)}
+                  className="rounded-xl bg-yellow-500 py-3 max-sm:mt-2"
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
-            <div className="flex w-1/3 flex-col justify-between">
-              <img src={course.imageCover} alt="image" className="rounded-xl" />
-              <div className="text-xl font-bold">{course.price}$ </div>
-
-              <button
-                onClick={() => buyCourse(course.id)}
-                className="rounded-xl bg-yellow-500 py-3"
-              >
-                Add to Cart
-              </button>
+            <div className="flex max-w-3xl flex-col">
+              {course.reviews.length > 0 ? (
+                <h2 className="mb-6 mt-10 text-4xl font-bold">Reviews</h2>
+              ) : (
+                <span className="mt-10 text-2xl">
+                  There are no reviews for this course yet.
+                </span>
+              )}
+              {showAllReviews && course.reviews.length > 0 ? (
+                <Review
+                  reviewsData={course.reviews[0]}
+                  key={course.reviews[0].id}
+                />
+              ) : (
+                course.reviews.map((reviewsData) => (
+                  <Review reviewsData={reviewsData} key={reviewsData.id} />
+                ))
+              )}
+              {course.reviews.length > 1 && (
+                <button
+                  onClick={() => {
+                    setShowAllReviews(!showAllReviews);
+                  }}
+                  className="self-center px-6 py-3 text-center text-stone-500 underline duration-150 hover:text-black"
+                >
+                  {showAllReviews
+                    ? `Show more reviews (${course.reviews.length - 1})`
+                    : "Show less reviews"}
+                </button>
+              )}
             </div>
           </div>
-          <div className="flex max-w-3xl flex-col">
-            {course.reviews.length > 0 ? (
-              <h2 className="mb-6 mt-10 text-4xl font-bold">Reviews</h2>
-            ) : (
-              <span className="mt-10 text-2xl">
-                There are no reviews for this course yet.
-              </span>
-            )}
-            {showAllReviews && course.reviews.length > 0 ? (
-              <Review
-                reviewsData={course.reviews[0]}
-                key={course.reviews[0].id}
-              />
-            ) : (
-              course.reviews.map((reviewsData) => (
-                <Review reviewsData={reviewsData} key={reviewsData.id} />
-              ))
-            )}
-            {course.reviews.length > 1 && (
-              <button
-                onClick={() => {
-                  setShowAllReviews(!showAllReviews);
-                }}
-                className="self-center px-6 py-3 text-center text-stone-500 underline duration-150 hover:text-black"
-              >
-                {showAllReviews
-                  ? `Show more reviews (${course.reviews.length - 1})`
-                  : "Show less reviews"}
-              </button>
-            )}
+        ) : (
+          <div>
+            <p>Loading...</p>
           </div>
-        </div>
-      ) : (
-        <div>
-          <p>Loading...</p>
-        </div>
-      )}
+        )}
+      </div>
     </section>
   );
 };

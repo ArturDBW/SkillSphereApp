@@ -44,15 +44,21 @@ export const Authorization = ({
       onClick={() => {
         setShowAuthorization(false);
       }}
-      className="absolute left-0 top-0 z-50 h-screen w-screen bg-black bg-opacity-50"
+      className="absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black bg-opacity-50 px-2"
     >
       <div
         onClick={(e) => {
           stopPropagation(e);
         }}
-        className="absolute bottom-1/2 right-1/2 mx-auto flex h-[500px] w-full max-w-4xl translate-x-1/2 translate-y-1/2  bg-white"
+        className="mx-auto flex h-[500px] w-full max-w-4xl rounded-xl bg-white"
       >
-        <div className="relative flex w-2/3 flex-col items-center justify-center overflow-hidden">
+        <div className="relative flex w-2/3 flex-col items-center justify-center overflow-hidden max-sm:w-full">
+          <button
+            onClick={() => setShowLogin(!showLogin)}
+            className="absolute bottom-5 right-5 hidden text-lg duration-150 hover:text-yellow-500 hover:underline max-sm:block"
+          >
+            {showLogin ? "You wanna create account?" : "You have account?"}
+          </button>
           <div
             className={`absolute transition-transform duration-500 ease-in-out ${showLogin ? `translate-y-0` : `translate-y-[140%]`}`}
           >
@@ -65,13 +71,13 @@ export const Authorization = ({
           </div>
         </div>
         <div
-          className="relative w-1/3 border-y bg-cover bg-center bg-no-repeat text-center text-white"
+          className="relative w-1/3 rounded-xl border-y bg-cover bg-center bg-no-repeat text-center text-white max-sm:hidden"
           style={{
             backgroundImage: `url(${hero})`,
           }}
         >
           <div
-            className="flex h-full w-full flex-col items-center justify-center px-2"
+            className="flex h-full w-full flex-col items-center justify-center rounded-r-xl px-2"
             style={{ backgroundColor: "rgba(102, 78, 36, 0.5)" }}
           >
             <IoIosCloseCircleOutline

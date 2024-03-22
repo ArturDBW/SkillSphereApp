@@ -98,13 +98,13 @@ export const HandleReview = ({
   return (
     <div
       onClick={() => setOpenUpdateReview(false)}
-      className="absolute left-0 top-0 h-screen w-screen bg-black bg-opacity-40"
+      className="absolute left-0 top-0 flex h-screen w-screen items-center justify-center bg-black bg-opacity-40 px-2"
     >
       <div
         onClick={(e) => {
           stopPropagation(e);
         }}
-        className="absolute bottom-1/2 right-1/2 flex w-[600px] translate-x-1/2 translate-y-1/2 flex-col rounded-xl bg-white p-5"
+        className="flex w-[600px] flex-col rounded-xl bg-white p-5 max-sm:w-full"
       >
         {showUpdateReview ? (
           <>
