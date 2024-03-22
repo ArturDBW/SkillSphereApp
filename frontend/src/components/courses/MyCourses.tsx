@@ -13,7 +13,7 @@ export const MyCourses = () => {
   return (
     <section className="h-[calc(100vh-72px)] ">
       <div className="mx-auto flex max-w-screen-xl gap-x-4 px-2 ">
-        <div className="w-1/3 border text-2xl text-black ">
+        <div className="w-1/3 border text-2xl text-black max-sm:w-1/5">
           <div className="m-2 flex items-center space-x-2 border-b px-4 py-6 max-sm:flex-col">
             <IoCreateOutline />
             <span className="max-sm:hidden">MyCourses</span>
@@ -41,7 +41,7 @@ export const MyCourses = () => {
             </li>
           </ul>
         </div>
-        <div className="w-2/3 border">
+        <div className="w-2/3 border max-sm:w-4/5">
           {settingsComponent === "newCourse" && <AddNewCourse />}
           {settingsComponent === "boughtCourses" && <BoughtCourses />}
         </div>

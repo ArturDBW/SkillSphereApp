@@ -22,7 +22,7 @@ export const Settings = () => {
   return (
     <section className="h-[calc(100vh-72px)]">
       <div className="mx-auto flex max-w-screen-xl gap-x-4 px-2 ">
-        <div className="w-1/3 border text-2xl text-black">
+        <div className="w-1/3 border text-2xl text-black max-sm:w-1/5">
           <div className="m-2 flex items-center space-x-2 border-b px-4 py-6 max-sm:flex-col">
             <IoSettingsOutline />
             <span className="max-sm:hidden">Settings</span>
@@ -50,7 +50,7 @@ export const Settings = () => {
             </li>
           </ul>
         </div>
-        <div className="flex w-2/3 flex-col border p-4 max-sm:w-full">
+        <div className="flex w-2/3 flex-col border p-4 max-sm:w-4/5 ">
           <div className="flex space-x-4 border-b pb-4">
             <div
               className="h-28 w-28 rounded-full bg-cover bg-center"
