@@ -77,25 +77,30 @@ export const AddNewReview = ({
       onClick={() => {
         setOpenAddReview(false);
       }}
-      className="absolute left-0 top-0 h-screen w-screen bg-black bg-opacity-40"
+      className="absolute left-0 top-0 flex h-screen w-screen items-center justify-center bg-black bg-opacity-40"
     >
       <div
         onClick={(e) => {
           stopPropagation(e);
         }}
-        className="absolute bottom-1/2 right-1/2 flex translate-x-1/2 translate-y-1/2 flex-col items-center rounded-xl bg-white p-5"
+        className="flex w-[600px] flex-col items-center rounded-xl bg-white p-5"
       >
-        <h2 className="mb-5 text-4xl font-bold">What is your review? </h2>
+        <h2 className="mb-5 text-4xl font-bold max-[480px]:text-3xl">
+          What is your review?{" "}
+        </h2>
         <StarRating size={56} onRatingChange={handleRatingChange} />
         {ratingError && (
           <span className="mt-2 px-4 text-red-500">Choose the rating!</span>
         )}
-        <form onSubmit={createReview} className="flex flex-col items-center">
+        <form
+          onSubmit={createReview}
+          className="flex w-full flex-col items-center"
+        >
           <textarea
             onChange={(e) => setReview(e.target.value)}
             value={review}
             placeholder="Tell us about your impressions of the course."
-            className="mt-5 h-36 min-w-[600px] border border-black p-2"
+            className="mt-5 h-36 w-full border border-black p-2 max-sm:h-20 "
           ></textarea>
           {reviewError && (
             <span className="mt-2 px-4 text-red-500">
@@ -104,7 +109,7 @@ export const AddNewReview = ({
           )}
           <button
             type="submit"
-            className="mt-8 w-40 self-end rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
+            className="mt-8 self-end rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
           >
             Save
           </button>

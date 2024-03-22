@@ -109,7 +109,7 @@ export const Courses = () => {
         </div>
         <div>
           <div className="max-lg:items-self-end flex gap-x-4 max-lg:flex-col">
-            <div className="w-1/4 max-lg:mb-4 max-lg:w-40">
+            <div className="w-1/4 max-lg:mb-4 max-lg:w-40 max-[400px]:w-full">
               <Select
                 defaultValue={sortOption}
                 onChange={(selectedOption) =>
@@ -120,7 +120,7 @@ export const Courses = () => {
               />
             </div>
             <div className="w-3/4 max-lg:w-full">
-              <div className="relative flex justify-between">
+              <div className="relative flex justify-between max-[480px]:flex-col">
                 <input
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -132,7 +132,7 @@ export const Courses = () => {
                   size={22}
                   className="absolute left-2 top-2 text-[#ccc]"
                 />
-                <span className="flex w-32 items-end justify-end text-lg font-bold">
+                <span className="flex w-32 items-end justify-end text-lg font-bold max-[480px]:mt-2 max-[480px]:self-end">
                   Results:{" "}
                   {
                     courses.filter((course) =>
