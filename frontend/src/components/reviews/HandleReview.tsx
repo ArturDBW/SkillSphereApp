@@ -1,8 +1,9 @@
 import { IoClose } from "react-icons/io5";
 import { StarRatingStatic } from "./StarRatingStatic";
 import { API } from "../../utils/api";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StarRating } from "./StarRating";
+import { AlertContext } from "../../ui/AppLayout";
 
 type HandleReviewProps = {
   setOpenUpdateReview: (isOpen: boolean) => void;
@@ -25,9 +26,17 @@ export const HandleReview = ({
   const [ratingError, setRatingError] = useState(false);
   const [reviewError, setReviewError] = useState(false);
 
+  const alertContext = useContext(AlertContext);
+  if (!alertContext) {
+    throw new Error("AlertContext not provided");
+  }
+  const { setShowAlert, setAlertInfo } = alertContext;
+
   const deleteReview = async (reviewId: string) => {
     try {
       await API.delete(`/skillsphere/reviews/${reviewId}`);
+      setAlertInfo("Review has been deleted");
+      setShowAlert(true);
       updateRatingUI();
       setOpenUpdateReview(false);
       console.log("Usunięto review");
@@ -60,13 +69,14 @@ export const HandleReview = ({
   ) => {
     e.preventDefault();
     try {
-      const response = await API.patch(`/skillsphere/reviews/${reviewId}`, {
+      await API.patch(`/skillsphere/reviews/${reviewId}`, {
         rating,
         review,
       });
+      setAlertInfo("Review has been updated");
+      setShowAlert(true);
       updateRatingUI();
       setOpenUpdateReview(false);
-      console.log(response, "Update komentarzu!");
     } catch (err) {
       if (rating <= 0) setRatingError(true);
       if (review === "") setReviewError(true);

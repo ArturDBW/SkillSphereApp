@@ -3,6 +3,8 @@ import { API } from "../../utils/api";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { AxiosError } from "axios";
+import { useContext } from "react";
+import { AlertContext } from "../../ui/AppLayout";
 
 const schema = z.object({
   email: z
@@ -18,6 +20,12 @@ export const Login = () => {
   const inputStyled = `mx-auto min-w-80 rounded-full px-6 py-2 outline-none border-2 focus:border-yellow-500 duration-150 max-[480px]:min-w-full`;
   const errorStyled = `h-5 w-full px-2 text-sm text-red-500`;
 
+  const alertContext = useContext(AlertContext);
+  if (!alertContext) {
+    throw new Error("AlertContext not provided");
+  }
+  const { setShowAlert, setAlertInfo } = alertContext;
+
   const {
     register,
     handleSubmit,
@@ -29,12 +37,12 @@ export const Login = () => {
 
   const handleLogin = async (data: FormValues) => {
     try {
-      const response = await API.post("/skillsphere/users/login", data);
-      console.log("Zalogowanie pomyślne", response);
-
+      await API.post("/skillsphere/users/login", data);
+      setAlertInfo("Logged successfully");
+      setShowAlert(true);
       window.setTimeout(() => {
         location.assign("/courses");
-      }, 1000);
+      }, 500);
     } catch (err) {
       if (err instanceof AxiosError) {
         if (err.response?.status === 401) {

@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { API } from "../../utils/api";
 import { useContext } from "react";
-import { UserContext } from "../../ui/AppLayout";
+import { AlertContext, UserContext } from "../../ui/AppLayout";
 
 type UserProps = {
   email: string;
@@ -35,6 +35,12 @@ export const AddNewCourse = () => {
   const inputStyled = `max-w-96 rounded-xl px-2 py-2 outline-none border-2 focus:border-yellow-500 duration-150`;
   const errorStyled = `h-5 w-full px-2 text-sm text-red-500 max-[480px]:h-10`;
 
+  const alertContext = useContext(AlertContext);
+  if (!alertContext) {
+    throw new Error("AlertContext not provided");
+  }
+  const { setShowAlert, setAlertInfo } = alertContext;
+
   const user: UserProps | null = useContext(UserContext);
 
   const {
@@ -47,8 +53,9 @@ export const AddNewCourse = () => {
 
   const createCourse = async (data: FormValues) => {
     try {
-      const response = await API.post("/skillsphere/courses", data);
-      console.log(response, "Dodano nowy kurs!");
+      await API.post("/skillsphere/courses", data);
+      setAlertInfo("A new course has been added");
+      setShowAlert(true);
     } catch (err) {
       console.error(err);
     }
