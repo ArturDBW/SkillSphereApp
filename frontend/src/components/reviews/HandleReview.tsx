@@ -39,7 +39,6 @@ export const HandleReview = ({
       setShowAlert(true);
       updateRatingUI();
       setOpenUpdateReview(false);
-      console.log("Usunięto review");
     } catch (err) {
       console.error(err);
     }
