@@ -3,6 +3,7 @@ import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { createContext, useEffect, useState } from "react";
 import { API } from "../utils/api";
+import { AlertComponent } from "./AlertComponent";
 
 type UserProps = {
   email: string;
@@ -10,10 +11,22 @@ type UserProps = {
   id: string;
 };
 
+type AlertContextType = {
+  showAlert: boolean;
+  setShowAlert: (show: boolean) => void;
+  alertInfo: string;
+  setAlertInfo: (info: string) => void;
+};
+
+export const AlertContext = createContext<AlertContextType | undefined>(
+  undefined,
+);
 export const UserContext = createContext<UserProps | null>(null);
 
 export const AppLayout = () => {
   const [user, setUser] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertInfo, setAlertInfo] = useState("");
 
   useEffect(() => {
     const checkLoginAndFetchUser = async () => {
@@ -35,11 +48,16 @@ export const AppLayout = () => {
 
   return (
     <UserContext.Provider value={user}>
-      <Header />
-      <main className="">
-        <Outlet />
-      </main>
-      <Footer />
+      <AlertContext.Provider
+        value={{ showAlert, setShowAlert, alertInfo, setAlertInfo }}
+      >
+        <Header />
+        {showAlert && <AlertComponent alertInfo={alertInfo} />}
+        <main className="">
+          <Outlet />
+        </main>
+        <Footer />
+      </AlertContext.Provider>
     </UserContext.Provider>
   );
 };

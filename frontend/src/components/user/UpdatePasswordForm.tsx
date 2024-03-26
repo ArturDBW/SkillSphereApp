@@ -3,6 +3,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { API } from "../../utils/api";
 import { AxiosError } from "axios";
+import { AlertContext } from "../../ui/AppLayout";
+import { useContext } from "react";
 
 const schema = z
   .object({
@@ -23,6 +25,12 @@ export const UpdatePasswordForm = () => {
   const inputStyled = `max-w-96 rounded-xl px-2 py-2 outline-none border-2 focus:border-yellow-500 duration-150`;
   const errorStyled = `h-5 w-full px-2 text-sm text-red-500 max-[480px]:h-10`;
 
+  const alertContext = useContext(AlertContext);
+  if (!alertContext) {
+    throw new Error("AlertContext not provided");
+  }
+  const { setShowAlert, setAlertInfo } = alertContext;
+
   const {
     register,
     setError,
@@ -32,12 +40,9 @@ export const UpdatePasswordForm = () => {
 
   const updatePassword = async (data: FormValues) => {
     try {
-      const response = await API.patch(
-        "skillsphere/users/updateMyPassword",
-        data,
-      );
-      window.location.reload();
-      console.log(response, "Hasło zaaktualizowane!");
+      await API.patch("skillsphere/users/updateMyPassword", data);
+      setAlertInfo("The password has been updated");
+      setShowAlert(true);
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
         if (err.response?.status === 401) {

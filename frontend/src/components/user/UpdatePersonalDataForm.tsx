@@ -3,6 +3,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { API } from "../../utils/api";
 import { AxiosError } from "axios";
+import { useContext } from "react";
+import { AlertContext } from "../../ui/AppLayout";
 
 const schema = z.object({
   name: z.string().min(1, { message: "Name must be at least 1 character" }),
@@ -18,6 +20,12 @@ export const UpdatePersonalDataForm = () => {
   const inputStyled = `max-w-96 rounded-xl px-2 py-2 outline-none border-2 focus:border-yellow-500 duration-150`;
   const errorStyled = `h-5 w-full px-2 text-sm text-red-500 max-[480px]:h-10`;
 
+  const alertContext = useContext(AlertContext);
+  if (!alertContext) {
+    throw new Error("AlertContext not provided");
+  }
+  const { setShowAlert, setAlertInfo } = alertContext;
+
   const {
     register,
     setError,
@@ -27,9 +35,12 @@ export const UpdatePersonalDataForm = () => {
 
   const updateUserData = async (data: FormValues) => {
     try {
-      const response = await API.patch("/skillsphere/users/updateMe", data);
-      console.log("Zaaktualizowano dane uzytkownika", response);
-      window.location.reload();
+      await API.patch("/skillsphere/users/updateMe", data);
+      setAlertInfo("The data has been updated");
+      setShowAlert(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
         if (err.response?.status === 409) {

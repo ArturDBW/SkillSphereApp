@@ -36,7 +36,7 @@ export const Settings = () => {
             >
               <BsPerson />
               <span className="max-sm:hidden">Account</span>
-              <MdKeyboardArrowRight className="self-end max-sm:hidden " />
+              <MdKeyboardArrowRight className="self-end max-sm:hidden" />
             </li>
             <li
               onClick={() => {

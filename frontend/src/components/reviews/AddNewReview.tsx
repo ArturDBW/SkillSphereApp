@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { StarRating } from "./StarRating";
 import { IoClose } from "react-icons/io5";
 import { API } from "../../utils/api";
-import { UserContext } from "../../ui/AppLayout";
+import { AlertContext, UserContext } from "../../ui/AppLayout";
 
 type AddNewReviewProps = {
   courseId: string;
@@ -28,6 +28,12 @@ export const AddNewReview = ({
   const [ratingError, setRatingError] = useState(false);
   const [reviewError, setReviewError] = useState(false);
 
+  const alertContext = useContext(AlertContext);
+  if (!alertContext) {
+    throw new Error("AlertContext not provided");
+  }
+  const { setShowAlert, setAlertInfo } = alertContext;
+
   const handleRatingChange = (newRating: number) => {
     setRating(newRating);
   };
@@ -51,15 +57,16 @@ export const AddNewReview = ({
   const createReview = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await API.post("/skillsphere/reviews", {
+      await API.post("/skillsphere/reviews", {
         user: user?.id,
         course: courseId,
         rating,
         review,
       });
+      setAlertInfo("New review has been added");
+      setShowAlert(true);
       setOpenAddReview(false);
       updateRatingUI();
-      console.log(response, "Dodano komentarz");
     } catch (err) {
       if (rating <= 0) setRatingError(true);
       if (review === "") setReviewError(true);
