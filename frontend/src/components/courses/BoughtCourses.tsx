@@ -109,6 +109,11 @@ export const BoughtCourses = () => {
 
   return (
     <section className="grid grid-cols-3 gap-4 p-4 max-lg:grid-cols-2 max-md:grid-cols-1">
+      {user?.boughtCourses?.length === 0 && (
+        <h3 className="col-span-full mt-2 w-full text-center text-xl text-stone-500">
+          You don't have any courses yet, buy and come back here.
+        </h3>
+      )}
       {user?.boughtCourses?.map((course: BoughtCourse) => (
         <div key={course.id} className="flex min-h-64 flex-col justify-between">
           <div>
