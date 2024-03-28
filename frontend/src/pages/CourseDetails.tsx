@@ -6,7 +6,7 @@ import { StarRatingStatic } from "../components/reviews/StarRatingStatic";
 import { calculateAverageRating } from "../utils/averageRating";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBackSharp } from "react-icons/io5";
-import { UserContext } from "../ui/AppLayout";
+import { AlertContext, UserContext } from "../ui/AppLayout";
 
 type UserProps = {
   email: string;
@@ -43,11 +43,16 @@ export const CourseDetails = () => {
   const [averageRating, setAverageRating] = useState(0);
   const navigate = useNavigate();
 
+  const alertContext = useContext(AlertContext);
+  if (!alertContext) {
+    throw new Error("AlertContext not provided");
+  }
+  const { setShowAlert, setAlertInfo } = alertContext;
+
   useEffect(() => {
     const fetchOneCourse = async (slug: string) => {
       try {
         const response = await API.get(`/skillsphere/courses/${slug}`);
-        console.log(response.data.data);
         setCourse(response.data.data.course);
       } catch (err) {
         console.error("Błąd podczas pobierania danych kursu", err);
@@ -64,20 +69,18 @@ export const CourseDetails = () => {
     }
   }, [course]);
 
-  // ----------------------------------------------------------->
-
   const buyCourse = async (courseId: number) => {
     try {
       const response = await API.post(
         `/skillsphere/buy/course/${courseId}/user/${user?.id}`,
       );
-      console.log(response, "Kupiono kurs!");
+      setAlertInfo("You bought the course!"),
+        setShowAlert(true),
+        console.log(response, "Kupiono kurs!");
     } catch (err) {
       console.error(err);
     }
   };
-
-  // ------------------------------------------------------------>
 
   return (
     <section className="mt-4 min-h-[calc(100vh-72px)]">

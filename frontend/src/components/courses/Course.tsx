@@ -56,6 +56,11 @@ export const Course = ({ courseData }: CourseProps) => {
           </div>
           <Link
             to={`/courses/${courseData.slug}`}
+            onClick={() => {
+              window.scrollTo({
+                top: 0,
+              });
+            }}
             className="rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
           >
             Details

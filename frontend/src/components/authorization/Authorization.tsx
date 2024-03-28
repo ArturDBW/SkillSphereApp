@@ -71,7 +71,7 @@ export const Authorization = ({
           </div>
         </div>
         <div
-          className="relative w-1/3 rounded-xl border-y bg-cover bg-center bg-no-repeat text-center text-white max-sm:hidden"
+          className="relative w-1/3 rounded-r-xl bg-cover bg-center bg-no-repeat text-center text-white max-sm:hidden"
           style={{
             backgroundImage: `url(${hero})`,
           }}
