@@ -1,8 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.custom-select__control {
-  border: 1px solid #da1818; /* zmień styl obramowania */
-  border-radius: 4px; /* zaokrąglenie krawędzi */
-}

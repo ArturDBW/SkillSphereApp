@@ -37,16 +37,16 @@ type Course = {
 
 export const CourseDetails = () => {
   const user: UserProps | null = useContext(UserContext);
-  const { id } = useParams();
+  const { slug } = useParams();
   const [course, setCourse] = useState<Course | null>(null);
   const [showAllReviews, setShowAllReviews] = useState(true);
   const [averageRating, setAverageRating] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchOneCourse = async (id: string) => {
+    const fetchOneCourse = async (slug: string) => {
       try {
-        const response = await API.get(`/skillsphere/courses/${id}`);
+        const response = await API.get(`/skillsphere/courses/${slug}`);
         console.log(response.data.data);
         setCourse(response.data.data.course);
       } catch (err) {
@@ -54,8 +54,8 @@ export const CourseDetails = () => {
       }
     };
 
-    fetchOneCourse(id!);
-  }, [id]);
+    fetchOneCourse(slug!);
+  }, [slug]);
 
   useEffect(() => {
     if (course) {

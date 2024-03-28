@@ -21,6 +21,7 @@ type Course = {
   imageCover: string;
   description: string;
   price: number;
+  slug: string;
   reviews: [];
 };
 

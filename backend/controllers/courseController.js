@@ -66,7 +66,9 @@ exports.getAllCourse = async (req, res, next) => {
 };
 
 exports.getCourse = catchAsync(async (req, res, next) => {
-  const course = await Course.findById(req.params.id).populate("reviews");
+  const course = await Course.findOne({ slug: req.params.slug }).populate(
+    "reviews"
+  );
 
   if (!course) {
     return next(new AppError("No tour found with that ID", 400));

@@ -15,6 +15,7 @@ type CourseProps = {
     imageCover: string;
     description: string;
     price: number;
+    slug: string;
     reviews: Review[];
   };
 };
@@ -54,7 +55,7 @@ export const Course = ({ courseData }: CourseProps) => {
             </span>
           </div>
           <Link
-            to={`/courses/${courseData.id}`}
+            to={`/courses/${courseData.slug}`}
             className="rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
           >
             Details
