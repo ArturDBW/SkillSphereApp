@@ -29,7 +29,7 @@ export const BurgerMenu = ({
       {showBurgerMenu && (
         <div
           onClick={() => setShowBurgerMenu(false)}
-          className="bg-blackCustom absolute left-0 top-0 z-50 h-screen w-screen"
+          className="absolute left-0 top-0 z-50 h-screen w-screen bg-blackCustom"
         >
           <div
             onClick={(e) => {

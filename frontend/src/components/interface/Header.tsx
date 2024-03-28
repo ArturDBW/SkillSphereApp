@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import logo from "/logo.png";
 import { BsBasket3 } from "react-icons/bs";
 import { useContext, useEffect, useState } from "react";
-import { Authorization } from "./authorization/Authorization";
-import { UserMenu } from "./user/UserMenu";
-import { UserContext } from "../ui/AppLayout";
+import { Authorization } from "../authorization/Authorization";
+import { UserMenu } from "../user/UserMenu";
+import { UserContext } from "../../ui/AppLayout";
 import { Navigation } from "./Navigation";
 import { BurgerMenu } from "./BurgerMenu";
 

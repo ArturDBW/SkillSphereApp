@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
+import { Footer } from "../components/interface/Footer";
+import { Header } from "../components/interface/Header";
 import { createContext, useEffect, useState } from "react";
 import { API } from "../utils/api";
 import { AlertComponent } from "./AlertComponent";

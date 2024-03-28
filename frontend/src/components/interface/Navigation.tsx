@@ -33,7 +33,7 @@ export const Navigation = ({
             color: isActive ? "#eab308" : textColor,
           })}
         >
-          <li>Home</li>
+          <li className="hover:text-yellow-400">Home</li>
         </NavLink>
         <NavLink
           to="/courses"
@@ -42,7 +42,7 @@ export const Navigation = ({
             color: isActive ? "#eab308" : textColor,
           })}
         >
-          <li>Courses</li>
+          <li className="hover:text-yellow-400">Courses</li>
         </NavLink>
         <NavLink
           to="/aboutus"
@@ -51,7 +51,7 @@ export const Navigation = ({
             color: isActive ? "#eab308" : textColor,
           })}
         >
-          <li>About Us</li>
+          <li className="hover:text-yellow-400">About Us</li>
         </NavLink>
       </ul>
     </nav>
