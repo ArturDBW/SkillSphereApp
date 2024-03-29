@@ -21,7 +21,7 @@ export const UserMenu = () => {
 
   const logout = async () => {
     try {
-      await API.get("/skillsphere/users/logout");
+      await API.post("/skillsphere/users/logout");
       window.setTimeout(() => {
         location.assign("/");
       }, 500);
