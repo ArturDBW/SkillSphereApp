@@ -44,7 +44,7 @@ export const Authorization = ({
       onClick={() => {
         setShowAuthorization(false);
       }}
-      className="absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black bg-opacity-50 px-2"
+      className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black bg-opacity-50 px-2"
     >
       <div
         onClick={(e) => {
