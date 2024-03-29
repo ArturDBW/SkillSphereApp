@@ -6,7 +6,7 @@ export const Footer = () => {
       <div className="mx-auto max-w-screen-xl">
         <div className="flex items-center justify-between max-md:flex-col max-md:space-y-4">
           <span className="text-2xl font-bold">SkillSphere</span>
-          <Navigation textColor={"white"} />
+          <Navigation textColor={"white"} extraUlStyles="space-x-10" />
         </div>
         <p className="mt-10 w-1/2 text-stone-400 max-md:mx-auto max-md:justify-center max-md:text-center max-md:text-xs">
           Our comprehensive range of courses caters to diverse learning needs,

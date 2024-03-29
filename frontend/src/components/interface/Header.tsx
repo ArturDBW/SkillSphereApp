@@ -36,7 +36,11 @@ export const Header = () => {
             <span className="text-xl font-bold">SkillSphere</span>
           </div>
         </Link>
-        <Navigation textColor={"black"} extraNavStyles={"max-md:hidden"} />
+        <Navigation
+          textColor={"black"}
+          extraNavStyles={"max-md:hidden"}
+          extraUlStyles="space-x-10"
+        />
         <BurgerMenu
           showBurgerMenu={showBurgerMenu}
           setShowBurgerMenu={setShowBurgerMenu}

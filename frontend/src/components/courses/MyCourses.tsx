@@ -11,7 +11,7 @@ export const MyCourses = () => {
   const liStyled = `m-2 flex cursor-pointer items-center space-x-2 rounded-xl px-4 py-6 duration-150 hover:bg-yellow-500 hover:text-white max-sm:w-full max-sm:justify-center`;
 
   return (
-    <section className="h-[calc(100vh-72px)] ">
+    <section className="min-h-[calc(100vh-72px)]">
       <div className="mx-auto flex max-w-screen-xl gap-x-4 px-2 ">
         <div className="w-1/3 border text-2xl text-black max-sm:w-1/5">
           <div className="m-2 flex items-center space-x-2 border-b px-4 py-6 max-sm:flex-col">

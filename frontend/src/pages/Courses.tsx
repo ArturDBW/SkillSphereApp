@@ -93,7 +93,7 @@ export const Courses = () => {
     <section className="min-h-[calc(100vh-72px)]">
       <div className="mx-auto max-w-screen-xl px-2">
         <div
-          className="relative mb-5 mt-10 h-[200px] rounded-xl bg-cover bg-center bg-no-repeat"
+          className="relative mb-5 mt-10 h-[200px] rounded-xl bg-cover bg-center bg-no-repeat max-md:mt-3"
           style={{
             backgroundImage: `url(${hero})`,
           }}

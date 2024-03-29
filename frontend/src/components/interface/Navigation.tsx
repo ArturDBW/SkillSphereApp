@@ -25,7 +25,7 @@ export const Navigation = ({
 
   return (
     <nav className={extraNavStyles}>
-      <ul className={`flex space-x-10 font-bold uppercase ${extraUlStyles}`}>
+      <ul className={`flex font-bold uppercase ${extraUlStyles}`}>
         <NavLink
           to="/"
           onClick={scrollToTop}
