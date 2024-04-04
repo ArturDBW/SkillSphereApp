@@ -39,7 +39,7 @@ export const UserMenu = () => {
         onClick={() => setShowMenu(true)}
         className="h-10 w-10 cursor-pointer rounded-full bg-cover bg-center duration-150 hover:scale-110"
         style={{
-          backgroundImage: `url(${user?.imageCover ? user.imageCover : "https://i.pinimg.com/564x/1f/50/b9/1f50b9d69876f889319c1bbae9a03f4f.jpg"})`,
+          backgroundImage: `url(http://127.0.0.1:4000/public/${user?.imageCover})`,
         }}
       />
       {showMenu && (
@@ -51,7 +51,7 @@ export const UserMenu = () => {
             <div
               className="h-16 w-16 rounded-full bg-cover bg-center"
               style={{
-                backgroundImage: `url(${user?.imageCover ? user.imageCover : "https://i.pinimg.com/564x/1f/50/b9/1f50b9d69876f889319c1bbae9a03f4f.jpg"})`,
+                backgroundImage: `url(http://127.0.0.1:4000/public/${user?.imageCover})`,
               }}
             />
             <div className="flex flex-col">

@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const path = require("path");
 const viewRouter = require("./routes/viewRouter");
 const userRouter = require("./routes/userRouter");
 const courseRouter = require("./routes/courseRouter");
@@ -43,6 +44,12 @@ app.use(
   hpp({
     whitelist: ["duration"], // ustawiam parametry ktore moga sie pojawic wiecej niz raz w URL
   })
+);
+
+// Dostęp do folderu ze zdjęciami z backendu dla wykorzystania w UI
+app.use(
+  "/public",
+  express.static(path.join(__dirname, "public", "img", "users"))
 );
 
 // Odpala środowisko developmentu
