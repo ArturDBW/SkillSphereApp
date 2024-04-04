@@ -15,7 +15,6 @@ type UserProps = {
 
 export const UserMenu = () => {
   const user: UserProps | null = useContext(UserContext);
-  console.log(user);
 
   const liStyled =
     "flex cursor-pointer items-center space-x-2 py-5 hover:text-yellow-500";
