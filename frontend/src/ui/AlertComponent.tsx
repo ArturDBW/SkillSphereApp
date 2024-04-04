@@ -28,9 +28,11 @@ export const AlertComponent = ({ alertInfo }: AlertComponentProps) => {
   return (
     <>
       {showAlert && (
-        <div className="fixed right-1/2 top-20 z-50 flex min-w-72 translate-x-1/2 items-center rounded-xl bg-green-400 p-4 text-lg">
-          <FiCheck />
-          <span className="ml-4">{alertInfo}.</span>
+        <div className="fixed right-1/2 top-20 z-50 flex min-w-72 translate-x-1/2 items-center rounded-xl bg-green-400 p-4 text-lg max-sm:text-sm">
+          <div className="flex w-full items-center justify-center">
+            <FiCheck />
+            <span className="ml-4">{alertInfo}.</span>
+          </div>
         </div>
       )}
     </>
