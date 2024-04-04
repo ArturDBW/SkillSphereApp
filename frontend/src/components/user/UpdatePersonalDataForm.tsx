@@ -12,6 +12,7 @@ const schema = z.object({
     .string()
     .min(1, { message: "Provide email" })
     .email({ message: "Valid email" }),
+  imageCover: z.any(),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -35,7 +36,16 @@ export const UpdatePersonalDataForm = () => {
 
   const updateUserData = async (data: FormValues) => {
     try {
-      await API.patch("/skillsphere/users/updateMe", data);
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("imageCover", data.imageCover[0]);
+
+      await API.patch("/skillsphere/users/updateMe", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setAlertInfo("The data has been updated");
       setShowAlert(true);
       setTimeout(() => {
@@ -80,11 +90,24 @@ export const UpdatePersonalDataForm = () => {
         {errors.email ? `${errors.email.message}` : null}
         {errors.root && <span>{errors.root.message}</span>}
       </div>
+      <label
+        htmlFor="imageCover"
+        className="mt-2 w-max cursor-pointer rounded-xl bg-yellow-500 px-4 py-3 font-bold text-white hover:bg-yellow-400"
+      >
+        Update profile photo
+      </label>
+      <input
+        {...register("imageCover")}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        id="imageCover"
+      />
       <button
         type="submit"
         className="mt-8 w-40 rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
       >
-        Submit
+        Save
       </button>
     </form>
   );

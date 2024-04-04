@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema(
     },
     imageCover: {
       type: String,
+      default: "default.jpeg",
     },
     boughtCourses: {
       type: [mongoose.Schema.ObjectId],

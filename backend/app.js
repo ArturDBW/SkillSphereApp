@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const path = require("path");
 const viewRouter = require("./routes/viewRouter");
 const userRouter = require("./routes/userRouter");
 const courseRouter = require("./routes/courseRouter");
@@ -19,6 +20,12 @@ const corsOptions = {
   origin: "http://localhost:5173",
   credentials: true, // Zezwól na przekazywanie plików cookie
 };
+
+// Dostęp do folderu ze zdjęciami z backendu dla wykorzystania w UI
+app.use(
+  "/public",
+  express.static(path.join(__dirname, "public", "img", "users"))
+);
 
 app.use(cors(corsOptions));
 

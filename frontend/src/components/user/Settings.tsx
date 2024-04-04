@@ -55,7 +55,9 @@ export const Settings = () => {
             <div
               className="h-28 w-28 rounded-full bg-cover bg-center"
               style={{
-                backgroundImage: `url(${user?.imageCover ? user.imageCover : "https://i.pinimg.com/564x/1f/50/b9/1f50b9d69876f889319c1bbae9a03f4f.jpg"})`,
+                backgroundImage:
+                  user?.imageCover &&
+                  `url(http://127.0.0.1:4000/public/${user?.imageCover})`,
               }}
             />
             <div className="flex flex-col justify-center">
