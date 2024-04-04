@@ -21,6 +21,12 @@ const corsOptions = {
   credentials: true, // Zezwól na przekazywanie plików cookie
 };
 
+// Dostęp do folderu ze zdjęciami z backendu dla wykorzystania w UI
+app.use(
+  "/public",
+  express.static(path.join(__dirname, "public", "img", "users"))
+);
+
 app.use(cors(corsOptions));
 
 //// MIDDLEWARES ----------------------------------------------------->
@@ -44,12 +50,6 @@ app.use(
   hpp({
     whitelist: ["duration"], // ustawiam parametry ktore moga sie pojawic wiecej niz raz w URL
   })
-);
-
-// Dostęp do folderu ze zdjęciami z backendu dla wykorzystania w UI
-app.use(
-  "/public",
-  express.static(path.join(__dirname, "public", "img", "users"))
 );
 
 // Odpala środowisko developmentu
