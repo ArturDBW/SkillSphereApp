@@ -86,17 +86,23 @@ export const UpdatePersonalDataForm = () => {
         placeholder=""
         className={inputStyled}
       />
-      <label>Profile Picture</label>
-      <input
-        {...register("imageCover")}
-        type="file"
-        accept="image/*"
-        className={inputStyled}
-      />
       <div className={errorStyled}>
         {errors.email ? `${errors.email.message}` : null}
         {errors.root && <span>{errors.root.message}</span>}
       </div>
+      <label
+        htmlFor="imageCover"
+        className="mt-2 w-max cursor-pointer rounded-xl bg-yellow-500 px-4 py-3 font-bold text-white hover:bg-yellow-400"
+      >
+        Update profile photo
+      </label>
+      <input
+        {...register("imageCover")}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        id="imageCover"
+      />
       <button
         type="submit"
         className="mt-8 w-40 rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
