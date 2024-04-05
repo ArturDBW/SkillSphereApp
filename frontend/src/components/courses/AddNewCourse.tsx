@@ -20,6 +20,7 @@ const schema = z
     //   image: z.string().url();,
     author: z.string(),
     price: z.string(),
+    imageCover: z.any(),
     description: z
       .string()
       .min(5, { message: "Description should have at least 40 characters" }), // zmienic potem
@@ -53,7 +54,18 @@ export const AddNewCourse = () => {
 
   const createCourse = async (data: FormValues) => {
     try {
-      await API.post("/skillsphere/courses", data);
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("author", data.author);
+      formData.append("price", data.price);
+      formData.append("description", data.description);
+      formData.append("imageCover", data.imageCover[0]);
+
+      await API.post("/skillsphere/courses", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setAlertInfo("A new course has been added");
       setShowAlert(true);
     } catch (err) {
@@ -93,11 +105,24 @@ export const AddNewCourse = () => {
       <div className={errorStyled}>
         {errors.description ? `${errors.description.message}` : null}
       </div>
+      <label
+        htmlFor="imageCover"
+        className="mt-2 w-max cursor-pointer rounded-xl bg-yellow-500 px-4 py-3 font-bold text-white hover:bg-yellow-400"
+      >
+        Add photo
+      </label>
+      <input
+        {...register("imageCover")}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        id="imageCover"
+      />
       <button
         type="submit"
         className="mt-8 w-40 rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
       >
-        Submit
+        Create course
       </button>
     </form>
   );

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { StarRatingStatic } from "../reviews/StarRatingStatic";
 import { useEffect, useState } from "react";
 import { calculateAverageRating } from "../../utils/averageRating";
+import { backendURL } from "../../utils/api";
 
 type Review = {
   rating: number;
@@ -32,7 +33,7 @@ export const Course = ({ courseData }: CourseProps) => {
   return (
     <div className="flex gap-4 border-b py-2 max-sm:flex-col">
       <img
-        src={courseData.imageCover}
+        src={`${backendURL}/public/${courseData.imageCover}`}
         alt="Course Image"
         className="aspect-[300/160] max-w-[300px] max-sm:max-w-full"
       />

@@ -1,3 +1,4 @@
+import { backendURL } from "../../utils/api";
 import { StarRatingStatic } from "./StarRatingStatic";
 
 type reviewsDataProps = {
@@ -18,7 +19,7 @@ export const Review = ({ reviewsData }: reviewsDataProps) => {
         <div
           className="h-24 w-24 rounded-xl bg-cover bg-center"
           style={{
-            backgroundImage: `url('${reviewsData.user.imageCover}')`,
+            backgroundImage: `url('${backendURL}/public/${reviewsData.user.imageCover}')`,
           }}
         />
       </div>

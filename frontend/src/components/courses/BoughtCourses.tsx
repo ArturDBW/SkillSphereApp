@@ -2,7 +2,7 @@ import { useContext, useEffect, useState, useCallback } from "react";
 import { UserContext } from "../../ui/AppLayout";
 import { StarRatingStatic } from "../reviews/StarRatingStatic";
 import { AddNewReview } from "../reviews/AddNewReview";
-import { API } from "../../utils/api";
+import { API, backendURL } from "../../utils/api";
 import { HandleReview } from "../reviews/HandleReview";
 
 type UserProps = {
@@ -118,7 +118,7 @@ export const BoughtCourses = () => {
         <div key={course.id} className="flex min-h-64 flex-col justify-between">
           <div>
             <img
-              src={course.imageCover}
+              src={`${backendURL}/public/${course.imageCover}`}
               alt="Course image"
               className="aspect-[300/160]"
             />
