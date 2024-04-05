@@ -84,10 +84,14 @@ exports.getCourse = catchAsync(async (req, res, next) => {
 });
 
 exports.createCourse = async (req, res, next) => {
-  console.log(req.file);
-  console.log(req.body);
-
   try {
+    if (!req.file) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Please provide an image cover for the course",
+      });
+    }
+
     const newCourse = await Course.create({
       ...req.body,
       imageCover: req.file.filename,
@@ -175,7 +179,6 @@ const upload = multer({
 exports.uploadCoursePhoto = upload.single("imageCover");
 
 exports.resizeCoursePhoto = (req, res, next) => {
-  console.log(req.file);
   if (!req.file) return next();
 
   req.file.filename = `course-${req.user.id}-${Date.now()}.jpeg`;
