@@ -12,6 +12,7 @@ type UserProps = {
   email: string;
   name: string;
   id: string;
+  boughtCourses: [];
 };
 
 type Course = {

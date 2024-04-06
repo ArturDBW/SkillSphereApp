@@ -16,8 +16,8 @@ const hpp = require("hpp");
 
 // Konfiguracja CORS
 const corsOptions = {
-  // origin: "https://skill-sphere-app-frontend.vercel.app", // Ustawienie dokładnego adresu aplikacji frontendowej
-  origin: "http://localhost:5173",
+  // origin: "http://localhost:5173",
+  origin: "https://skill-sphere-app-frontend.vercel.app",
   credentials: true, // Zezwól na przekazywanie plików cookie
 };
 

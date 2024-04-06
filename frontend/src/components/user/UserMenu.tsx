@@ -4,7 +4,7 @@ import { CiLogout } from "react-icons/ci";
 import { API, backendURL } from "../../utils/api";
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../../ui/AppLayout";
+import { AlertContext, UserContext } from "../../ui/AppLayout";
 
 type UserProps = {
   email: string;
@@ -15,6 +15,11 @@ type UserProps = {
 
 export const UserMenu = () => {
   const user: UserProps | null = useContext(UserContext);
+  const alertContext = useContext(AlertContext);
+  if (!alertContext) {
+    throw new Error("AlertContext not provided");
+  }
+  const { setShowAlert, setAlertInfo } = alertContext;
 
   const liStyled =
     "flex cursor-pointer items-center space-x-2 py-5 hover:text-yellow-500";
@@ -22,10 +27,11 @@ export const UserMenu = () => {
   const logout = async () => {
     try {
       await API.post("/skillsphere/users/logout");
+      setAlertInfo("Logged out successfully");
+      setShowAlert(true);
       window.setTimeout(() => {
         location.assign("/");
       }, 500);
-      console.log("Wylogowanie");
     } catch (err) {
       console.error("Bład wylogowania", err);
     }

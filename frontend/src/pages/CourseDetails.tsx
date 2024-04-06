@@ -12,6 +12,7 @@ type UserProps = {
   email: string;
   name: string;
   id: string;
+  boughtCourses: [];
 };
 
 type ReviewData = {
@@ -71,13 +72,21 @@ export const CourseDetails = () => {
 
   const buyCourse = async (courseId: number) => {
     try {
-      const response = await API.post(
-        `/skillsphere/buy/course/${courseId}/user/${user?.id}`,
-      );
-      setAlertInfo("You bought the course!"),
-        setShowAlert(true),
-        console.log(response, "Kupiono kurs!");
+      await API.post(`/skillsphere/buy/course/${courseId}/user/${user?.id}`);
+      setAlertInfo("You bought the course.");
+      setShowAlert(true);
     } catch (err) {
+      if (
+        user?.boughtCourses.map(
+          (userCourse: Course) => userCourse.id === course?.id,
+        )
+      ) {
+        setAlertInfo("You own this course!");
+        setShowAlert(true);
+      } else {
+        setAlertInfo("You must be logged in to buy the course!");
+        setShowAlert(true);
+      }
       console.error(err);
     }
   };
