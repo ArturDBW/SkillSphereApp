@@ -1,7 +1,7 @@
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoCreateOutline } from "react-icons/io5";
 import { CiLogout } from "react-icons/ci";
-import { API } from "../../utils/api";
+import { API, backendURL } from "../../utils/api";
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../ui/AppLayout";
@@ -39,7 +39,7 @@ export const UserMenu = () => {
         onClick={() => setShowMenu(true)}
         className="h-10 w-10 cursor-pointer rounded-full bg-cover bg-center duration-150 hover:scale-110"
         style={{
-          backgroundImage: `url(http://127.0.0.1:4000/public/${user?.imageCover})`,
+          backgroundImage: `url(${backendURL}/public/${user?.imageCover})`,
         }}
       />
       {showMenu && (

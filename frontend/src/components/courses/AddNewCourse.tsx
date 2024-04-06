@@ -4,6 +4,7 @@ import { z } from "zod";
 import { API } from "../../utils/api";
 import { useContext } from "react";
 import { AlertContext, UserContext } from "../../ui/AppLayout";
+import { AxiosError } from "axios";
 
 type UserProps = {
   email: string;
@@ -17,9 +18,9 @@ const schema = z
       .string()
       .min(5, { message: "Title should have at least 5 characters" })
       .max(50, { message: "Title should have max 50 characters" }),
-    //   image: z.string().url();,
     author: z.string(),
     price: z.string(),
+    imageCover: z.any(),
     description: z
       .string()
       .min(5, { message: "Description should have at least 40 characters" }), // zmienic potem
@@ -46,6 +47,7 @@ export const AddNewCourse = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -53,10 +55,28 @@ export const AddNewCourse = () => {
 
   const createCourse = async (data: FormValues) => {
     try {
-      await API.post("/skillsphere/courses", data);
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("author", data.author);
+      formData.append("price", data.price);
+      formData.append("description", data.description);
+      formData.append("imageCover", data.imageCover[0]);
+
+      await API.post("/skillsphere/courses", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setAlertInfo("A new course has been added");
       setShowAlert(true);
-    } catch (err) {
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 400) {
+          setError("root", {
+            message: "Provide course image",
+          });
+        }
+      }
       console.error(err);
     }
   };
@@ -93,11 +113,27 @@ export const AddNewCourse = () => {
       <div className={errorStyled}>
         {errors.description ? `${errors.description.message}` : null}
       </div>
+      <label
+        htmlFor="imageCover"
+        className="mt-2 w-max cursor-pointer rounded-xl bg-yellow-500 px-4 py-3 font-bold text-white hover:bg-yellow-400"
+      >
+        Add photo
+      </label>
+      <input
+        {...register("imageCover")}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        id="imageCover"
+      />
+      <div className={errorStyled}>
+        {errors.root ? `${errors.root.message}` : null}
+      </div>
       <button
         type="submit"
         className="mt-8 w-40 rounded-xl bg-yellow-500 px-6 py-3 duration-150 hover:bg-yellow-400"
       >
-        Submit
+        Create course
       </button>
     </form>
   );

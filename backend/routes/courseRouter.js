@@ -7,7 +7,13 @@ const router = express.Router();
 
 router.get("/", courseController.getAllCourse);
 router.get("/:slug", courseController.getCourse);
-router.post("/", authController.protect, courseController.createCourse);
+router.post(
+  "/",
+  authController.protect,
+  courseController.uploadCoursePhoto,
+  courseController.resizeCoursePhoto,
+  courseController.createCourse
+);
 router.patch("/:id", authController.protect, courseController.updateCourse);
 router.delete("/:id", authController.protect, courseController.deleteCourse);
 

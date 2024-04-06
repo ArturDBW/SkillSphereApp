@@ -27,6 +27,11 @@ app.use(
   express.static(path.join(__dirname, "public", "img", "users"))
 );
 
+app.use(
+  "/public",
+  express.static(path.join(__dirname, "public", "img", "courses"))
+);
+
 app.use(cors(corsOptions));
 
 //// MIDDLEWARES ----------------------------------------------------->

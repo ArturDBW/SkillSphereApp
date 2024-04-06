@@ -12,10 +12,11 @@ const courseSchema = new mongoose.Schema(
     },
     author: {
       type: String,
-      required: [true, "Please provie a author"],
+      required: [true, "Please provied a author"],
     },
     imageCover: {
       type: String,
+      required: [true, "Please upload a photo"],
     },
     price: {
       type: Number,

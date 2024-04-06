@@ -1,7 +1,8 @@
 const Course = require("../models/courseModel");
-const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
+const multer = require("multer");
+const sharp = require("sharp");
 
 exports.getAllCourse = async (req, res, next) => {
   try {
@@ -84,7 +85,17 @@ exports.getCourse = catchAsync(async (req, res, next) => {
 
 exports.createCourse = async (req, res, next) => {
   try {
-    const newCourse = await Course.create(req.body);
+    if (!req.file) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Please provide an image cover for the course",
+      });
+    }
+
+    const newCourse = await Course.create({
+      ...req.body,
+      imageCover: req.file.filename,
+    });
     res.status(201).json({
       status: "success",
       data: {
@@ -146,4 +157,37 @@ exports.deleteCourse = async (req, res, next) => {
       message: err,
     });
   }
+};
+
+// image upload
+
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Not an image! Please upload only images.", 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+exports.uploadCoursePhoto = upload.single("imageCover");
+
+exports.resizeCoursePhoto = (req, res, next) => {
+  if (!req.file) return next();
+
+  req.file.filename = `course-${req.user.id}-${Date.now()}.jpeg`;
+
+  sharp(req.file.buffer)
+    .resize(600, 300)
+    .toFormat("jpeg")
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/courses/${req.file.filename}`);
+
+  next();
 };

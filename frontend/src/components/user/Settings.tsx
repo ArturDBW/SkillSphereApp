@@ -5,6 +5,7 @@ import { UpdatePersonalDataForm } from "./UpdatePersonalDataForm";
 import { UpdatePasswordForm } from "./UpdatePasswordForm";
 import { useState, useContext } from "react";
 import { UserContext } from "../../ui/AppLayout";
+import { backendURL } from "../../utils/api";
 
 type UserProps = {
   email: string;
@@ -57,7 +58,7 @@ export const Settings = () => {
               style={{
                 backgroundImage:
                   user?.imageCover &&
-                  `url(http://127.0.0.1:4000/public/${user?.imageCover})`,
+                  `url(${backendURL}/public/${user?.imageCover})`,
               }}
             />
             <div className="flex flex-col justify-center">

@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { API } from "../utils/api";
+import { API, backendURL } from "../utils/api";
 import { Review } from "../components/reviews/Review";
 import { StarRatingStatic } from "../components/reviews/StarRatingStatic";
 import { calculateAverageRating } from "../utils/averageRating";
@@ -125,7 +125,7 @@ export const CourseDetails = () => {
               </div>
               <div className="flex w-1/3 flex-col justify-between max-lg:w-1/2 max-sm:mt-4 max-sm:w-full">
                 <img
-                  src={course.imageCover}
+                  src={`${backendURL}/public/${course.imageCover}`}
                   alt="image"
                   className="rounded-xl  max-sm:hidden "
                 />
