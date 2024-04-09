@@ -21,7 +21,7 @@ Application for learing online. App include authentication system and allows for
 
 ## What I learned
 
-This is my first fullstack app with NodeJs, Express and MongoDB. While coding this application, learn how to work with the backend in a web application, which greatly broadened my horizons. Here I learned how to connect backend to frontend using
+This is my first fullstack app with NodeJs, Express and MongoDB. While coding this application, learn how to work with backend in a web application, which greatly broadened my horizons. Here I learned how to connect backend to frontend using
 axios. Additionaly I use several new for me react libraries (React Form Hook Form, ZOD, React paginate). To sum up, this is my biggest project that has taught me a lot of new things.
 
 
