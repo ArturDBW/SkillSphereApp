@@ -9,6 +9,7 @@ Application for learing online. App include authentication system and allows for
 - JavaScript
 - NodeJs + Express
 - MongoDB
+- Vite
 - TypeScript
 - React
 - TailwindCSS
