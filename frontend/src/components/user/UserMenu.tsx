@@ -57,7 +57,7 @@ export const UserMenu = () => {
             <div
               className="h-16 w-16 rounded-full bg-cover bg-center"
               style={{
-                backgroundImage: `url(http://127.0.0.1:4000/public/${user?.imageCover})`,
+                backgroundImage: `url(${backendURL}/public/${user?.imageCover})`,
               }}
             />
             <div className="flex flex-col">
