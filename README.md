@@ -3,7 +3,7 @@
 ## Description
 
 Application for learing online. App include authentication system and allows for purchase courses and create your own. Additionally, the application has an extensive reviews system.
-(Curenttly, the projects is not finished and contains a lot of unused code and console.logs)
+(Curenttly, the projects is not finished and contains a lot of unused code and console.logs).
 
 ## Technologies
 - JavaScript
