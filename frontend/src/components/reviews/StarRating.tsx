@@ -17,7 +17,7 @@ export const StarRating = ({
 
   const handleClick = (ratingValue: number) => {
     setRating(ratingValue);
-    onRatingChange(ratingValue); // przekazanie oceny do funkcji zwrotnej
+    onRatingChange(ratingValue);
   };
 
   return (
