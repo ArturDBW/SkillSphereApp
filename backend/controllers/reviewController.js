@@ -76,8 +76,6 @@ exports.updateReview = catchAsync(async (req, res, next) => {
     });
   }
 
-  // await Review.calcAverageRatings(review.course);
-
   res.status(200).json({
     status: "success",
     data: {
