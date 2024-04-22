@@ -82,7 +82,6 @@ exports.getUser = async (req, res, next) => {
     const user = await User.findById(req.params.id);
 
     if (!user) {
-      // Jeżeli nie znaleziono użytkownika, wyślij odpowiedź z kodem błędu 404
       return res.status(404).json({
         status: "fail",
         message: "Valid User ID",
