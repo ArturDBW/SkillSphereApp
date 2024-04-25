@@ -35,7 +35,6 @@ app.use(
 app.use(cors(corsOptions));
 
 //// MIDDLEWARES ----------------------------------------------------->
-//// SECURITY
 // PROTECT - HTTP headers
 app.use(helmet());
 
