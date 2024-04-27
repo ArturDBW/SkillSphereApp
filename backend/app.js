@@ -14,7 +14,6 @@ const rateLimit = require("express-rate-limit");
 const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
 
-// Konfiguracja CORS
 const corsOptions = {
   // origin: "http://localhost:5173",
   origin: "https://skill-sphere-app-frontend.vercel.app",
