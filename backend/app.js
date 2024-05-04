@@ -72,7 +72,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
 app.use("/", viewRouter);
 app.use("/skillsphere/users", userRouter);
 app.use("/skillsphere/courses", courseRouter);
