@@ -15,7 +15,7 @@ Application for learing online. App include authentication system and allows for
 - TailwindCSS
 - React Router
 
-## How to run app (only frontend)
+## How to run app
 - npm install
 - npm run dev
 
