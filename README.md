@@ -7,7 +7,8 @@ Application for learing online. App include authentication system and allows for
 
 ## Technologies
 - JavaScript
-- NodeJs + Express
+- NodeJs
+- Express
 - MongoDB
 - Vite
 - TypeScript
